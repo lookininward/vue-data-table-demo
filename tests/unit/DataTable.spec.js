@@ -24,6 +24,18 @@ describe('DataTable.vue', () => {
       wrapper.contains('[data-test-component="DataTable"]')
     ).toBe(true);
 
+    expect(
+      wrapper.contains('[data-test-TableHeader]')
+    ).toBe(true);
+
+    expect(
+      wrapper.contains('[data-test-TableBody]')
+    ).toBe(true);
+
+    expect(
+      wrapper.contains('[data-test-TableFooter]')
+    ).toBe(true);
+
   })
 
 })

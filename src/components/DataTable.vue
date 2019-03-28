@@ -1,9 +1,28 @@
 <template>
   <div
     data-test-component="DataTable"
-    class="dataTable"
+    class="DataTable"
   >
+
+    <div
+      data-test-TableHeader
+      class="TableHeader"
+    >
+    </div>
+
     {{ header }}
+
+    <div
+      data-test-TableBody
+      class="TableBody"
+    >
+    </div>
+
+    <div
+      data-test-TableFooter
+      class="TableFooter"
+    >
+    </div>
   </div>
 </template>
 
