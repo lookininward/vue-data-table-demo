@@ -151,7 +151,6 @@
     .table-header-cell {
       position: relative;
       @include flexCentered(column);
-      @include hoverState();
       align-items: flex-start;
       padding: 0px 10px;
       font-size: 12px;
