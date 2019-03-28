@@ -16,6 +16,22 @@
       data-test-TableBody
       class="TableBody"
     >
+
+      <div
+        data-test-TableRow
+        class="TableRow"
+        v-for="item in items"
+      >
+
+        <div
+          data-test-TableCell
+          class="TableCell"
+          v-for="key in item"
+        >
+        </div>
+
+      </div>
+
     </div>
 
     <div
@@ -30,7 +46,8 @@
 export default {
   name: 'DataTable',
   props: {
-    header: String
+    header: String,
+    items: Array
   }
 }
 </script>

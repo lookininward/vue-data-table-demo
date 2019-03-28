@@ -1,19 +1,9 @@
 import { shallowMount } from '@vue/test-utils'
 import DataTable from '@/components/DataTable.vue'
 
-// describe('HelloWorld.vue', () => {
-//   it('renders props.msg when passed', () => {
-//     const msg = 'new message'
-//     const wrapper = shallowMount(HelloWorld, {
-//       propsData: { msg }
-//     })
-//     expect(wrapper.text()).toMatch(msg)
-//   })
-// })
-
 describe('DataTable.vue', () => {
 
-  it('DataTable component does render', () => {
+  it('Component does render', () => {
     const wrapper = shallowMount(DataTable);
 
     expect(
@@ -35,6 +25,60 @@ describe('DataTable.vue', () => {
     expect(
       wrapper.contains('[data-test-TableFooter]')
     ).toBe(true);
+
+  })
+
+
+  function randomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+  }
+
+  it('Given data, generates correct number of rows', () => {
+    let items = [];
+    for (let i = 0; i < randomInt(1000); i++) {
+      items.push({ name: 'Kyra Lester'});
+    }
+
+    const wrapper = shallowMount(DataTable, {
+      propsData:  { items }
+    })
+
+    expect(
+      wrapper.findAll('[data-test-TableRow]').length
+    ).toBe(items.length);
+
+  })
+
+
+  it('Given data, generates correct number of columns/cells in row', () => {
+    const numItems = randomInt(1000);
+    let items = [];
+
+    for (let i = 0; i < numItems; i++) {
+      items.push({
+        id: '3471DA17-401F-9633-BF81-4CADA6FD5C79',
+        name: 'Kyra Lester',
+        description: 'Curabitur dictum. Phasellus in',
+        date: '2017-07-23T04:24:49-07:00',
+        amount: '345.54'
+      });
+    }
+
+    const wrapper = shallowMount(DataTable, {
+      propsData:  { items }
+    })
+
+    let rows = wrapper.findAll('[data-test-TableRow]');
+
+    for (var i = 0; i < rows.length; i++) {
+      expect(
+        rows.at(i).findAll('[data-test-TableCell]').length
+      ).toBe(Object.keys(items[0]).length);
+    }
+
+    expect(
+      wrapper.findAll('[data-test-TableCell]').length
+    ).toBe(numItems * Object.keys(items[0]).length)
 
   })
 
