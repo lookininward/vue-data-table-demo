@@ -18,12 +18,27 @@
           :key="idx + '--header'"
           @click="sortTableBy(header.header, header.type)"
         >
-          {{ header.header }}
-
           <template
             v-if="header.header === sortKey"
           >
-            ACTIVE
+            <div
+              class="HeaderCell HeaderCell--Active"
+            >
+              {{ header.header }}
+
+              <template v-if="reverse">
+                <i class="fas fa-long-arrow-alt-up"></i>
+              </template>
+
+              <template v-else>
+                <i class="fas fa-long-arrow-alt-down"></i>
+              </template>
+
+            </div>
+          </template>
+
+          <template v-else>
+            {{ header.header }}
           </template>
 
         </div>
@@ -177,6 +192,29 @@ export default {
 }
 
 .HeaderCell {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  font-weight: 500;
+  transition: all .3s;
+
+  &:hover {
+    background-color: #ececff;
+    color: #2c3e50;
+  }
+
+  .HeaderCell--Active {
+    background-color: red;
+
+    i {
+      margin-left: 8px;
+    }
+  }
 }
 
 //-- Body ---------------------------------------
@@ -190,12 +228,17 @@ export default {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   background-color: #F2F2F2;
+
+  &:hover {
+    background-color: #ececff;
+  }
 }
 
 .TableCell {
   display: grid;
   align-items: center;
   border: 1px solid lightgrey;
+  padding: 10px;
 }
 
 //-- Footer -------------------------------------
