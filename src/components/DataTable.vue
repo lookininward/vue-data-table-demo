@@ -5,6 +5,14 @@
     class="DataTable"
   >
 
+    <input
+      data-test-component="Search"
+      ref="SearchComponent"
+      type="text"
+      v-model="searchText"
+      class="SearchInput"
+    >
+
     <div
       data-test-TableHeader
       class="TableHeader"
@@ -91,13 +99,15 @@ export default {
     return {
       sortKey: null,
       sortType: null,
-      reverse: false
+      reverse: false,
+      searchText: ''
     }
 
   },
 
-  created() {
-    //
+  mounted() {
+    let refs = this.$refs // cool
+    refs.SearchComponent.focus()
   },
 
   computed: {
@@ -152,7 +162,15 @@ export default {
 
       }
 
-      return result;
+      let searchText = this.searchText.toLowerCase()
+
+      let filteredResults = result.filter(item => {
+        const itemValues = Object.values(item)
+        itemValues.forEach(val => { val.toString().toLowerCase()})
+        return itemValues.toString().toLowerCase().includes(searchText)
+      })
+
+      return filteredResults;
     }
 
   },
@@ -179,7 +197,17 @@ export default {
   height: 100vh;
   background: lightgrey;
   display: grid;
-  grid-template-rows: 50px auto 50px;
+  grid-template-rows: 50px 50px auto 20px;
+}
+
+.SearchInput {
+  display: grid;
+  background-color: #F2F2F2;
+  font-size: 24px;
+  color: #2c3e50;
+  outline: 0;
+
+  padding: 10px;
 }
 
 //-- Header -------------------------------------
