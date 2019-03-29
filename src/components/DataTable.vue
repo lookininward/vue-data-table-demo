@@ -10,14 +10,24 @@
       class="TableHeader"
     >
 
-      <div
-        data-test-HeaderCell
-        class="HeaderCell"
-        v-for="(header, idx) in headers"
-        :key="idx + '--header'"
-      >
-        {{ header }}
-      </div>
+      <template v-if="headers">
+        <div
+          data-test-HeaderCell
+          class="HeaderCell"
+          v-for="(header, idx) in headers"
+          :key="idx + '--header'"
+          @click="sortTableBy(header.header, header.type)"
+        >
+          {{ header.header }}
+
+          <template
+            v-if="header.header === sortKey"
+          >
+            ACTIVE
+          </template>
+
+        </div>
+      </template>
 
     </div>
 
@@ -29,7 +39,7 @@
       <div
         data-test-TableRow
         class="TableRow"
-        v-for="(item, idx) in items"
+        v-for="(item, idx) in sortedItems"
         v-bind:key="idx + '--item'"
       >
 
@@ -63,18 +73,81 @@ export default {
   },
 
   data() {
-    return {}
+    return {
+      sortKey: null,
+      sortType: null,
+      reverse: false
+    }
+
+  },
+
+  created() {
+    //
   },
 
   computed: {
 
     headers() {
+      let items = this.items ? this.items : [];
+      let headers = items.length ? Object.keys(items[0]) : [];
+      let result = [];
 
-      if (this.items) {
-        const item1 = this.items[0];
-        return Object.keys(item1);
+      headers.forEach(header => {
+        let data = items[0] ? items[0][header] : 'string'
+        let type = typeof data
+
+        result.push({
+          header,
+          type
+        })
+      })
+
+      return result;
+    },
+
+    sortedItems() {
+      let items = this.items ? this.items : []
+      const sortKey = this.sortKey
+      const sortType = this.sortType
+      const reverse = this.reverse
+      let result = items;
+
+      if (sortType === 'number') {
+        result = items.sort((a, b) => {
+          return reverse ?  b[sortKey] - a[sortKey] : a[sortKey] - b[sortKey]
+        })
       }
 
+      if (sortType === 'string') {
+
+        result = items.sort((a, b) => {
+          var x = a ? a[sortKey].toLowerCase() : '';
+          var y = b ? b[sortKey].toLowerCase() : '';
+
+          if (reverse) {
+            if (x > y) {return -1;}
+            if (x < y) {return 1;}
+          } else {
+            if (x < y) {return -1;}
+            if (x > y) {return 1;}
+          }
+
+          return 0;
+        });
+
+      }
+
+      return result;
+    }
+
+  },
+
+  methods: {
+
+    sortTableBy(sortKey, sortType) {
+      this.reverse = (this.sortKey == sortKey) ? ! this.reverse : false
+      this.sortKey = sortKey
+      this.sortType = sortType
     }
 
   }
@@ -96,7 +169,14 @@ export default {
 
 //-- Header -------------------------------------
 .TableHeader {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  align-items: center;
   background-color: #6c7ae0;
+  color: #fff;
+}
+
+.HeaderCell {
 }
 
 //-- Body ---------------------------------------
