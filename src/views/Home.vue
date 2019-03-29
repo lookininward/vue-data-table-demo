@@ -13,6 +13,7 @@ import DataTable from '@/components/DataTable.vue'
 
 export default {
   name: 'home',
+
   components: {
     DataTable
   },

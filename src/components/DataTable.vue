@@ -9,6 +9,16 @@
       data-test-TableHeader
       class="TableHeader"
     >
+
+      <div
+        data-test-HeaderCell
+        class="HeaderCell"
+        v-for="(header, idx) in headers"
+        :key="idx + '--header'"
+      >
+        {{ header }}
+      </div>
+
     </div>
 
     <div
@@ -19,15 +29,15 @@
       <div
         data-test-TableRow
         class="TableRow"
-        v-for="item in items"
-        :key="item.id"
+        v-for="(item, idx) in items"
+        v-bind:key="idx + '--item'"
       >
 
         <div
           data-test-TableCell
           class="TableCell"
-          v-for="itemAttr in item"
-          :itemAttr="itemAttr"
+          v-for="(itemAttr, idx) in item"
+          :key="idx + '--cell'"
         >
           {{ itemAttr }}
         </div>
@@ -50,6 +60,23 @@ export default {
   name: 'DataTable',
   props: {
     items: Array
+  },
+
+  data() {
+    return {}
+  },
+
+  computed: {
+
+    headers() {
+
+      if (this.items) {
+        const item1 = this.items[0];
+        return Object.keys(item1);
+      }
+
+    }
+
   }
 }
 </script>
