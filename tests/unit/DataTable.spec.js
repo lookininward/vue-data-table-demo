@@ -358,7 +358,6 @@ describe('DataTable.vue', () => {
   // })
 
   it('can sort table by search input', () => {
-    
 
     let items = [
       {
@@ -428,6 +427,17 @@ describe('DataTable.vue', () => {
     search.trigger('input')
     // expect(row1Cells.at(0).text()).toBe(false)
 
+  })
+
+  it('footer displays number of total rows', () => {
+    let items = []
+    for (let i = 0; i < randomInt(300); i++) {
+      items.push({ name: 'Kyra Lester'})
+    }
+
+    const wrapper = shallowMount(DataTable, { propsData:  { items }})
+    const totalRows = wrapper.find('[data-test-TotalRows]')
+    expect(totalRows.text()).toBe(`Rows: ${items.length}`)
   })
 
 })

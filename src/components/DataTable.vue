@@ -158,8 +158,11 @@
       data-test-TableFooter
       class="table-footer"
     >
-      <!-- display total items -->
-      <!-- display checked items -->
+      <div data-test-TotalRows>
+        <template v-if="items">
+          Rows: {{ items.length }}
+        </template>
+      </div>
     </div>
   </div>
 </template>
@@ -415,7 +418,11 @@ $bdr-color--light2: rgba(0, 0, 0, 0.05);
 //-- Grid Row 5 ---------------------------------
 //-- Footer -------------------------------------
 .table-footer {
+  display: flex;
+  align-items: center;
   background-color: $bg-color--grey;
   border-top: 1px solid $bdr-color--light2;
+  padding: 0 20px;
+  font-size: 12px;
 }
 </style>
