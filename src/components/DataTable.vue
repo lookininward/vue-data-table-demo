@@ -132,22 +132,20 @@
     </div>
 
     <!-- Table Footer -------------------------->
-    <div
+    <TableFooter
       data-test-TableFooter
-      class="table-footer"
-    >
-      <div data-test-TotalRows>
-        <template v-if="items">
-          Rows: {{ items.length }}
-        </template>
-      </div>
-    </div>
+      :totalItems="items ? items.length : 0"
+      :selectedItems="selectedItems ? selectedItems.length : 0"
+    />
+
   </div>
 </template>
 
 <!-- Script ------------------------------------------------------------------>
 <script>
 import ProjectDescription from '@/components/DataTable/ProjectDescription.vue'
+import TableFooter from '@/components/DataTable/TableFooter.vue'
+
 export default {
   name: 'DataTable',
   props: {
@@ -155,7 +153,8 @@ export default {
   },
 
   components: {
-    ProjectDescription
+    ProjectDescription,
+    TableFooter
   },
 
   data() {
@@ -163,7 +162,8 @@ export default {
       sortKey: null,
       sortType: null,
       reverse: false,
-      searchText: ''
+      searchText: '',
+      selectedItems: null
     }
 
   },

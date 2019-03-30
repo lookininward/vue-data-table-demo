@@ -1,4 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
+import { randomInt } from '../helpers.js'
 import DataTable from '@/components/DataTable.vue'
 
 describe('DataTable.vue', () => {
@@ -11,10 +12,6 @@ describe('DataTable.vue', () => {
     expect(wrapper.contains('[data-test-TableBody]')).toBe(true)
     expect(wrapper.contains('[data-test-TableFooter]')).toBe(true)
   })
-
-  function randomInt(max) {
-    return Math.floor(Math.random() * Math.floor(max))
-  }
 
   it('generates correct number of rows', () => {
     let items = []
@@ -427,17 +424,6 @@ describe('DataTable.vue', () => {
     search.trigger('input')
     // expect(row1Cells.at(0).text()).toBe(false)
 
-  })
-
-  it('footer displays number of total rows', () => {
-    let items = []
-    for (let i = 0; i < randomInt(300); i++) {
-      items.push({ name: 'Kyra Lester'})
-    }
-
-    const wrapper = shallowMount(DataTable, { propsData:  { items }})
-    const totalRows = wrapper.find('[data-test-TotalRows]')
-    expect(totalRows.text()).toBe(`Rows: ${items.length}`)
   })
 
 })
