@@ -105,7 +105,9 @@
           class="table-cell table-cell--checkbox"
         >
           <input
+            data-test-checkbox
             type="checkbox"
+            @click="toggleSelect(item)"
           >
         </div>
 
@@ -163,7 +165,7 @@ export default {
       sortType: null,
       reverse: false,
       searchText: '',
-      selectedItems: null
+      selectedItems: []
     }
 
   },
@@ -244,6 +246,18 @@ export default {
       this.reverse = (this.sortKey == sortKey) ? ! this.reverse : false
       this.sortKey = sortKey
       this.sortType = sortType
+    },
+
+    toggleSelect(item) {
+      const selectedItems = this.selectedItems
+
+      if (selectedItems.includes(item)) {
+        const idx = selectedItems.findIndex(x => x.ID === item.ID)
+        selectedItems.splice(idx, 1)
+
+      } else {
+        selectedItems.push(item)
+      }
     }
 
   }
