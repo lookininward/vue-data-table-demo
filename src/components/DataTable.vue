@@ -6,29 +6,7 @@
   >
 
     <!-- Description --------------------------->
-    <div class="project-description">
-      <h3>Data Component Challenge</h3>
-      <div class="Links">
-        <div class="LinkItem">
-          Vinoth Michael Xavier
-        </div>
-        <a
-          href="https://github.com/lookininward/data-table"
-          target="_blank"
-          class="LinkItem"
-        >
-          <i class="fab fa-github"></i>
-        </a>
-        <a
-          href="mailto:vinoth.michaelxavier@gmail.com"
-          target="_blank"
-          class="LinkItem"
-        >
-          <i class="far fa-envelope"></i>
-        </a>
-      </div>
-    </div>
-
+    <ProjectDescription />
 
     <!-- Data Filters -------------------------->
     <div class="data-filters">
@@ -169,10 +147,15 @@
 
 <!-- Script ------------------------------------------------------------------>
 <script>
+import ProjectDescription from '@/components/DataTable/ProjectDescription.vue'
 export default {
   name: 'DataTable',
   props: {
     items: Array
+  },
+
+  components: {
+    ProjectDescription
   },
 
   data() {
@@ -268,7 +251,7 @@ export default {
 </script>
 
 <!-- Style ------------------------------------------------------------------->
-<style scoped lang="scss">
+<style lang="scss">
 
 //-- Variables ----------------------------------
 $bg-color--light:   #fff;
