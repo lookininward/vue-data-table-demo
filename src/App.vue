@@ -26,4 +26,8 @@ body {
 h3 {
   margin: 0;
 }
+
+input[type='checkbox'] {
+  cursor: pointer;
+}
 </style>

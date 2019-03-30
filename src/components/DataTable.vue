@@ -66,6 +66,12 @@
           >
         </div>
 
+        <div
+          data-test-TableHeaderCellDropDown
+          class="table-header-cell table-header-cell--dropdown"
+        >
+          <i class="fas fa-ellipsis-v"></i>
+        </div>
 
         <template
           v-for="(header, idx) in headers"
@@ -98,6 +104,7 @@
             </div>
           </template>
         </template>
+
       </template>
     </div>
 
@@ -124,6 +131,13 @@
           >
         </div>
 
+        <div
+          data-test-TableCellDropDown
+          class="table-cell table-cell--dropdown"
+        >
+          <i class="fas fa-ellipsis-v"></i>
+        </div>
+
 
         <!-- Table Cells ----------------------->
         <div
@@ -144,6 +158,8 @@
       data-test-TableFooter
       class="table-footer"
     >
+      <!-- display total items -->
+      <!-- display checked items -->
     </div>
   </div>
 </template>
@@ -255,6 +271,7 @@ export default {
 $bg-color--light:   #fff;
 $bg-color--grey:    #f6f9fc;
 $txt-color--light:  #fff;
+$txt-color--light2: rgba(0, 0, 0, 0.05);
 $txt-color--dark:   #2c3e50;
 $bdr-color--light:  #e9ecef;
 $bdr-color--light2: rgba(0, 0, 0, 0.05);
@@ -322,7 +339,7 @@ $bdr-color--light2: rgba(0, 0, 0, 0.05);
 //-- Header -------------------------------------
 .table-header {
   display: grid;
-  grid-template-columns: 50px repeat(auto-fit, minmax(100px, 1fr));
+  grid-template-columns: 50px 5px repeat(auto-fit, minmax(0px, 1fr));
   align-items: center;
   border-top: 1px solid $bdr-color--light2;
   border-bottom: 1px solid $bdr-color--light2;
@@ -342,6 +359,11 @@ $bdr-color--light2: rgba(0, 0, 0, 0.05);
     position: absolute;
     right: 20px;
   }
+
+  &.table-header-cell--dropdown i {
+    position: unset;
+    cursor: pointer;
+  }
 }
 
 .table-header-cell.table-header-cell--Active {
@@ -359,7 +381,7 @@ $bdr-color--light2: rgba(0, 0, 0, 0.05);
 
 .table-row {
   display: grid;
-  grid-template-columns: 50px repeat(auto-fit, minmax(0px, 1fr));
+  grid-template-columns: 50px 5px repeat(auto-fit, minmax(0px, 1fr));
   background-color: $bg-color--light;
 
   &:hover {
@@ -374,10 +396,21 @@ $bdr-color--light2: rgba(0, 0, 0, 0.05);
   padding: 10px;
 }
 
-.table-cell.table-cell--checkbox {
+.table-cell.table-cell--checkbox,
+.table-cell.table-cell--dropdown {
   @include flexCentered(column);
   padding: 0;
 }
+
+.table-cell.table-cell--dropdown i {
+  color: $txt-color--light2;
+  cursor: pointer;
+
+  &:hover {
+    color: $txt-color--dark;
+  }
+}
+
 
 //-- Grid Row 5 ---------------------------------
 //-- Footer -------------------------------------
