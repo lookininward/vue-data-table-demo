@@ -2,73 +2,113 @@
 <template>
   <div
     data-test-component="DataTable"
-    class="DataTable"
+    class="data-table"
   >
 
-    <input
-      data-test-component="Search"
-      ref="SearchComponent"
-      type="text"
-      v-model="searchText"
-      class="SearchInput"
-    >
+    <!-- Description --------------------------->
+    <div class="project-description">
+      <h3>Data Component Challenge</h3>
+      <div class="Links">
+        <div class="LinkItem">
+          Vinoth Michael Xavier
+        </div>
+        <a
+          href="https://github.com/lookininward/data-table"
+          target="_blank"
+          class="LinkItem"
+        >
+          <i class="fab fa-github"></i>
+        </a>
+        <a
+          href="mailto:vinoth.michaelxavier@gmail.com"
+          target="_blank"
+          class="LinkItem"
+        >
+          <i class="far fa-envelope"></i>
+        </a>
+      </div>
+    </div>
 
+
+    <!-- Data Filters -------------------------->
+    <div class="data-filters">
+      <input
+        data-test-component="Search"
+        ref="SearchComponent"
+        type="text"
+        v-model="searchText"
+        class="input input--search"
+        placeholder="Search"
+      >
+      <div
+        data-test-component="Filters"
+        ref="Filters"
+        class="filter-options"
+      >
+        <!-- Add data filter buttons -->
+      </div>
+
+    </div>
+
+    <!-- Table Header -------------------------->
     <div
       data-test-TableHeader
-      class="TableHeader"
+      class="table-header"
     >
-
       <template v-if="headers">
-        <div
-          data-test-HeaderCell
-          class="HeaderCell"
+        <template
+          
           v-for="(header, idx) in headers"
-          :key="idx + '--header'"
-          @click="sortTableBy(header.header, header.type)"
         >
-          <template
-            v-if="header.header === sortKey"
-          >
+          <template v-if="header.header === sortKey">
             <div
-              class="HeaderCell HeaderCell--Active"
+              data-test-HeaderCell
+              class="table-header-cell table-header-cell--active"
+              :key="idx + '--header'"
+              @click="sortTableBy(header.header, header.type)"
             >
               {{ header.header }}
-
               <template v-if="reverse">
                 <i class="fas fa-long-arrow-alt-up"></i>
               </template>
-
               <template v-else>
                 <i class="fas fa-long-arrow-alt-down"></i>
               </template>
-
             </div>
           </template>
 
           <template v-else>
-            {{ header.header }}
+            <div
+              data-test-HeaderCell
+              class="table-header-cell"
+              :key="idx + '--header'"
+              @click="sortTableBy(header.header, header.type)"
+            >
+              {{ header.header }}
+            </div>
           </template>
-
-        </div>
+        </template>
       </template>
-
     </div>
 
+    <!-- Table Body ---------------------------->
     <div
       data-test-TableBody
-      class="TableBody"
+      class="table-body"
     >
 
+      <!-- Table Rows -------------------------->
       <div
         data-test-TableRow
-        class="TableRow"
+        class="table-row"
         v-for="(item, idx) in sortedItems"
         v-bind:key="idx + '--item'"
       >
 
+        <!-- Table Cells ----------------------->
         <div
           data-test-TableCell
-          class="TableCell"
+          class="table-cell"
           v-for="(itemAttr, idx) in item"
           :key="idx + '--cell'"
         >
@@ -79,9 +119,10 @@
 
     </div>
 
+    <!-- Table Footer -------------------------->
     <div
       data-test-TableFooter
-      class="TableFooter"
+      class="table-footer"
     >
     </div>
   </div>
@@ -190,87 +231,134 @@ export default {
 <!-- Style ------------------------------------------------------------------->
 <style scoped lang="scss">
 
-.DataTable {
-  margin: 0;
-  padding: 0;
+//-- Variables ----------------------------------
+$bg-color--light:   #fff;
+$bg-color--grey:    #f6f9fc;
+$txt-color--light:  #fff;
+$txt-color--dark:   #2c3e50;
+$bdr-color--light:  #e9ecef;
+$bdr-color--light2: rgba(0, 0, 0, 0.05);
+
+
+//-- Mixins -------------------------------------
+@mixin flexCentered($direction) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: center;
+  align-items: center;
+}
+
+
+//-- Data Table ---------------------------------
+.data-table {
   width: 100vw;
   height: 100vh;
-  background: lightgrey;
   display: grid;
-  grid-template-rows: 50px 50px auto 20px;
+  grid-template-rows: 70px 40px 30px auto 20px;
 }
 
-.SearchInput {
+
+//-- Grid Row 1 ---------------------------------
+.project-description {
+  @include flexCentered(column);
+  align-items: flex-start;
+  padding: 0 20px;
+}
+
+.Links {
+  display: flex;
+}
+
+.LinkItem {
+  margin-right: 8px;
+}
+
+
+//-- Grid Row 2 ---------------------------------
+.data-filters {
+  display: flex;
+  border-top: 1px solid $bdr-color--light2;
+}
+
+.data-filters .input.input--search {
   display: grid;
-  background-color: #F2F2F2;
-  font-size: 24px;
-  color: #2c3e50;
+  border: none;
+  border-right: 1px solid $bdr-color--light2;
+  background-color: $bg-color--light;
+  font-size: 16px;
+  color: $txt-color--dark;
+  padding: 5px 20px;
   outline: 0;
-
-  padding: 10px;
 }
 
+.data-filters .filter-options {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+}
+
+
+//-- Grid Row 3 ---------------------------------
 //-- Header -------------------------------------
-.TableHeader {
+.table-header {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   align-items: center;
-  background-color: #6c7ae0;
-  color: #fff;
+  border-top: 1px solid $bdr-color--light2;
+  border-bottom: 1px solid $bdr-color--light2;
+  background-color: $bg-color--grey;
+  color: $txt-color--light;
 }
 
-.HeaderCell {
-  width: 100%;
-  height: 100%;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.table-header-cell {
+  @include flexCentered(column);
+  position: relative;
+  font-weight: 500;
+  color: $txt-color--dark;
+  transition: all .3s;
   cursor: pointer;
 
-  font-weight: 500;
-  transition: all .3s;
-
-  &:hover {
-    background-color: #ececff;
-    color: #2c3e50;
-  }
-
-  .HeaderCell--Active {
-    background-color: red;
-
-    i {
-      margin-left: 8px;
-    }
+  i {
+    position: absolute;
+    right: 20px;
   }
 }
 
+.table-header-cell.table-header-cell--Active {
+  font-weight: 600;
+}
+
+
+//-- Grid Rows Auto -----------------------------
 //-- Body ---------------------------------------
-.TableBody {
+.table-body {
   display: grid;
   grid-auto-rows: 1fr;
   overflow-y: auto;
 }
 
-.TableRow {
+.table-row {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  background-color: #F2F2F2;
+  grid-template-columns: repeat(auto-fit, minmax(0px, 1fr));
+  background-color: $bg-color--light;
 
   &:hover {
-    background-color: #ececff;
+    background-color: $bg-color--grey;
   }
 }
 
-.TableCell {
+.table-cell {
   display: grid;
   align-items: center;
-  border: 1px solid lightgrey;
+  border-bottom: 1px solid $bdr-color--light;
   padding: 10px;
 }
 
+
+//-- Grid Row 5 ---------------------------------
 //-- Footer -------------------------------------
-.TableFooter {
-  background-color: #6c7ae0;
+.table-footer {
+  background-color: $bg-color--grey;
+  border-top: 1px solid $bdr-color--light2;
 }
 </style>

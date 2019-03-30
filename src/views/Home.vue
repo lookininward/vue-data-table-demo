@@ -1,10 +1,8 @@
 <!-- Template ---------------------------------------------------------------->
 <template>
-  <div class="home">
-    <DataTable
-      v-bind:items=items
-    />
-  </div>
+  <DataTable
+    v-bind:items=items
+  />
 </template>
 
 <!-- Script ------------------------------------------------------------------>
