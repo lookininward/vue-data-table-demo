@@ -56,8 +56,18 @@
       class="table-header"
     >
       <template v-if="headers">
+
+        <div
+          data-test-TableCellCheckbox
+          class="table-header-cell table-header-cell--checkbox"
+        >
+          <input
+            type="checkbox"
+          >
+        </div>
+
+
         <template
-          
           v-for="(header, idx) in headers"
         >
           <template v-if="header.header === sortKey">
@@ -104,6 +114,16 @@
         v-for="(item, idx) in sortedItems"
         v-bind:key="idx + '--item'"
       >
+
+        <div
+          data-test-TableCellCheckbox
+          class="table-cell table-cell--checkbox"
+        >
+          <input
+            type="checkbox"
+          >
+        </div>
+
 
         <!-- Table Cells ----------------------->
         <div
@@ -302,7 +322,7 @@ $bdr-color--light2: rgba(0, 0, 0, 0.05);
 //-- Header -------------------------------------
 .table-header {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  grid-template-columns: 50px repeat(auto-fit, minmax(100px, 1fr));
   align-items: center;
   border-top: 1px solid $bdr-color--light2;
   border-bottom: 1px solid $bdr-color--light2;
@@ -339,7 +359,7 @@ $bdr-color--light2: rgba(0, 0, 0, 0.05);
 
 .table-row {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(0px, 1fr));
+  grid-template-columns: 50px repeat(auto-fit, minmax(0px, 1fr));
   background-color: $bg-color--light;
 
   &:hover {
@@ -354,6 +374,10 @@ $bdr-color--light2: rgba(0, 0, 0, 0.05);
   padding: 10px;
 }
 
+.table-cell.table-cell--checkbox {
+  @include flexCentered(column);
+  padding: 0;
+}
 
 //-- Grid Row 5 ---------------------------------
 //-- Footer -------------------------------------
