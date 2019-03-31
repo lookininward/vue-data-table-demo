@@ -23,6 +23,14 @@
         ref="Filters"
         class="filter-options"
       >
+        <i
+          class="fas fa-sliders-h"
+        >
+        </i>
+        <i
+          class="fas fa-filter"
+        >
+        </i>
         <!-- Add data filter buttons -->
       </div>
 
@@ -107,7 +115,7 @@
           <input
             data-test-checkbox
             type="checkbox"
-            @click="toggleSelect(item)"
+            @click="toggleSelect(item.ID)"
           >
         </div>
 
@@ -248,15 +256,14 @@ export default {
       this.sortType = sortType
     },
 
-    toggleSelect(item) {
+    toggleSelect(itemID) {
       const selectedItems = this.selectedItems
 
-      if (selectedItems.includes(item)) {
-        const idx = selectedItems.findIndex(x => x.ID === item.ID)
+      if (selectedItems.includes(itemID)) {
+        const idx = selectedItems.findIndex(x => x === itemID)
         selectedItems.splice(idx, 1)
-
       } else {
-        selectedItems.push(item)
+        selectedItems.push(itemID)
       }
     }
 
@@ -331,7 +338,13 @@ $bdr-color--light2: rgba(0, 0, 0, 0.05);
 .data-filters .filter-options {
   display: flex;
   align-items: center;
-  padding: 0 10px;
+  padding: 0 20px;
+
+  i {
+    margin-right: 15px;
+    cursor: pointer;
+  }
+
 }
 
 
