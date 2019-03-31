@@ -20,11 +20,13 @@ describe('DataTable.vue', () => {
       items.push({ name: 'Kyra Lester'})
     }
 
-    const wrapper = shallowMount(DataTable, {
+    const wrapper = mount(DataTable, {
       propsData:  { items }
     })
 
-    expect(wrapper.findAll('[data-test-TableRow]').length).toBe(items.length)
+    expect(
+      wrapper.findAll('[data-test-component="TableRow"]').length
+    ).toBe(items.length)
   })
 
 
@@ -42,11 +44,11 @@ describe('DataTable.vue', () => {
     });
     }
 
-    const wrapper = shallowMount(DataTable, {
+    const wrapper = mount(DataTable, {
       propsData:  { items }
     })
 
-    let rows = wrapper.findAll('[data-test-TableRow]');
+    let rows = wrapper.findAll('[data-test-component="TableRow"]');
 
     for (var i = 0; i < rows.length; i++) {
       expect(
@@ -118,7 +120,7 @@ describe('DataTable.vue', () => {
     propsData:  { items }
   })
 
-  let rows = wrapper.findAll('[data-test-TableRow]');
+  let rows = wrapper.findAll('[data-test-component="TableRow"]');
   let row1Cells = rows.at(0).findAll('[data-test-TableCell]');
   let row2Cells = rows.at(1).findAll('[data-test-TableCell]');
   let row3Cells = rows.at(2).findAll('[data-test-TableCell]');

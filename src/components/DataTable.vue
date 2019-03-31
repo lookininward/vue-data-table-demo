@@ -29,43 +29,18 @@
     >
 
       <!-- Table Rows -------------------------->
-      <div
+      <template
         data-test-TableRow
-        class="table-row"
         v-for="(item, idx) in sortedItems"
-        v-bind:key="idx + '--item'"
       >
-
-        <div
-          data-test-TableCellCheckbox
-          class="table-cell table-cell--checkbox"
-        >
-          <input
-            data-test-checkbox
-            type="checkbox"
-            @click="toggleSelect(item.ID)"
-          >
-        </div>
-
-        <div
-          data-test-TableCellDropDown
-          class="table-cell table-cell--dropdown"
-        >
-          <i class="fas fa-ellipsis-v"></i>
-        </div>
-
-
-        <!-- Table Cells ----------------------->
-        <div
-          data-test-TableCell
-          class="table-cell"
-          v-for="(itemAttr, idx) in item"
-          :key="idx + '--cell'"
-        >
-          {{ itemAttr }}
-        </div>
-
-      </div>
+        <TableRow
+          data-test-component="TableRow"
+          class="table-row"
+          :item="item"
+          :idx="idx"
+          v-bind:key="idx + '--item'"
+        />
+      </template>
 
     </div>
 
@@ -84,6 +59,7 @@
 import ProjectDescription from '@/components/DataTable/ProjectDescription.vue'
 import TableFilters from '@/components/DataTable/TableFilters.vue'
 import TableHeader from '@/components/DataTable/TableHeader.vue'
+import TableRow from '@/components/DataTable/TableRow.vue'
 import TableFooter from '@/components/DataTable/TableFooter.vue'
 
 export default {
@@ -96,6 +72,7 @@ export default {
     ProjectDescription,
     TableFilters,
     TableHeader,
+    TableRow,
     TableFooter
   },
 
@@ -113,9 +90,9 @@ export default {
   computed: {
 
     headers() {
-      let items = this.items ? this.items : [];
-      let headers = items.length ? Object.keys(items[0]) : [];
-      let result = [];
+      let items = this.items ? this.items : []
+      let headers = items.length ? Object.keys(items[0]) : []
+      let result = []
 
       headers.forEach(header => {
         let data = items[0] ? items[0][header] : 'string'
@@ -127,7 +104,7 @@ export default {
         })
       })
 
-      return result;
+      return result
     },
 
     sortedItems() {

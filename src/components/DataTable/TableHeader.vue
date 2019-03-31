@@ -15,7 +15,7 @@
         <input type="checkbox">
       </div>
 
-      <!-- Select All Ellipsis ----------------->
+      <!-- All Items Dropdown ------------------>
       <div
         data-test-TableHeaderCellDropDown
         class="table-header-cell table-header-cell--dropdown"
