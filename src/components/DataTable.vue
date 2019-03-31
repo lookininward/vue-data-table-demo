@@ -10,66 +10,17 @@
 
     <!-- Data Filters -------------------------->
     <TableFilters
+      data-test-component="TableHeader"
       v-model="searchText"
     />
 
     <!-- Table Header -------------------------->
-    <div
-      data-test-TableHeader
-      class="table-header"
-    >
-      <template v-if="headers">
-
-        <div
-          data-test-TableCellCheckbox
-          class="table-header-cell table-header-cell--checkbox"
-        >
-          <input
-            type="checkbox"
-          >
-        </div>
-
-        <div
-          data-test-TableHeaderCellDropDown
-          class="table-header-cell table-header-cell--dropdown"
-        >
-          <i class="fas fa-ellipsis-v"></i>
-        </div>
-
-        <template
-          v-for="(header, idx) in headers"
-        >
-          <template v-if="header.header === sortKey">
-            <div
-              data-test-HeaderCell
-              class="table-header-cell table-header-cell--active"
-              :key="idx + '--header'"
-              @click="sortTableBy(header.header, header.type)"
-            >
-              {{ header.header }}
-              <template v-if="reverse">
-                <i class="fas fa-long-arrow-alt-up"></i>
-              </template>
-              <template v-else>
-                <i class="fas fa-long-arrow-alt-down"></i>
-              </template>
-            </div>
-          </template>
-
-          <template v-else>
-            <div
-              data-test-HeaderCell
-              class="table-header-cell"
-              :key="idx + '--header'"
-              @click="sortTableBy(header.header, header.type)"
-            >
-              {{ header.header }}
-            </div>
-          </template>
-        </template>
-
-      </template>
-    </div>
+    <TableHeader
+      :headers="headers"
+      :sortKey="sortKey"
+      :reverse="reverse"
+      @sortColumns="sortTableBy"
+    />
 
     <!-- Table Body ---------------------------->
     <div
@@ -120,7 +71,7 @@
 
     <!-- Table Footer -------------------------->
     <TableFooter
-      data-test-TableFooter
+      data-test-component="TableFooter"
       :totalItems="items ? items.length : 0"
       :selectedItems="selectedItems ? selectedItems.length : 0"
     />
@@ -132,6 +83,7 @@
 <script>
 import ProjectDescription from '@/components/DataTable/ProjectDescription.vue'
 import TableFilters from '@/components/DataTable/TableFilters.vue'
+import TableHeader from '@/components/DataTable/TableHeader.vue'
 import TableFooter from '@/components/DataTable/TableFooter.vue'
 
 export default {
@@ -143,6 +95,7 @@ export default {
   components: {
     ProjectDescription,
     TableFilters,
+    TableHeader,
     TableFooter
   },
 

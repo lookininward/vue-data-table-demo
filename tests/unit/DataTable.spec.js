@@ -1,4 +1,5 @@
-import { shallowMount } from '@vue/test-utils'
+import { mount, shallowMount } from '@vue/test-utils'
+// using mount --> integration tests for intercomponent behaviour
 import { randomInt } from '../helpers.js'
 import DataTable from '@/components/DataTable.vue'
 
@@ -8,9 +9,9 @@ describe('DataTable.vue', () => {
     const wrapper = shallowMount(DataTable)
     expect(wrapper.attributes()['data-test-component']).toBe('DataTable')
     expect(wrapper.contains('[data-test-component="DataTable"]')).toBe(true)
-    expect(wrapper.contains('[data-test-TableHeader]')).toBe(true)
+    expect(wrapper.contains('[data-test-component="TableHeader"]')).toBe(true)
     expect(wrapper.contains('[data-test-TableBody]')).toBe(true)
-    expect(wrapper.contains('[data-test-TableFooter]')).toBe(true)
+    expect(wrapper.contains('[data-test-component="TableFooter"]')).toBe(true)
   })
 
   it('generates correct number of rows', () => {
@@ -113,7 +114,7 @@ describe('DataTable.vue', () => {
   let item2 = items[1];
   let item3 = items[2];
 
-  const wrapper = shallowMount(DataTable, {
+  const wrapper = mount(DataTable, {
     propsData:  { items }
   })
 
