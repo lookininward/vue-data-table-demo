@@ -9,32 +9,9 @@
     <ProjectDescription />
 
     <!-- Data Filters -------------------------->
-    <div class="data-filters">
-      <input
-        data-test-component="Search"
-        ref="SearchComponent"
-        type="text"
-        v-model="searchText"
-        class="input input--search"
-        placeholder="Search"
-      >
-      <div
-        data-test-component="Filters"
-        ref="Filters"
-        class="filter-options"
-      >
-        <i
-          class="fas fa-sliders-h"
-        >
-        </i>
-        <i
-          class="fas fa-filter"
-        >
-        </i>
-        <!-- Add data filter buttons -->
-      </div>
-
-    </div>
+    <TableFilters
+      v-model="searchText"
+    />
 
     <!-- Table Header -------------------------->
     <div
@@ -154,6 +131,7 @@
 <!-- Script ------------------------------------------------------------------>
 <script>
 import ProjectDescription from '@/components/DataTable/ProjectDescription.vue'
+import TableFilters from '@/components/DataTable/TableFilters.vue'
 import TableFooter from '@/components/DataTable/TableFooter.vue'
 
 export default {
@@ -164,6 +142,7 @@ export default {
 
   components: {
     ProjectDescription,
+    TableFilters,
     TableFooter
   },
 
@@ -176,11 +155,6 @@ export default {
       selectedItems: []
     }
 
-  },
-
-  mounted() {
-    let refs = this.$refs // cool
-    refs.SearchComponent.focus()
   },
 
   computed: {
@@ -208,7 +182,7 @@ export default {
       const sortKey = this.sortKey
       const sortType = this.sortType
       const reverse = this.reverse
-      let result = items;
+      let result = items
 
       if (sortType === 'number') {
         result = items.sort((a, b) => {
@@ -219,19 +193,19 @@ export default {
       if (sortType === 'string') {
 
         result = items.sort((a, b) => {
-          var x = a ? a[sortKey].toLowerCase() : '';
-          var y = b ? b[sortKey].toLowerCase() : '';
+          var x = a ? a[sortKey].toLowerCase() : ''
+          var y = b ? b[sortKey].toLowerCase() : ''
 
           if (reverse) {
-            if (x > y) {return -1;}
-            if (x < y) {return 1;}
+            if (x > y) { return -1 }
+            if (x < y) { return 1 }
           } else {
-            if (x < y) {return -1;}
-            if (x > y) {return 1;}
+            if (x < y) { return -1 }
+            if (x > y) { return 1 }
           }
 
-          return 0;
-        });
+          return 0
+        })
 
       }
 
@@ -243,7 +217,7 @@ export default {
         return itemValues.toString().toLowerCase().includes(searchText)
       })
 
-      return filteredResults;
+      return filteredResults
     }
 
   },
