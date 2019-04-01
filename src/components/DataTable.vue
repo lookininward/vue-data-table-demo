@@ -315,12 +315,12 @@ $bdr-color--light2: rgba(0, 0, 0, 0.05);
 }
 
 .table-cell.table-cell--checkbox,
-.table-cell.table-cell--dropdown {
+.table-cell.table-cell--dropdownTrigger {
   @include flexCentered(column);
   padding: 0;
 }
 
-.table-cell.table-cell--dropdown i {
+.table-cell.table-cell--dropdownTrigger i {
   color: $txt-color--light2;
   cursor: pointer;
 

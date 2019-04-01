@@ -24,9 +24,7 @@
       </div>
 
       <!-- Headers ----------------------------->
-      <template
-        v-for="(header, idx) in headers"
-      >
+      <template v-for="(header, idx) in headers">
         <template v-if="header.header === sortKey">
           <div
             data-test-HeaderCell
