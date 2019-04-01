@@ -38,6 +38,7 @@
           class="table-row"
           :item="item"
           :idx="idx"
+          @toggleSelect="toggleSelect"
           v-bind:key="idx + '--item'"
         />
       </template>

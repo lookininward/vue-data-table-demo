@@ -458,7 +458,43 @@ describe('DataTable.vue', () => {
 
   })
 
+  it('can track selected items - integration', () => {
+
+    let items = [{
+      "ID": "3471DA17-401F-9633-BF81-4CADA6FD5C79",
+      "Name": "Kyra Lester",
+      "Description": "Curabitur dictum. Phasellus in",
+      "Date": "2017-07-23T04:24:49-07:00",
+      "Amount": 345.54
+    }]
+
+    const wrapper = mount(DataTable, {
+      propsData:  { items }
+    })
+
+    // none selected
+    expect(wrapper.vm.selectedItems.length).toBe(0)
+
+    //
+    let row = wrapper.findAll('[data-test-component="TableRow"]')
+    let rowCheckbox = wrapper.findAll('[data-test-checkbox]')
+    expect(row.length).toBe(1)
+    expect(rowCheckbox.length).toBe(1)
+
+    rowCheckbox.trigger('click')
+
+    // includes selection
+    expect(wrapper.vm.selectedItems.length).toBe(1)
+
+    expect(
+      wrapper.vm.selectedItems[0]
+    ).toBe("3471DA17-401F-9633-BF81-4CADA6FD5C79")
+
+  })
+
   // if number or date field shot min max options sliders
   // hide or show data fields
-
 })
+
+
+// need integration tests to demonstrate more realistic intercomponent behaviour

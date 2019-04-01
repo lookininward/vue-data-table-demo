@@ -11,8 +11,8 @@
       <input
         data-test-checkbox
         type="checkbox"
+        @click="toggle(item.ID)"
       >
-      <!-- @click="toggleSelect(item.ID)" -->
     </div>
 
     <!-- Item Drop ----------------------------->
@@ -43,7 +43,15 @@ export default {
 
   props: {
    item: { type: Object }
- }
+ },
+
+ methods: {
+
+    toggle(itemID) {
+      this.$emit('toggleSelect', itemID)
+    }
+
+  }
 }
 </script>
 
