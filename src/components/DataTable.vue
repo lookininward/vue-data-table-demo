@@ -29,10 +29,7 @@
     >
 
       <!-- Table Rows -------------------------->
-      <template
-        data-test-TableRow
-        v-for="(item, idx) in sortedItems"
-      >
+      <template v-for="(item, idx) in sortedItems">
         <TableRow
           data-test-component="TableRow"
           class="table-row"
@@ -42,7 +39,6 @@
           v-bind:key="idx + '--item'"
         />
       </template>
-
     </div>
 
     <!-- Table Footer -------------------------->
