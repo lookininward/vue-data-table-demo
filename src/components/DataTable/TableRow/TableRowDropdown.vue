@@ -5,15 +5,20 @@
     class="table-cell table-cell--dropdownTrigger"
   >
     <div
+      data-test-dropdown="itemRow"
       v-bind:id="`item-${item.id}`"
       class="row-dropdown"
       v-tippy-html
     >
-      <div class="row-dropdown-option">
+      <div
+        data-test-btn="editItem"
+        class="row-dropdown-option"
+      >
         Edit
       </div>
 
       <div
+        data-test-btn="deleteItem"
         class="row-dropdown-option"
         @click="deleteItem(item.id)"
       >
@@ -22,6 +27,7 @@
     </div>
 
     <i
+      data-test-btn="dropdownTrigger"
       class="fas fa-ellipsis-v"
       v-tippy="{
         reactive: true,
@@ -29,7 +35,8 @@
         trigger : 'click',
         placement: 'right',
         html: `#item-${item.id}`,
-        theme : 'row-dropdown'
+        theme : 'row-dropdown',
+        duration: 100
       }"
     >
     </i>

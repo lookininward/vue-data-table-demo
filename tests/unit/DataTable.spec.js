@@ -1,7 +1,6 @@
 import { mount, shallowMount } from '@vue/test-utils'
 import { randomInt } from '../helpers.js'
 import DataTable from '@/components/DataTable.vue'
-import TableRowDropdown from '@/components/DataTable/TableRow/TableRowDropdown.vue'
 
 describe('DataTable.vue', () => {
 
@@ -55,8 +54,7 @@ describe('DataTable.vue', () => {
     ]
 
     const wrapper = mount(DataTable, {
-      propsData:  { items },
-      stubs: { TableRowDropdown: false }
+      propsData:  { items }
     })
 
     let rows = wrapper.findAll('[data-test-component="TableRow"]')

@@ -1,6 +1,5 @@
-import { mount, shallowMount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import DataTable from '@/components/DataTable.vue'
-import TableRowDropdown from '@/components/DataTable/TableRow/TableRowDropdown.vue'
 
 describe('DataTable.vue sort', () => {
   let items = [
@@ -32,8 +31,7 @@ describe('DataTable.vue sort', () => {
   let item3 = items[2]
 
   const wrapperDataTable = mount(DataTable, {
-    propsData: { items },
-    stubs: { TableRowDropdown: false }
+    propsData: { items }
   })
 
   let rows = wrapperDataTable.findAll('[data-test-component="TableRow"]')
