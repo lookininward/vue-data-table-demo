@@ -35,9 +35,9 @@ describe('DataTable.vue sort', () => {
   })
 
   let rows = wrapperDataTable.findAll('[data-test-component="TableRow"]')
-  let row1Cells = rows.at(0).findAll('[data-test-TableCell]')
-  let row2Cells = rows.at(1).findAll('[data-test-TableCell]')
-  let row3Cells = rows.at(2).findAll('[data-test-TableCell]')
+  let row1Cells = rows.at(0).findAll('[data-test-component="TableCell"]')
+  let row2Cells = rows.at(1).findAll('[data-test-component="TableCell"]')
+  let row3Cells = rows.at(2).findAll('[data-test-component="TableCell"]')
 
   let headers = wrapperDataTable.findAll('[data-test-HeaderCell]')
 

@@ -1,5 +1,5 @@
 import TableRow from '@/components/DataTable/TableRow.vue'
-import { shallowMount } from '@vue/test-utils'
+import { mount, shallowMount } from '@vue/test-utils'
 
 describe('TableRow.vue', () => {
 
@@ -25,8 +25,8 @@ describe('TableRow.vue', () => {
       "amount": 345.54
     }
 
-    let wrapper = shallowMount(TableRow, {propsData:  { item }})
-    let tableCells = wrapper.findAll('[data-test-TableCell]')
+    let wrapper = mount(TableRow, {propsData:  { item }})
+    let tableCells = wrapper.findAll('[data-test-component="TableCell"]')
     let itemKeys = Object.keys(item)
 
     expect(tableCells.length).toBe(itemKeys.length)
@@ -34,7 +34,7 @@ describe('TableRow.vue', () => {
     for (var i = 0; i < itemKeys.length; i++) {
       let expectedText = item[itemKeys[i]].toString()
       let foundText = tableCells.at(i).text()
-      expect(foundText).toBe(expectedText)
+      expect(foundText).toContain(expectedText)
     }
   })
 

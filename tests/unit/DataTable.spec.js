@@ -58,8 +58,8 @@ describe('DataTable.vue', () => {
     })
 
     let rows = wrapper.findAll('[data-test-component="TableRow"]')
-    let search = wrapper.find('[data-test-component="Search"]')
-    expect(search.contains('[data-test-component="Search"]')).toBe(true)
+    let search = wrapper.find('[data-test-input="Search"]')
+    expect(search.contains('[data-test-input="Search"]')).toBe(true)
     expect(rows.length).toBe(3)
 
     search.setValue('Buckminster')

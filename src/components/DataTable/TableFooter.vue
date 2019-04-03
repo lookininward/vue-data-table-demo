@@ -23,16 +23,12 @@
 
 <!-- Script ------------------------------------------------------------------>
 <script>
-export default {
-  name: 'TableFooter',
+  export default {
+    name: 'TableFooter',
 
-  props: {
-   totalItems: { type: Number },
-   selectedItems: { type: Number }
- }
-}
+    props: {
+     totalItems: { type: Number },
+     selectedItems: { type: Number }
+   }
+  }
 </script>
-
-<!-- Style ------------------------------------------------------------------->
-<style scoped lang="scss">
-</style>

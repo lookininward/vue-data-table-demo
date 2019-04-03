@@ -2,7 +2,9 @@
 <template>
   <div
     data-test-component="TableRow"
+    class="table-row"
   >
+
     <!-- Select Item checkbox ------------------>
     <div
       data-test-TableCellCheckbox
@@ -15,52 +17,48 @@
       >
     </div>
 
-    <!-- Item Dropdown ------------------------->
+    <!-- Row Dropdown -------------------------->
     <TableRowDropdown
       data-test-component="TableRowDropdown"
       :item="item"
     />
 
     <!-- Table Cells --------------------------->
-    <div
-      data-test-TableCell
+    <TableCell
+      data-test-component="TableCell"
       class="table-cell"
       v-for="(itemAttr, idx) in item"
+      :item="item"
+      :itemAttr="itemAttr"
       :key="idx + '--cell'"
-    >
-      {{ itemAttr }}
-    </div>
+    />
   </div>
-
 </template>
 
 <!-- Script ------------------------------------------------------------------>
 <script>
+  import TableRowDropdown from '@/components/DataTable/TableRow/TableRowDropdown.vue'
+  import TableCell from '@/components/DataTable/TableRow/TableCell.vue'
 
-import TableRowDropdown from '@/components/DataTable/TableRow/TableRowDropdown.vue'
+  export default {
+    name: 'TableRow',
 
-export default {
-  name: 'TableRow',
+    props: {
+      item: { type: Object }
+    },
 
-  props: {
-    item: { type: Object }
-  },
+    components: {
+      TableRowDropdown,
+      TableCell
+    },
 
-  components: {
-    TableRowDropdown
-  },
+    methods: {
 
-  methods: {
+      toggle(itemID) {
+        this.$emit('toggleSelect', itemID)
+      }
 
-    toggle(itemID) {
-      this.$emit('toggleSelect', itemID)
     }
 
   }
-
-}
 </script>
-
-<!-- Style ------------------------------------------------------------------->
-<style lang="scss">
-</style>

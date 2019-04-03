@@ -1,6 +1,9 @@
 <!-- Template ---------------------------------------------------------------->
 <template>
-  <div class="project-description">
+  <div
+    data-test-component="ProjectDescription"
+    class="project-description"
+  >
     <h3>Data Component Challenge</h3>
     <div class="Links">
       <div class="LinkItem">
@@ -26,11 +29,7 @@
 
 <!-- Script ------------------------------------------------------------------>
 <script>
-export default {
-  name: 'ProjectDescription'
-}
+  export default {
+    name: 'ProjectDescription'
+  }
 </script>
-
-<!-- Style ------------------------------------------------------------------->
-<style scoped lang="scss">
-</style>

@@ -26,7 +26,6 @@ describe('TableRowDropdown.vue', () => {
 
     expect(wrapper.contains('[data-test-btn="dropdownTrigger"]')).toBe(true)
     expect(wrapper.contains('[data-test-dropdown="itemRow"]')).toBe(true)
-    expect(wrapper.contains('[data-test-btn="editItem"]')).toBe(true)
     expect(wrapper.contains('[data-test-btn="deleteItem"]')).toBe(true)
   })
 

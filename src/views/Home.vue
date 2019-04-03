@@ -7,32 +7,28 @@
 
 <!-- Script ------------------------------------------------------------------>
 <script>
-import DataTable from '@/components/DataTable.vue'
-import { mapState } from 'vuex'
+  import DataTable from '@/components/DataTable.vue'
+  import { mapState } from 'vuex'
 
-export default {
-  name: 'home',
+  export default {
+    name: 'home',
 
-  components: {
-    DataTable
-  },
+    components: {
+      DataTable
+    },
 
-  data() {
-    return {
+    data() {
+      return {}
+    },
+
+    mounted() {
+      this.$store.dispatch('fetchData')
+    },
+
+    computed: {
+      ...mapState([
+        'items'
+      ])
     }
-  },
-
-  mounted() {
-    this.$store.dispatch('fetchData')
-  },
-
-  computed: {
-
-    ...mapState([
-      'items'
-    ])
-
   }
-
-}
 </script>
