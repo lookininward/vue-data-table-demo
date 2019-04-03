@@ -7,7 +7,6 @@
     <div
       v-bind:id="`item-${item.id}`"
       class="row-dropdown"
-      style="display: none;"
       v-tippy-html
     >
       <div class="row-dropdown-header">
@@ -17,7 +16,10 @@
         Edit
       </div>
 
-      <div class="row-dropdown-option">
+      <div
+        class="row-dropdown-option"
+        @click="deleteItem(item.id)"
+      >
         Delete
       </div>
     </div>
@@ -25,7 +27,7 @@
     <i
       class="fas fa-ellipsis-v"
       v-tippy="{
-        reactive: false,
+        reactive: true,
         interactive : true,
         trigger : 'click',
         placement: 'right',
@@ -41,6 +43,7 @@
 <script>
 import Vue from 'vue'
 import VueTippy from 'vue-tippy'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'TableRow',
@@ -51,6 +54,14 @@ export default {
 
   created() {
     Vue.use(VueTippy)
+  },
+
+  methods: {
+
+    ...mapActions([
+      'deleteItem'
+    ])
+
   }
 
 }

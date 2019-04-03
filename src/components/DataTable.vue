@@ -38,6 +38,8 @@
           @toggleSelect="toggleSelect"
           v-bind:key="idx + '--item'"
         />
+        <!-- using idx for key breaks vueTippy popover
+        using item.id for key breaks unit tests -- undefined item error -->
       </template>
     </div>
 
