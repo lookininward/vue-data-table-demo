@@ -9,9 +9,6 @@
       class="row-dropdown"
       v-tippy-html
     >
-      <div class="row-dropdown-header">
-        {{ item.name }}
-      </div>
       <div class="row-dropdown-option">
         Edit
       </div>
@@ -84,22 +81,25 @@ div.tippy-tooltip.row-dropdown-theme {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-}
-
-
-.row-dropdown-header {
-  padding: 5px 8px;
-  background-color: #f6f9fc;
-  color: #000;
+  background-color: #fff;
+  min-width: 100px;
+  max-width: 100px;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-size: .85rem;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
 }
 
 .row-dropdown-option {
-  padding: 5px 8px;
+  width: 100%;
+  padding: 5px 10px;
   background-color: #fff;
   color: #000;
   cursor: pointer;
 
-  &:hover {
+   &:hover {
     background-color: #f6f9fc;
   }
 }
