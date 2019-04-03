@@ -56,7 +56,7 @@ describe('DataTable.vue', () => {
 
     const wrapper = mount(DataTable, {
       propsData:  { items },
-      stubs: { TableRowDropdown: true }
+      stubs: { TableRowDropdown: false }
     })
 
     let rows = wrapper.findAll('[data-test-component="TableRow"]')

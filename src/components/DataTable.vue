@@ -29,18 +29,14 @@
     >
 
       <!-- Table Rows -------------------------->
-      <template v-for="(item, idx) in sortedItems">
-        <TableRow
-          data-test-component="TableRow"
-          class="table-row"
-          :item="item"
-          :idx="idx"
-          @toggleSelect="toggleSelect"
-          v-bind:key="idx + '--item'"
-        />
-        <!-- using idx for key breaks vueTippy popover
-        using item.id for key breaks unit tests -- undefined item error -->
-      </template>
+      <TableRow
+        data-test-component="TableRow"
+        class="table-row"
+        v-for="item in sortedItems"
+        v-bind:item="item"
+        v-bind:key="item.id"
+        @toggleSelect="toggleSelect"
+      />
     </div>
 
     <!-- Table Footer -------------------------->

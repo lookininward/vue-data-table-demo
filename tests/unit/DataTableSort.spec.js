@@ -1,8 +1,8 @@
-import { mount } from '@vue/test-utils'
+import { mount, shallowMount } from '@vue/test-utils'
 import DataTable from '@/components/DataTable.vue'
 import TableRowDropdown from '@/components/DataTable/TableRow/TableRowDropdown.vue'
 
-describe('DataTable.vue Integration', () => {
+describe('DataTable.vue sort', () => {
   let items = [
     {
       "id": "3471DA17-401F-9633-BF81-4CADA6FD5C79",
@@ -33,7 +33,7 @@ describe('DataTable.vue Integration', () => {
 
   const wrapperDataTable = mount(DataTable, {
     propsData: { items },
-    stubs: { TableRowDropdown: true }
+    stubs: { TableRowDropdown: false }
   })
 
   let rows = wrapperDataTable.findAll('[data-test-component="TableRow"]')
@@ -43,232 +43,64 @@ describe('DataTable.vue Integration', () => {
 
   let headers = wrapperDataTable.findAll('[data-test-HeaderCell]')
 
-  it('can sort table by Amount', () => {
-    let amountColumn = headers.at(4)
+  it('can sort table by amount', () => {
+    wrapperDataTable.vm.sortTableBy('amount', 'number')
+    expect(wrapperDataTable.vm.sortedItems[0]).toBe(item3)
+    expect(wrapperDataTable.vm.sortedItems[1]).toBe(item1)
+    expect(wrapperDataTable.vm.sortedItems[2]).toBe(item2)
 
-    // initial
-    amountColumn.trigger('click')
-
-    expect(row1Cells.at(0).text()).toBe(item3['id'])
-    expect(row1Cells.at(1).text()).toBe(item3['name'])
-    expect(row1Cells.at(2).text()).toBe(item3['description'])
-    expect(row1Cells.at(3).text()).toBe(item3['date'])
-    expect(row1Cells.at(4).text()).toBe((item3['amount']).toString())
-
-    expect(row2Cells.at(0).text()).toBe(item1['id'])
-    expect(row2Cells.at(1).text()).toBe(item1['name'])
-    expect(row2Cells.at(2).text()).toBe(item1['description'])
-    expect(row2Cells.at(3).text()).toBe(item1['date'])
-    expect(row2Cells.at(4).text()).toBe((item1['amount']).toString())
-
-    expect(row3Cells.at(0).text()).toBe(item2['id'])
-    expect(row3Cells.at(1).text()).toBe(item2['name'])
-    expect(row3Cells.at(2).text()).toBe(item2['description'])
-    expect(row3Cells.at(3).text()).toBe(item2['date'])
-    expect(row3Cells.at(4).text()).toBe((item2['amount']).toString())
-
-    // reverse
-    amountColumn.trigger('click')
-    expect(row1Cells.at(0).text()).toBe(item2['id'])
-    expect(row1Cells.at(1).text()).toBe(item2['name'])
-    expect(row1Cells.at(2).text()).toBe(item2['description'])
-    expect(row1Cells.at(3).text()).toBe(item2['date'])
-    expect(row1Cells.at(4).text()).toBe((item2['amount']).toString())
-
-    expect(row2Cells.at(0).text()).toBe(item1['id'])
-    expect(row2Cells.at(1).text()).toBe(item1['name'])
-    expect(row2Cells.at(2).text()).toBe(item1['description'])
-    expect(row2Cells.at(3).text()).toBe(item1['date'])
-    expect(row2Cells.at(4).text()).toBe((item1['amount']).toString())
-
-    expect(row3Cells.at(0).text()).toBe(item3['id'])
-    expect(row3Cells.at(1).text()).toBe(item3['name'])
-    expect(row3Cells.at(2).text()).toBe(item3['description'])
-    expect(row3Cells.at(3).text()).toBe(item3['date'])
-    expect(row3Cells.at(4).text()).toBe((item3['amount']).toString())
+    wrapperDataTable.vm.sortTableBy('amount', 'number')
+    expect(wrapperDataTable.vm.sortedItems[0]).toBe(item2)
+    expect(wrapperDataTable.vm.sortedItems[1]).toBe(item1)
+    expect(wrapperDataTable.vm.sortedItems[2]).toBe(item3)
   })
 
   it('can sort table by id', () => {
-    let idColumn = headers.at(0)
+    wrapperDataTable.vm.sortTableBy('id', 'string')
+    expect(wrapperDataTable.vm.sortedItems[0]).toBe(item1)
+    expect(wrapperDataTable.vm.sortedItems[1]).toBe(item2)
+    expect(wrapperDataTable.vm.sortedItems[2]).toBe(item3)
 
-    // initial
-    idColumn.trigger('click')
-
-    expect(row1Cells.at(0).text()).toBe(item1['id'])
-    expect(row1Cells.at(1).text()).toBe(item1['name'])
-    expect(row1Cells.at(2).text()).toBe(item1['description'])
-    expect(row1Cells.at(3).text()).toBe(item1['date'])
-    expect(row1Cells.at(4).text()).toBe((item1['amount']).toString())
-
-    expect(row2Cells.at(0).text()).toBe(item2['id'])
-    expect(row2Cells.at(1).text()).toBe(item2['name'])
-    expect(row2Cells.at(2).text()).toBe(item2['description'])
-    expect(row2Cells.at(3).text()).toBe(item2['date'])
-    expect(row2Cells.at(4).text()).toBe((item2['amount']).toString())
-
-    expect(row3Cells.at(0).text()).toBe(item3['id'])
-    expect(row3Cells.at(1).text()).toBe(item3['name'])
-    expect(row3Cells.at(2).text()).toBe(item3['description'])
-    expect(row3Cells.at(3).text()).toBe(item3['date'])
-    expect(row3Cells.at(4).text()).toBe((item3['amount']).toString())
-
-    // reverse
-    idColumn.trigger('click')
-
-    expect(row1Cells.at(0).text()).toBe(item3['id'])
-    expect(row1Cells.at(1).text()).toBe(item3['name'])
-    expect(row1Cells.at(2).text()).toBe(item3['description'])
-    expect(row1Cells.at(3).text()).toBe(item3['date'])
-    expect(row1Cells.at(4).text()).toBe((item3['amount']).toString())
-
-    expect(row2Cells.at(0).text()).toBe(item2['id'])
-    expect(row2Cells.at(1).text()).toBe(item2['name'])
-    expect(row2Cells.at(2).text()).toBe(item2['description'])
-    expect(row2Cells.at(3).text()).toBe(item2['date'])
-    expect(row2Cells.at(4).text()).toBe((item2['amount']).toString())
-
-    expect(row3Cells.at(0).text()).toBe(item1['id'])
-    expect(row3Cells.at(1).text()).toBe(item1['name'])
-    expect(row3Cells.at(2).text()).toBe(item1['description'])
-    expect(row3Cells.at(3).text()).toBe(item1['date'])
-    expect(row3Cells.at(4).text()).toBe((item1['amount']).toString())
+    wrapperDataTable.vm.sortTableBy('id', 'string')
+    expect(wrapperDataTable.vm.sortedItems[0]).toBe(item3)
+    expect(wrapperDataTable.vm.sortedItems[1]).toBe(item2)
+    expect(wrapperDataTable.vm.sortedItems[2]).toBe(item1)
   })
 
-  it('can sort table by Name', () => {
-    let nameColumn = headers.at(1)
+  it('can sort table by name', () => {
+    wrapperDataTable.vm.sortTableBy('name', 'string')
+    expect(wrapperDataTable.vm.sortedItems[0]).toBe(item3)
+    expect(wrapperDataTable.vm.sortedItems[1]).toBe(item2)
+    expect(wrapperDataTable.vm.sortedItems[2]).toBe(item1)
 
-    // initial
-    nameColumn.trigger('click')
+    wrapperDataTable.vm.sortTableBy('name', 'string')
+    expect(wrapperDataTable.vm.sortedItems[0]).toBe(item1)
+    expect(wrapperDataTable.vm.sortedItems[1]).toBe(item2)
+    expect(wrapperDataTable.vm.sortedItems[2]).toBe(item3)
 
-    expect(row1Cells.at(0).text()).toBe(item3['id'])
-    expect(row1Cells.at(1).text()).toBe(item3['name'])
-    expect(row1Cells.at(2).text()).toBe(item3['description'])
-    expect(row1Cells.at(3).text()).toBe(item3['date'])
-    expect(row1Cells.at(4).text()).toBe((item3['amount']).toString())
-
-    expect(row2Cells.at(0).text()).toBe(item2['id'])
-    expect(row2Cells.at(1).text()).toBe(item2['name'])
-    expect(row2Cells.at(2).text()).toBe(item2['description'])
-    expect(row2Cells.at(3).text()).toBe(item2['date'])
-    expect(row2Cells.at(4).text()).toBe((item2['amount']).toString())
-
-    expect(row3Cells.at(0).text()).toBe(item1['id'])
-    expect(row3Cells.at(1).text()).toBe(item1['name'])
-    expect(row3Cells.at(2).text()).toBe(item1['description'])
-    expect(row3Cells.at(3).text()).toBe(item1['date'])
-    expect(row3Cells.at(4).text()).toBe((item1['amount']).toString())
-
-    // reverse
-    nameColumn.trigger('click')
-
-    expect(row1Cells.at(0).text()).toBe(item1['id'])
-    expect(row1Cells.at(1).text()).toBe(item1['name'])
-    expect(row1Cells.at(2).text()).toBe(item1['description'])
-    expect(row1Cells.at(3).text()).toBe(item1['date'])
-    expect(row1Cells.at(4).text()).toBe((item1['amount']).toString())
-
-    expect(row2Cells.at(0).text()).toBe(item2['id'])
-    expect(row2Cells.at(1).text()).toBe(item2['name'])
-    expect(row2Cells.at(2).text()).toBe(item2['description'])
-    expect(row2Cells.at(3).text()).toBe(item2['date'])
-    expect(row2Cells.at(4).text()).toBe((item2['amount']).toString())
-
-    expect(row3Cells.at(0).text()).toBe(item3['id'])
-    expect(row3Cells.at(1).text()).toBe(item3['name'])
-    expect(row3Cells.at(2).text()).toBe(item3['description'])
-    expect(row3Cells.at(3).text()).toBe(item3['date'])
-    expect(row3Cells.at(4).text()).toBe((item3['amount']).toString())
   })
 
-  it('can sort table by Description', () => {
-    let descriptionColumn = headers.at(2)
+  it('can sort table by description', () => {
+    wrapperDataTable.vm.sortTableBy('description', 'string')
+    expect(wrapperDataTable.vm.sortedItems[0]).toBe(item1)
+    expect(wrapperDataTable.vm.sortedItems[1]).toBe(item2)
+    expect(wrapperDataTable.vm.sortedItems[2]).toBe(item3)
 
-    // initial
-    descriptionColumn.trigger('click')
-
-    expect(row1Cells.at(0).text()).toBe(item1['id'])
-    expect(row1Cells.at(1).text()).toBe(item1['name'])
-    expect(row1Cells.at(2).text()).toBe(item1['description'])
-    expect(row1Cells.at(3).text()).toBe(item1['date'])
-    expect(row1Cells.at(4).text()).toBe((item1['amount']).toString())
-
-    expect(row2Cells.at(0).text()).toBe(item2['id'])
-    expect(row2Cells.at(1).text()).toBe(item2['name'])
-    expect(row2Cells.at(2).text()).toBe(item2['description'])
-    expect(row2Cells.at(3).text()).toBe(item2['date'])
-    expect(row2Cells.at(4).text()).toBe((item2['amount']).toString())
-
-    expect(row3Cells.at(0).text()).toBe(item3['id'])
-    expect(row3Cells.at(1).text()).toBe(item3['name'])
-    expect(row3Cells.at(2).text()).toBe(item3['description'])
-    expect(row3Cells.at(3).text()).toBe(item3['date'])
-    expect(row3Cells.at(4).text()).toBe((item3['amount']).toString())
-
-    // reverse
-    descriptionColumn.trigger('click')
-
-    expect(row1Cells.at(0).text()).toBe(item3['id'])
-    expect(row1Cells.at(1).text()).toBe(item3['name'])
-    expect(row1Cells.at(2).text()).toBe(item3['description'])
-    expect(row1Cells.at(3).text()).toBe(item3['date'])
-    expect(row1Cells.at(4).text()).toBe((item3['amount']).toString())
-
-    expect(row2Cells.at(0).text()).toBe(item2['id'])
-    expect(row2Cells.at(1).text()).toBe(item2['name'])
-    expect(row2Cells.at(2).text()).toBe(item2['description'])
-    expect(row2Cells.at(3).text()).toBe(item2['date'])
-    expect(row2Cells.at(4).text()).toBe((item2['amount']).toString())
-
-    expect(row3Cells.at(0).text()).toBe(item1['id'])
-    expect(row3Cells.at(1).text()).toBe(item1['name'])
-    expect(row3Cells.at(2).text()).toBe(item1['description'])
-    expect(row3Cells.at(3).text()).toBe(item1['date'])
-    expect(row3Cells.at(4).text()).toBe((item1['amount']).toString())
+    wrapperDataTable.vm.sortTableBy('description', 'string')
+    expect(wrapperDataTable.vm.sortedItems[0]).toBe(item3)
+    expect(wrapperDataTable.vm.sortedItems[1]).toBe(item2)
+    expect(wrapperDataTable.vm.sortedItems[2]).toBe(item1)
   })
 
-  it('can sort table by Date', () => {
-    let dateColumn = headers.at(3)
+  it('can sort table by date', () => {
+    wrapperDataTable.vm.sortTableBy('date', 'string')
+    expect(wrapperDataTable.vm.sortedItems[0]).toBe(item1)
+    expect(wrapperDataTable.vm.sortedItems[1]).toBe(item2)
+    expect(wrapperDataTable.vm.sortedItems[2]).toBe(item3)
 
-    // initial
-    dateColumn.trigger('click')
-
-    expect(row1Cells.at(0).text()).toBe(item1['id'])
-    expect(row1Cells.at(1).text()).toBe(item1['name'])
-    expect(row1Cells.at(2).text()).toBe(item1['description'])
-    expect(row1Cells.at(3).text()).toBe(item1['date'])
-    expect(row1Cells.at(4).text()).toBe((item1['amount']).toString())
-
-    expect(row2Cells.at(0).text()).toBe(item2['id'])
-    expect(row2Cells.at(1).text()).toBe(item2['name'])
-    expect(row2Cells.at(2).text()).toBe(item2['description'])
-    expect(row2Cells.at(3).text()).toBe(item2['date'])
-    expect(row2Cells.at(4).text()).toBe((item2['amount']).toString())
-
-    expect(row3Cells.at(0).text()).toBe(item3['id'])
-    expect(row3Cells.at(1).text()).toBe(item3['name'])
-    expect(row3Cells.at(2).text()).toBe(item3['description'])
-    expect(row3Cells.at(3).text()).toBe(item3['date'])
-    expect(row3Cells.at(4).text()).toBe((item3['amount']).toString())
-
-    // reverse
-    dateColumn.trigger('click')
-
-    expect(row1Cells.at(0).text()).toBe(item3['id'])
-    expect(row1Cells.at(1).text()).toBe(item3['name'])
-    expect(row1Cells.at(2).text()).toBe(item3['description'])
-    expect(row1Cells.at(3).text()).toBe(item3['date'])
-    expect(row1Cells.at(4).text()).toBe((item3['amount']).toString())
-
-    expect(row2Cells.at(0).text()).toBe(item2['id'])
-    expect(row2Cells.at(1).text()).toBe(item2['name'])
-    expect(row2Cells.at(2).text()).toBe(item2['description'])
-    expect(row2Cells.at(3).text()).toBe(item2['date'])
-    expect(row2Cells.at(4).text()).toBe((item2['amount']).toString())
-
-    expect(row3Cells.at(0).text()).toBe(item1['id'])
-    expect(row3Cells.at(1).text()).toBe(item1['name'])
-    expect(row3Cells.at(2).text()).toBe(item1['description'])
-    expect(row3Cells.at(3).text()).toBe(item1['date'])
-    expect(row3Cells.at(4).text()).toBe((item1['amount']).toString())
+    wrapperDataTable.vm.sortTableBy('date', 'string')
+    expect(wrapperDataTable.vm.sortedItems[0]).toBe(item3)
+    expect(wrapperDataTable.vm.sortedItems[1]).toBe(item2)
+    expect(wrapperDataTable.vm.sortedItems[2]).toBe(item1)
   })
 })
