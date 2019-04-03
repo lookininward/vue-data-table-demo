@@ -11,7 +11,7 @@
       <input
         data-test-checkbox
         type="checkbox"
-        @click="toggle(item.ID)"
+        @click="toggle(item.id)"
       >
     </div>
 

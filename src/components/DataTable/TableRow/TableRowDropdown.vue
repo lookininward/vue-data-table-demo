@@ -5,13 +5,13 @@
     class="table-cell table-cell--dropdownTrigger"
   >
     <div
-      v-bind:id="`item-${item.ID}`"
+      v-bind:id="`item-${item.id}`"
       class="row-dropdown"
       style="display: none;"
       v-tippy-html
     >
       <div class="row-dropdown-header">
-        {{ item.Name }}
+        {{ item.name }}
       </div>
       <div class="row-dropdown-option">
         Edit
@@ -29,7 +29,7 @@
         interactive : true,
         trigger : 'click',
         placement: 'right',
-        html: `#item-${item.ID}`,
+        html: `#item-${item.id}`,
         theme : 'row-dropdown'
       }"
     >

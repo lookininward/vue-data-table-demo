@@ -5,25 +5,25 @@ import TableRowDropdown from '@/components/DataTable/TableRow/TableRowDropdown.v
 describe('DataTable.vue Integration', () => {
   let items = [
     {
-      "ID": "3471DA17-401F-9633-BF81-4CADA6FD5C79",
-      "Name": "Kyra Lester",
-      "Description": "Curabitur dictum. Phasellus in",
-      "Date": "2017-07-23T04:24:49-07:00",
-      "Amount": 345.54
+      "id": "3471DA17-401F-9633-BF81-4CADA6FD5C79",
+      "name": "Kyra Lester",
+      "description": "Curabitur dictum. Phasellus in",
+      "date": "2017-07-23T04:24:49-07:00",
+      "amount": 345.54
     },
     {
-      "ID": "9F5C9912-936A-FB85-1EDB-9DA87BE7FF1E",
-      "Name": "Buckminster Alvarado",
-      "Description": "dui, in sodales elit erat vitae risus. Duis a mi",
-      "Date": "2018-11-08T05:44:15-08:00",
-      "Amount": 677.08
+      "id": "9F5C9912-936A-FB85-1EDB-9DA87BE7FF1E",
+      "name": "Buckminster Alvarado",
+      "description": "dui, in sodales elit erat vitae risus. Duis a mi",
+      "date": "2018-11-08T05:44:15-08:00",
+      "amount": 677.08
     },
     {
-      "ID": "B743AC82-3613-13A2-2E42-E0C1F5CBF8A6",
-      "Name": "Athena Smith",
-      "Description": "massa lobortis ultrices. Vivamus rhoncus.",
-      "Date": "2018-11-11T06:19:57-08:00",
-      "Amount": 73.67
+      "id": "B743AC82-3613-13A2-2E42-E0C1F5CBF8A6",
+      "name": "Athena Smith",
+      "description": "massa lobortis ultrices. Vivamus rhoncus.",
+      "date": "2018-11-11T06:19:57-08:00",
+      "amount": 73.67
     }
   ]
 
@@ -49,89 +49,89 @@ describe('DataTable.vue Integration', () => {
     // initial
     amountColumn.trigger('click')
 
-    expect(row1Cells.at(0).text()).toBe(item3['ID'])
-    expect(row1Cells.at(1).text()).toBe(item3['Name'])
-    expect(row1Cells.at(2).text()).toBe(item3['Description'])
-    expect(row1Cells.at(3).text()).toBe(item3['Date'])
-    expect(row1Cells.at(4).text()).toBe((item3['Amount']).toString())
+    expect(row1Cells.at(0).text()).toBe(item3['id'])
+    expect(row1Cells.at(1).text()).toBe(item3['name'])
+    expect(row1Cells.at(2).text()).toBe(item3['description'])
+    expect(row1Cells.at(3).text()).toBe(item3['date'])
+    expect(row1Cells.at(4).text()).toBe((item3['amount']).toString())
 
-    expect(row2Cells.at(0).text()).toBe(item1['ID'])
-    expect(row2Cells.at(1).text()).toBe(item1['Name'])
-    expect(row2Cells.at(2).text()).toBe(item1['Description'])
-    expect(row2Cells.at(3).text()).toBe(item1['Date'])
-    expect(row2Cells.at(4).text()).toBe((item1['Amount']).toString())
+    expect(row2Cells.at(0).text()).toBe(item1['id'])
+    expect(row2Cells.at(1).text()).toBe(item1['name'])
+    expect(row2Cells.at(2).text()).toBe(item1['description'])
+    expect(row2Cells.at(3).text()).toBe(item1['date'])
+    expect(row2Cells.at(4).text()).toBe((item1['amount']).toString())
 
-    expect(row3Cells.at(0).text()).toBe(item2['ID'])
-    expect(row3Cells.at(1).text()).toBe(item2['Name'])
-    expect(row3Cells.at(2).text()).toBe(item2['Description'])
-    expect(row3Cells.at(3).text()).toBe(item2['Date'])
-    expect(row3Cells.at(4).text()).toBe((item2['Amount']).toString())
+    expect(row3Cells.at(0).text()).toBe(item2['id'])
+    expect(row3Cells.at(1).text()).toBe(item2['name'])
+    expect(row3Cells.at(2).text()).toBe(item2['description'])
+    expect(row3Cells.at(3).text()).toBe(item2['date'])
+    expect(row3Cells.at(4).text()).toBe((item2['amount']).toString())
 
     // reverse
     amountColumn.trigger('click')
-    expect(row1Cells.at(0).text()).toBe(item2['ID'])
-    expect(row1Cells.at(1).text()).toBe(item2['Name'])
-    expect(row1Cells.at(2).text()).toBe(item2['Description'])
-    expect(row1Cells.at(3).text()).toBe(item2['Date'])
-    expect(row1Cells.at(4).text()).toBe((item2['Amount']).toString())
+    expect(row1Cells.at(0).text()).toBe(item2['id'])
+    expect(row1Cells.at(1).text()).toBe(item2['name'])
+    expect(row1Cells.at(2).text()).toBe(item2['description'])
+    expect(row1Cells.at(3).text()).toBe(item2['date'])
+    expect(row1Cells.at(4).text()).toBe((item2['amount']).toString())
 
-    expect(row2Cells.at(0).text()).toBe(item1['ID'])
-    expect(row2Cells.at(1).text()).toBe(item1['Name'])
-    expect(row2Cells.at(2).text()).toBe(item1['Description'])
-    expect(row2Cells.at(3).text()).toBe(item1['Date'])
-    expect(row2Cells.at(4).text()).toBe((item1['Amount']).toString())
+    expect(row2Cells.at(0).text()).toBe(item1['id'])
+    expect(row2Cells.at(1).text()).toBe(item1['name'])
+    expect(row2Cells.at(2).text()).toBe(item1['description'])
+    expect(row2Cells.at(3).text()).toBe(item1['date'])
+    expect(row2Cells.at(4).text()).toBe((item1['amount']).toString())
 
-    expect(row3Cells.at(0).text()).toBe(item3['ID'])
-    expect(row3Cells.at(1).text()).toBe(item3['Name'])
-    expect(row3Cells.at(2).text()).toBe(item3['Description'])
-    expect(row3Cells.at(3).text()).toBe(item3['Date'])
-    expect(row3Cells.at(4).text()).toBe((item3['Amount']).toString())
+    expect(row3Cells.at(0).text()).toBe(item3['id'])
+    expect(row3Cells.at(1).text()).toBe(item3['name'])
+    expect(row3Cells.at(2).text()).toBe(item3['description'])
+    expect(row3Cells.at(3).text()).toBe(item3['date'])
+    expect(row3Cells.at(4).text()).toBe((item3['amount']).toString())
   })
 
-  it('can sort table by ID', () => {
+  it('can sort table by id', () => {
     let idColumn = headers.at(0)
 
     // initial
     idColumn.trigger('click')
 
-    expect(row1Cells.at(0).text()).toBe(item1['ID'])
-    expect(row1Cells.at(1).text()).toBe(item1['Name'])
-    expect(row1Cells.at(2).text()).toBe(item1['Description'])
-    expect(row1Cells.at(3).text()).toBe(item1['Date'])
-    expect(row1Cells.at(4).text()).toBe((item1['Amount']).toString())
+    expect(row1Cells.at(0).text()).toBe(item1['id'])
+    expect(row1Cells.at(1).text()).toBe(item1['name'])
+    expect(row1Cells.at(2).text()).toBe(item1['description'])
+    expect(row1Cells.at(3).text()).toBe(item1['date'])
+    expect(row1Cells.at(4).text()).toBe((item1['amount']).toString())
 
-    expect(row2Cells.at(0).text()).toBe(item2['ID'])
-    expect(row2Cells.at(1).text()).toBe(item2['Name'])
-    expect(row2Cells.at(2).text()).toBe(item2['Description'])
-    expect(row2Cells.at(3).text()).toBe(item2['Date'])
-    expect(row2Cells.at(4).text()).toBe((item2['Amount']).toString())
+    expect(row2Cells.at(0).text()).toBe(item2['id'])
+    expect(row2Cells.at(1).text()).toBe(item2['name'])
+    expect(row2Cells.at(2).text()).toBe(item2['description'])
+    expect(row2Cells.at(3).text()).toBe(item2['date'])
+    expect(row2Cells.at(4).text()).toBe((item2['amount']).toString())
 
-    expect(row3Cells.at(0).text()).toBe(item3['ID'])
-    expect(row3Cells.at(1).text()).toBe(item3['Name'])
-    expect(row3Cells.at(2).text()).toBe(item3['Description'])
-    expect(row3Cells.at(3).text()).toBe(item3['Date'])
-    expect(row3Cells.at(4).text()).toBe((item3['Amount']).toString())
+    expect(row3Cells.at(0).text()).toBe(item3['id'])
+    expect(row3Cells.at(1).text()).toBe(item3['name'])
+    expect(row3Cells.at(2).text()).toBe(item3['description'])
+    expect(row3Cells.at(3).text()).toBe(item3['date'])
+    expect(row3Cells.at(4).text()).toBe((item3['amount']).toString())
 
     // reverse
     idColumn.trigger('click')
 
-    expect(row1Cells.at(0).text()).toBe(item3['ID'])
-    expect(row1Cells.at(1).text()).toBe(item3['Name'])
-    expect(row1Cells.at(2).text()).toBe(item3['Description'])
-    expect(row1Cells.at(3).text()).toBe(item3['Date'])
-    expect(row1Cells.at(4).text()).toBe((item3['Amount']).toString())
+    expect(row1Cells.at(0).text()).toBe(item3['id'])
+    expect(row1Cells.at(1).text()).toBe(item3['name'])
+    expect(row1Cells.at(2).text()).toBe(item3['description'])
+    expect(row1Cells.at(3).text()).toBe(item3['date'])
+    expect(row1Cells.at(4).text()).toBe((item3['amount']).toString())
 
-    expect(row2Cells.at(0).text()).toBe(item2['ID'])
-    expect(row2Cells.at(1).text()).toBe(item2['Name'])
-    expect(row2Cells.at(2).text()).toBe(item2['Description'])
-    expect(row2Cells.at(3).text()).toBe(item2['Date'])
-    expect(row2Cells.at(4).text()).toBe((item2['Amount']).toString())
+    expect(row2Cells.at(0).text()).toBe(item2['id'])
+    expect(row2Cells.at(1).text()).toBe(item2['name'])
+    expect(row2Cells.at(2).text()).toBe(item2['description'])
+    expect(row2Cells.at(3).text()).toBe(item2['date'])
+    expect(row2Cells.at(4).text()).toBe((item2['amount']).toString())
 
-    expect(row3Cells.at(0).text()).toBe(item1['ID'])
-    expect(row3Cells.at(1).text()).toBe(item1['Name'])
-    expect(row3Cells.at(2).text()).toBe(item1['Description'])
-    expect(row3Cells.at(3).text()).toBe(item1['Date'])
-    expect(row3Cells.at(4).text()).toBe((item1['Amount']).toString())
+    expect(row3Cells.at(0).text()).toBe(item1['id'])
+    expect(row3Cells.at(1).text()).toBe(item1['name'])
+    expect(row3Cells.at(2).text()).toBe(item1['description'])
+    expect(row3Cells.at(3).text()).toBe(item1['date'])
+    expect(row3Cells.at(4).text()).toBe((item1['amount']).toString())
   })
 
   it('can sort table by Name', () => {
@@ -140,44 +140,44 @@ describe('DataTable.vue Integration', () => {
     // initial
     nameColumn.trigger('click')
 
-    expect(row1Cells.at(0).text()).toBe(item3['ID'])
-    expect(row1Cells.at(1).text()).toBe(item3['Name'])
-    expect(row1Cells.at(2).text()).toBe(item3['Description'])
-    expect(row1Cells.at(3).text()).toBe(item3['Date'])
-    expect(row1Cells.at(4).text()).toBe((item3['Amount']).toString())
+    expect(row1Cells.at(0).text()).toBe(item3['id'])
+    expect(row1Cells.at(1).text()).toBe(item3['name'])
+    expect(row1Cells.at(2).text()).toBe(item3['description'])
+    expect(row1Cells.at(3).text()).toBe(item3['date'])
+    expect(row1Cells.at(4).text()).toBe((item3['amount']).toString())
 
-    expect(row2Cells.at(0).text()).toBe(item2['ID'])
-    expect(row2Cells.at(1).text()).toBe(item2['Name'])
-    expect(row2Cells.at(2).text()).toBe(item2['Description'])
-    expect(row2Cells.at(3).text()).toBe(item2['Date'])
-    expect(row2Cells.at(4).text()).toBe((item2['Amount']).toString())
+    expect(row2Cells.at(0).text()).toBe(item2['id'])
+    expect(row2Cells.at(1).text()).toBe(item2['name'])
+    expect(row2Cells.at(2).text()).toBe(item2['description'])
+    expect(row2Cells.at(3).text()).toBe(item2['date'])
+    expect(row2Cells.at(4).text()).toBe((item2['amount']).toString())
 
-    expect(row3Cells.at(0).text()).toBe(item1['ID'])
-    expect(row3Cells.at(1).text()).toBe(item1['Name'])
-    expect(row3Cells.at(2).text()).toBe(item1['Description'])
-    expect(row3Cells.at(3).text()).toBe(item1['Date'])
-    expect(row3Cells.at(4).text()).toBe((item1['Amount']).toString())
+    expect(row3Cells.at(0).text()).toBe(item1['id'])
+    expect(row3Cells.at(1).text()).toBe(item1['name'])
+    expect(row3Cells.at(2).text()).toBe(item1['description'])
+    expect(row3Cells.at(3).text()).toBe(item1['date'])
+    expect(row3Cells.at(4).text()).toBe((item1['amount']).toString())
 
     // reverse
     nameColumn.trigger('click')
 
-    expect(row1Cells.at(0).text()).toBe(item1['ID'])
-    expect(row1Cells.at(1).text()).toBe(item1['Name'])
-    expect(row1Cells.at(2).text()).toBe(item1['Description'])
-    expect(row1Cells.at(3).text()).toBe(item1['Date'])
-    expect(row1Cells.at(4).text()).toBe((item1['Amount']).toString())
+    expect(row1Cells.at(0).text()).toBe(item1['id'])
+    expect(row1Cells.at(1).text()).toBe(item1['name'])
+    expect(row1Cells.at(2).text()).toBe(item1['description'])
+    expect(row1Cells.at(3).text()).toBe(item1['date'])
+    expect(row1Cells.at(4).text()).toBe((item1['amount']).toString())
 
-    expect(row2Cells.at(0).text()).toBe(item2['ID'])
-    expect(row2Cells.at(1).text()).toBe(item2['Name'])
-    expect(row2Cells.at(2).text()).toBe(item2['Description'])
-    expect(row2Cells.at(3).text()).toBe(item2['Date'])
-    expect(row2Cells.at(4).text()).toBe((item2['Amount']).toString())
+    expect(row2Cells.at(0).text()).toBe(item2['id'])
+    expect(row2Cells.at(1).text()).toBe(item2['name'])
+    expect(row2Cells.at(2).text()).toBe(item2['description'])
+    expect(row2Cells.at(3).text()).toBe(item2['date'])
+    expect(row2Cells.at(4).text()).toBe((item2['amount']).toString())
 
-    expect(row3Cells.at(0).text()).toBe(item3['ID'])
-    expect(row3Cells.at(1).text()).toBe(item3['Name'])
-    expect(row3Cells.at(2).text()).toBe(item3['Description'])
-    expect(row3Cells.at(3).text()).toBe(item3['Date'])
-    expect(row3Cells.at(4).text()).toBe((item3['Amount']).toString())
+    expect(row3Cells.at(0).text()).toBe(item3['id'])
+    expect(row3Cells.at(1).text()).toBe(item3['name'])
+    expect(row3Cells.at(2).text()).toBe(item3['description'])
+    expect(row3Cells.at(3).text()).toBe(item3['date'])
+    expect(row3Cells.at(4).text()).toBe((item3['amount']).toString())
   })
 
   it('can sort table by Description', () => {
@@ -186,44 +186,44 @@ describe('DataTable.vue Integration', () => {
     // initial
     descriptionColumn.trigger('click')
 
-    expect(row1Cells.at(0).text()).toBe(item1['ID'])
-    expect(row1Cells.at(1).text()).toBe(item1['Name'])
-    expect(row1Cells.at(2).text()).toBe(item1['Description'])
-    expect(row1Cells.at(3).text()).toBe(item1['Date'])
-    expect(row1Cells.at(4).text()).toBe((item1['Amount']).toString())
+    expect(row1Cells.at(0).text()).toBe(item1['id'])
+    expect(row1Cells.at(1).text()).toBe(item1['name'])
+    expect(row1Cells.at(2).text()).toBe(item1['description'])
+    expect(row1Cells.at(3).text()).toBe(item1['date'])
+    expect(row1Cells.at(4).text()).toBe((item1['amount']).toString())
 
-    expect(row2Cells.at(0).text()).toBe(item2['ID'])
-    expect(row2Cells.at(1).text()).toBe(item2['Name'])
-    expect(row2Cells.at(2).text()).toBe(item2['Description'])
-    expect(row2Cells.at(3).text()).toBe(item2['Date'])
-    expect(row2Cells.at(4).text()).toBe((item2['Amount']).toString())
+    expect(row2Cells.at(0).text()).toBe(item2['id'])
+    expect(row2Cells.at(1).text()).toBe(item2['name'])
+    expect(row2Cells.at(2).text()).toBe(item2['description'])
+    expect(row2Cells.at(3).text()).toBe(item2['date'])
+    expect(row2Cells.at(4).text()).toBe((item2['amount']).toString())
 
-    expect(row3Cells.at(0).text()).toBe(item3['ID'])
-    expect(row3Cells.at(1).text()).toBe(item3['Name'])
-    expect(row3Cells.at(2).text()).toBe(item3['Description'])
-    expect(row3Cells.at(3).text()).toBe(item3['Date'])
-    expect(row3Cells.at(4).text()).toBe((item3['Amount']).toString())
+    expect(row3Cells.at(0).text()).toBe(item3['id'])
+    expect(row3Cells.at(1).text()).toBe(item3['name'])
+    expect(row3Cells.at(2).text()).toBe(item3['description'])
+    expect(row3Cells.at(3).text()).toBe(item3['date'])
+    expect(row3Cells.at(4).text()).toBe((item3['amount']).toString())
 
     // reverse
     descriptionColumn.trigger('click')
 
-    expect(row1Cells.at(0).text()).toBe(item3['ID'])
-    expect(row1Cells.at(1).text()).toBe(item3['Name'])
-    expect(row1Cells.at(2).text()).toBe(item3['Description'])
-    expect(row1Cells.at(3).text()).toBe(item3['Date'])
-    expect(row1Cells.at(4).text()).toBe((item3['Amount']).toString())
+    expect(row1Cells.at(0).text()).toBe(item3['id'])
+    expect(row1Cells.at(1).text()).toBe(item3['name'])
+    expect(row1Cells.at(2).text()).toBe(item3['description'])
+    expect(row1Cells.at(3).text()).toBe(item3['date'])
+    expect(row1Cells.at(4).text()).toBe((item3['amount']).toString())
 
-    expect(row2Cells.at(0).text()).toBe(item2['ID'])
-    expect(row2Cells.at(1).text()).toBe(item2['Name'])
-    expect(row2Cells.at(2).text()).toBe(item2['Description'])
-    expect(row2Cells.at(3).text()).toBe(item2['Date'])
-    expect(row2Cells.at(4).text()).toBe((item2['Amount']).toString())
+    expect(row2Cells.at(0).text()).toBe(item2['id'])
+    expect(row2Cells.at(1).text()).toBe(item2['name'])
+    expect(row2Cells.at(2).text()).toBe(item2['description'])
+    expect(row2Cells.at(3).text()).toBe(item2['date'])
+    expect(row2Cells.at(4).text()).toBe((item2['amount']).toString())
 
-    expect(row3Cells.at(0).text()).toBe(item1['ID'])
-    expect(row3Cells.at(1).text()).toBe(item1['Name'])
-    expect(row3Cells.at(2).text()).toBe(item1['Description'])
-    expect(row3Cells.at(3).text()).toBe(item1['Date'])
-    expect(row3Cells.at(4).text()).toBe((item1['Amount']).toString())
+    expect(row3Cells.at(0).text()).toBe(item1['id'])
+    expect(row3Cells.at(1).text()).toBe(item1['name'])
+    expect(row3Cells.at(2).text()).toBe(item1['description'])
+    expect(row3Cells.at(3).text()).toBe(item1['date'])
+    expect(row3Cells.at(4).text()).toBe((item1['amount']).toString())
   })
 
   it('can sort table by Date', () => {
@@ -232,43 +232,43 @@ describe('DataTable.vue Integration', () => {
     // initial
     dateColumn.trigger('click')
 
-    expect(row1Cells.at(0).text()).toBe(item1['ID'])
-    expect(row1Cells.at(1).text()).toBe(item1['Name'])
-    expect(row1Cells.at(2).text()).toBe(item1['Description'])
-    expect(row1Cells.at(3).text()).toBe(item1['Date'])
-    expect(row1Cells.at(4).text()).toBe((item1['Amount']).toString())
+    expect(row1Cells.at(0).text()).toBe(item1['id'])
+    expect(row1Cells.at(1).text()).toBe(item1['name'])
+    expect(row1Cells.at(2).text()).toBe(item1['description'])
+    expect(row1Cells.at(3).text()).toBe(item1['date'])
+    expect(row1Cells.at(4).text()).toBe((item1['amount']).toString())
 
-    expect(row2Cells.at(0).text()).toBe(item2['ID'])
-    expect(row2Cells.at(1).text()).toBe(item2['Name'])
-    expect(row2Cells.at(2).text()).toBe(item2['Description'])
-    expect(row2Cells.at(3).text()).toBe(item2['Date'])
-    expect(row2Cells.at(4).text()).toBe((item2['Amount']).toString())
+    expect(row2Cells.at(0).text()).toBe(item2['id'])
+    expect(row2Cells.at(1).text()).toBe(item2['name'])
+    expect(row2Cells.at(2).text()).toBe(item2['description'])
+    expect(row2Cells.at(3).text()).toBe(item2['date'])
+    expect(row2Cells.at(4).text()).toBe((item2['amount']).toString())
 
-    expect(row3Cells.at(0).text()).toBe(item3['ID'])
-    expect(row3Cells.at(1).text()).toBe(item3['Name'])
-    expect(row3Cells.at(2).text()).toBe(item3['Description'])
-    expect(row3Cells.at(3).text()).toBe(item3['Date'])
-    expect(row3Cells.at(4).text()).toBe((item3['Amount']).toString())
+    expect(row3Cells.at(0).text()).toBe(item3['id'])
+    expect(row3Cells.at(1).text()).toBe(item3['name'])
+    expect(row3Cells.at(2).text()).toBe(item3['description'])
+    expect(row3Cells.at(3).text()).toBe(item3['date'])
+    expect(row3Cells.at(4).text()).toBe((item3['amount']).toString())
 
     // reverse
     dateColumn.trigger('click')
 
-    expect(row1Cells.at(0).text()).toBe(item3['ID'])
-    expect(row1Cells.at(1).text()).toBe(item3['Name'])
-    expect(row1Cells.at(2).text()).toBe(item3['Description'])
-    expect(row1Cells.at(3).text()).toBe(item3['Date'])
-    expect(row1Cells.at(4).text()).toBe((item3['Amount']).toString())
+    expect(row1Cells.at(0).text()).toBe(item3['id'])
+    expect(row1Cells.at(1).text()).toBe(item3['name'])
+    expect(row1Cells.at(2).text()).toBe(item3['description'])
+    expect(row1Cells.at(3).text()).toBe(item3['date'])
+    expect(row1Cells.at(4).text()).toBe((item3['amount']).toString())
 
-    expect(row2Cells.at(0).text()).toBe(item2['ID'])
-    expect(row2Cells.at(1).text()).toBe(item2['Name'])
-    expect(row2Cells.at(2).text()).toBe(item2['Description'])
-    expect(row2Cells.at(3).text()).toBe(item2['Date'])
-    expect(row2Cells.at(4).text()).toBe((item2['Amount']).toString())
+    expect(row2Cells.at(0).text()).toBe(item2['id'])
+    expect(row2Cells.at(1).text()).toBe(item2['name'])
+    expect(row2Cells.at(2).text()).toBe(item2['description'])
+    expect(row2Cells.at(3).text()).toBe(item2['date'])
+    expect(row2Cells.at(4).text()).toBe((item2['amount']).toString())
 
-    expect(row3Cells.at(0).text()).toBe(item1['ID'])
-    expect(row3Cells.at(1).text()).toBe(item1['Name'])
-    expect(row3Cells.at(2).text()).toBe(item1['Description'])
-    expect(row3Cells.at(3).text()).toBe(item1['Date'])
-    expect(row3Cells.at(4).text()).toBe((item1['Amount']).toString())
+    expect(row3Cells.at(0).text()).toBe(item1['id'])
+    expect(row3Cells.at(1).text()).toBe(item1['name'])
+    expect(row3Cells.at(2).text()).toBe(item1['description'])
+    expect(row3Cells.at(3).text()).toBe(item1['date'])
+    expect(row3Cells.at(4).text()).toBe((item1['amount']).toString())
   })
 })

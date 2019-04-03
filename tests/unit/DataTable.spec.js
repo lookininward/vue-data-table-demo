@@ -32,25 +32,25 @@ describe('DataTable.vue', () => {
   it('can sort table by search', () => {
     let items = [
       {
-        "ID": "3471DA17-401F-9633-BF81-4CADA6FD5C79",
-        "Name": "Kyra Lester",
-        "Description": "Curabitur dictum. Phasellus in",
-        "Date": "2017-07-23T04:24:49-07:00",
-        "Amount": 345.54
+        "id": "3471DA17-401F-9633-BF81-4CADA6FD5C79",
+        "name": "Kyra Lester",
+        "description": "Curabitur dictum. Phasellus in",
+        "date": "2017-07-23T04:24:49-07:00",
+        "amount": 345.54
       },
       {
-        "ID": "9F5C9912-936A-FB85-1EDB-9DA87BE7FF1E",
-        "Name": "Buckminster Alvarado",
-        "Description": "dui, in sodales elit erat vitae risus. Duis a mi",
-        "Date": "2018-11-08T05:44:15-08:00",
-        "Amount": 677.08
+        "id": "9F5C9912-936A-FB85-1EDB-9DA87BE7FF1E",
+        "name": "Buckminster Alvarado",
+        "description": "dui, in sodales elit erat vitae risus. Duis a mi",
+        "date": "2018-11-08T05:44:15-08:00",
+        "amount": 677.08
       },
       {
-        "ID": "B743AC82-3613-13A2-2E42-E0C1F5CBF8A6",
-        "Name": "Athena Smith",
-        "Description": "massa lobortis ultrices. Vivamus rhoncus.",
-        "Date": "2018-11-11T06:19:57-08:00",
-        "Amount": 73.67
+        "id": "B743AC82-3613-13A2-2E42-E0C1F5CBF8A6",
+        "name": "Athena Smith",
+        "description": "massa lobortis ultrices. Vivamus rhoncus.",
+        "date": "2018-11-11T06:19:57-08:00",
+        "amount": 73.67
       }
     ]
 
@@ -75,11 +75,11 @@ describe('DataTable.vue', () => {
 
   it('can track selected items', () => {
     let items = [{
-      "ID": "3471DA17-401F-9633-BF81-4CADA6FD5C79",
-      "Name": "Kyra Lester",
-      "Description": "Curabitur dictum. Phasellus in",
-      "Date": "2017-07-23T04:24:49-07:00",
-      "Amount": 345.54
+      "id": "3471DA17-401F-9633-BF81-4CADA6FD5C79",
+      "name": "Kyra Lester",
+      "description": "Curabitur dictum. Phasellus in",
+      "date": "2017-07-23T04:24:49-07:00",
+      "amount": 345.54
     }]
 
     const wrapper = shallowMount(DataTable, {
@@ -90,7 +90,7 @@ describe('DataTable.vue', () => {
     expect(wrapper.vm.selectedItems.length).toBe(0)
 
     // toggle select item method on component
-    wrapper.vm.toggleSelect(items[0].ID)
+    wrapper.vm.toggleSelect(items[0].id)
 
     // includes selection
     expect(wrapper.vm.selectedItems.length).toBe(1)
