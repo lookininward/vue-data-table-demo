@@ -8,6 +8,7 @@
 <!-- Script ------------------------------------------------------------------>
 <script>
 import DataTable from '@/components/DataTable.vue'
+import { mapState } from 'vuex'
 
 export default {
   name: 'home',
@@ -18,21 +19,18 @@ export default {
 
   data() {
     return {
-      items: null
     }
   },
 
-  created() {
-    this.fetchData()
+  mounted() {
+    this.$store.dispatch('fetchData')
   },
 
-  methods: {
+  computed: {
 
-    fetchData() {
-      fetch('http://localhost:3000/items')
-      .then(res => { return res.text() })
-      .then(data => { this.items = JSON.parse(data) })
-    }
+    ...mapState([
+      'items'
+    ])
 
   }
 
