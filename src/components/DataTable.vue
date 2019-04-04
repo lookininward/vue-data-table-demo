@@ -6,8 +6,8 @@
   >
 
     <!-- Description --------------------------->
-    <ProjectDescription
-      data-test-component="ProjectDescription"
+    <ProjectInfo
+      data-test-component="ProjectInfo"
     />
 
     <!-- Table Filters ------------------------->
@@ -55,7 +55,7 @@
 
 <!-- Script ------------------------------------------------------------------>
 <script>
-  import ProjectDescription from '@/components/DataTable/ProjectDescription.vue'
+  import ProjectInfo from '@/components/DataTable/ProjectInfo.vue'
   import TableFilters from '@/components/DataTable/TableFilters.vue'
   import TableHeader from '@/components/DataTable/TableHeader.vue'
   import TableRow from '@/components/DataTable/TableRow.vue'
@@ -69,7 +69,7 @@
     },
 
     components: {
-      ProjectDescription,
+      ProjectInfo,
       TableFilters,
       TableHeader,
       TableRow,

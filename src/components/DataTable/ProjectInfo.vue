@@ -1,7 +1,7 @@
 <!-- Template ---------------------------------------------------------------->
 <template>
   <div
-    data-test-component="ProjectDescription"
+    data-test-component="ProjectInfo"
     class="project-description"
   >
     <h3>Data Component Challenge</h3>
@@ -30,6 +30,6 @@
 <!-- Script ------------------------------------------------------------------>
 <script>
   export default {
-    name: 'ProjectDescription'
+    name: 'ProjectInfo'
   }
 </script>
