@@ -74,3 +74,41 @@
     }
   }
 </script>
+
+<!-- Style ------------------------------------------------------------------->
+<style scoped lang="scss">
+
+  //-- Grid Row 3 ---------------------------------
+  .table-header {
+    display: grid;
+    grid-template-columns: 50px 5px repeat(auto-fit, minmax(0px, 1fr));
+    align-items: center;
+    border-top: 1px solid $bdr-color--light2;
+    border-bottom: 1px solid $bdr-color--light2;
+    background-color: $bg-color--grey;
+    color: $txt-color--light;
+  }
+
+  .table-header-cell {
+    @include flexCentered(column);
+    position: relative;
+    font-weight: 500;
+    color: $txt-color--dark;
+    transition: all .3s;
+    cursor: pointer;
+
+    i {
+      position: absolute;
+      right: 20px;
+    }
+
+    &.table-header-cell--dropdown i {
+      position: unset;
+      cursor: pointer;
+    }
+  }
+
+  .table-header-cell.table-header-cell--Active {
+    font-weight: 600;
+  }
+</style>

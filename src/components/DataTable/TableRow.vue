@@ -62,3 +62,16 @@
 
   }
 </script>
+
+<!-- Style ------------------------------------------------------------------->
+<style scoped lang="scss">
+  .table-row {
+    display: grid;
+    grid-template-columns: 50px 5px repeat(auto-fit, minmax(0px, 1fr));
+    background-color: $bg-color--light;
+
+    &:hover {
+      background-color: $bg-color--grey;
+    }
+  }
+</style>

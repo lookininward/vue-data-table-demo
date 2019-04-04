@@ -225,13 +225,14 @@
 <!-- Style ------------------------------------------------------------------->
 <style lang="scss">
 
+  //-- Buttons ----------------------------------
   .btn {
     min-width: 20px;
     background-color: $bg-color--light;
     border: 1px solid $bdr-color--light;
     border-radius: 10px;
     padding: 3px 5px;
-    font-size: 12px;
+    font-size: $font-sm;
     cursor: pointer;
     outline: 0;
 
@@ -256,189 +257,17 @@
     grid-template-rows: 70px 40px 30px auto 30px;
   }
 
+  //-- Grid Row 1 -- Project Info ---------------
+  //-- Grid Row 2 -- Table Filters --------------
+  //-- Grid Row 3 -- Header ---------------------
 
-  //-- Grid Row 1 ---------------------------------
-  .project-description {
-    @include flexCentered(column);
-    align-items: flex-start;
-    padding: 0 20px;
-  }
-
-  .Links {
-    display: flex;
-  }
-
-  .LinkItem {
-    margin-right: 8px;
-  }
-
-
-  //-- Grid Row 2 ---------------------------------
-  .data-filters {
-    display: flex;
-    border-top: 1px solid $bdr-color--light2;
-  }
-
-  .data-filters .input.input--search {
-    display: grid;
-    border: none;
-    border-right: 1px solid $bdr-color--light2;
-    background-color: $bg-color--light;
-    font-size: 16px;
-    color: $txt-color--dark;
-    padding: 5px 20px;
-    outline: 0;
-  }
-
-  .data-filters .filter-options {
-    display: flex;
-    align-items: center;
-    padding: 0 20px;
-
-    i {
-      margin-right: 15px;
-      cursor: pointer;
-    }
-
-  }
-
-
-  //-- Grid Row 3 ---------------------------------
-  //-- Header -------------------------------------
-  .table-header {
-    display: grid;
-    grid-template-columns: 50px 5px repeat(auto-fit, minmax(0px, 1fr));
-    align-items: center;
-    border-top: 1px solid $bdr-color--light2;
-    border-bottom: 1px solid $bdr-color--light2;
-    background-color: $bg-color--grey;
-    color: $txt-color--light;
-  }
-
-  .table-header-cell {
-    @include flexCentered(column);
-    position: relative;
-    font-weight: 500;
-    color: $txt-color--dark;
-    transition: all .3s;
-    cursor: pointer;
-
-    i {
-      position: absolute;
-      right: 20px;
-    }
-
-    &.table-header-cell--dropdown i {
-      position: unset;
-      cursor: pointer;
-    }
-  }
-
-  .table-header-cell.table-header-cell--Active {
-    font-weight: 600;
-  }
-
-
-  //-- Grid Rows Auto -----------------------------
-  //-- Body ---------------------------------------
+  //-- Grid Rows Auto ---------------------------
+  //-- Body -------------------------------------
   .table-body {
     display: grid;
     grid-auto-rows: 1fr;
     overflow-y: auto;
   }
 
-  .table-row {
-    display: grid;
-    grid-template-columns: 50px 5px repeat(auto-fit, minmax(0px, 1fr));
-    background-color: $bg-color--light;
-
-    &:hover {
-      background-color: $bg-color--grey;
-    }
-  }
-
-  .table-cell {
-    display: grid;
-    align-items: center;
-    border-bottom: 1px solid $bdr-color--light;
-    padding: 10px;
-    position: relative;
-
-
-    .edit-field {
-      display: none;
-      position: absolute;
-      top: 5px;
-      right: 5px;
-
-      background-color: #fff;
-      border: 1px solid $bdr-color--light;
-      border-radius: 10px;
-      padding: 3px 5px;
-      font-size: 12px;
-
-      cursor: pointer !important;
-    }
-
-    &:hover {
-      .edit-field {
-        display: flex;
-      }
-    }
-
-    .cell-textarea {
-      border: none;
-      outline: 0;
-      padding: 10px;
-      margin-bottom: 10px;
-      font-family: 'Avenir', Helvetica, Arial, sans-serif;
-      font-size: .85rem;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      text-align: center;
-      color: #2c3e50;
-    }
-
-    .edit-actions {
-      display: flex;
-      justify-content: center;
-
-      button {
-        margin: 0 5px;
-      }
-    }
-
-  }
-
-  .table-cell.table-cell--checkbox,
-  .table-cell.table-cell--dropdownTrigger {
-    @include flexCentered(column);
-    padding: 0;
-  }
-
-  .table-cell.table-cell--dropdownTrigger i {
-    color: $txt-color--light2;
-    cursor: pointer;
-
-    &:hover {
-      color: $txt-color--dark;
-    }
-  }
-
-
-  //-- Grid Row 5 ---------------------------------
-  //-- Footer -------------------------------------
-  .table-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: $bg-color--grey;
-    border-top: 1px solid $bdr-color--light2;
-    padding: 0 20px;
-    font-size: 12px;
-  }
-
-  .table-footer-info {
-    display: flex;
-  }
+  //-- Grid Row 5 -- Footer ---------------------
 </style>

@@ -63,3 +63,22 @@
    }
   }
 </script>
+
+<!-- Style ------------------------------------------------------------------->
+<style scoped lang="scss">
+
+  //-- Grid Row 5 ---------------------------------
+  .table-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: $bg-color--grey;
+    border-top: 1px solid $bdr-color--light2;
+    padding: 0 20px;
+    font-size: $font-sm;
+  }
+
+  .table-footer-info {
+    display: flex;
+  }
+</style>

@@ -85,3 +85,68 @@
 
   }
 </script>
+
+<!-- Style ------------------------------------------------------------------->
+<style lang="scss">
+  .table-cell {
+    display: grid;
+    align-items: center;
+    border-bottom: 1px solid $bdr-color--light;
+    padding: 10px;
+    position: relative;
+
+    .edit-field {
+      display: none;
+      position: absolute;
+      top: 5px;
+      right: 5px;
+
+      background-color: #fff;
+      border: 1px solid $bdr-color--light;
+      border-radius: 10px;
+      padding: 3px 5px;
+      font-size: $font-md;
+
+      cursor: pointer !important;
+    }
+
+    &:hover {
+      .edit-field {
+        display: flex;
+      }
+    }
+
+    .cell-textarea {
+      border: none;
+      outline: 0;
+      padding: 10px;
+      margin-bottom: 10px;
+      @include fontStandard();
+    }
+
+    .edit-actions {
+      display: flex;
+      justify-content: center;
+
+      button {
+        margin: 0 5px;
+      }
+    }
+
+  }
+
+  .table-cell.table-cell--checkbox,
+  .table-cell.table-cell--dropdownTrigger {
+    @include flexCentered(column);
+    padding: 0;
+  }
+
+  .table-cell.table-cell--dropdownTrigger i {
+    color: $txt-color--light2;
+    cursor: pointer;
+
+    &:hover {
+      color: $txt-color--dark;
+    }
+  }
+</style>
