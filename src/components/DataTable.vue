@@ -46,6 +46,8 @@
       data-test-component="TableFooter"
       :totalItems="items ? items.length : 0"
       :selectedItems="selectedItems ? selectedItems.length : 0"
+      :totalPages="pages.length"
+      @setCurrentPage="setCurrentPage"
     />
   </div>
 </template>
@@ -79,7 +81,9 @@
         sortType: null,
         reverse: false,
         searchText: '',
-        selectedItems: []
+        selectedItems: [],
+        currentPage: 1,
+        perPage: 20
       }
     },
 
@@ -104,7 +108,7 @@
       },
 
       sortedItems() {
-        let items = this.items ? this.items : []
+        let items = this.paginatedItems ? this.paginatedItems : []
         const sortKey = this.sortKey
         const sortType = this.sortType
         const reverse = this.reverse
@@ -144,6 +148,14 @@
         })
 
         return filteredResults
+      },
+
+      pages() {
+        return this.calculatePages()
+      },
+
+      paginatedItems() {
+        return this.pages[this.currentPage]
       }
 
     },
@@ -165,6 +177,33 @@
         } else {
           selectedItems.push(itemID)
         }
+      },
+
+      calculatePages() {
+        let numItems = this.items ? this.items.length : 0
+        let numItemsPerPage = this.perPage
+        let items = this.items
+        let pages = []
+        let pageSet = []
+
+        for (var i = 0; i < numItems; i++ ) {
+
+          if (pageSet.length >= numItemsPerPage) {
+            pages.push(pageSet)
+            pageSet = []
+          }
+
+          if (pageSet.length < numItemsPerPage) {
+            pageSet.push(items[i])
+          }
+
+        }
+
+        return pages
+      },
+
+      setCurrentPage(pageNum) {
+        this.currentPage = pageNum
       }
 
     }
@@ -174,12 +213,35 @@
 <!-- Style ------------------------------------------------------------------->
 <style lang="scss">
 
+  .btn {
+    min-width: 20px;
+    background-color: $bg-color--light;
+    border: 1px solid $bdr-color--light;
+    border-radius: 10px;
+    padding: 3px 5px;
+    font-size: 12px;
+    cursor: pointer;
+    outline: 0;
+
+    &:hover {
+      background-color: $bg-color--grey;
+    }
+  }
+
+  .btn.btn--pageNumber {
+    margin: 0 2px;
+
+    &:last-child {
+      margin: 0 0 0 2px;
+    }
+  }
+
   //-- Data Table ---------------------------------
   .data-table {
     width: 100vw;
     height: 100vh;
     display: grid;
-    grid-template-rows: 70px 40px 30px auto 20px;
+    grid-template-rows: 70px 40px 30px auto 30px;
   }
 
 
@@ -357,9 +419,14 @@
   .table-footer {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     background-color: $bg-color--grey;
     border-top: 1px solid $bdr-color--light2;
     padding: 0 20px;
     font-size: 12px;
+  }
+
+  .table-footer-info {
+    display: flex;
   }
 </style>

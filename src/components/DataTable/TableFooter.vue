@@ -4,20 +4,37 @@
     data-test-component="TableFooter"
     class="table-footer"
   >
-    <div
-      data-test-TotalRows
-      style="margin-right: 10px;"
-    >
-      <template v-if="totalItems">
-        Rows: {{ totalItems }}
-      </template>
+
+    <!-- Information --------------------------->
+    <div class="table-footer-info">
+      <div
+        data-test-TotalRows
+        style="margin-right: 10px;"
+      >
+        <template v-if="totalItems">
+          Total Rows: {{ totalItems }}
+        </template>
+      </div>
+
+      <div data-test-SelectedItems>
+        <template v-if="selectedItems">
+          Selected Rows: {{ selectedItems }}
+        </template>
+      </div>
     </div>
 
-    <div data-test-SelectedItems>
-      <template v-if="selectedItems">
-        Selected Rows: {{ selectedItems }}
-      </template>
+    <!-- Pagination ---------------------------->
+    <div class="table-footer-pages">
+      <button
+        v-for="idx in totalPages"
+        v-bind:key="idx"
+        class="btn btn--pageNumber"
+        @click="setPage(idx - 1)"
+      >
+        {{idx}}
+      </button>
     </div>
+
   </div>
 </template>
 
@@ -28,7 +45,16 @@
 
     props: {
      totalItems: { type: Number },
-     selectedItems: { type: Number }
+     selectedItems: { type: Number },
+     totalPages: { type: Number }
+   },
+
+   methods: {
+
+    setPage(pageNum) {
+      this.$emit('setCurrentPage', pageNum)
+    }
+
    }
   }
 </script>
