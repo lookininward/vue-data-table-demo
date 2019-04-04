@@ -24,14 +24,16 @@
     />
 
     <!-- Table Cells --------------------------->
-    <TableCell
-      data-test-component="TableCell"
-      class="table-cell"
-      v-for="(itemAttr, idx) in item"
-      :item="item"
-      :itemAttr="itemAttr"
-      :key="idx + '--cell'"
-    />
+    <div class="table-attrs">
+      <TableCell
+        data-test-component="TableCell"
+        class="table-cell"
+        v-for="(itemAttr, idx) in item"
+        :item="item"
+        :itemAttr="itemAttr"
+        :key="idx + '--cell'"
+      />
+    </div>
   </div>
 </template>
 
@@ -67,11 +69,20 @@
 <style scoped lang="scss">
   .table-row {
     display: grid;
-    grid-template-columns: 50px 5px repeat(auto-fit, minmax(0px, 1fr));
+    grid-template-columns: 30px 5px 1fr;
+    grid-template-rows: 1fr;
     background-color: $bg-color--light;
+    border-bottom: 1px solid #000;
 
     &:hover {
       background-color: $bg-color--grey;
+    }
+
+    @media screen and (min-width: $screen-width-sm) {
+      grid-template-columns: 50px 5px repeat(auto-fit, minmax(0px, 1fr));
+      grid-template-rows: auto;
+
+      border: none;
     }
   }
 
@@ -79,5 +90,28 @@
   .table-cell.table-cell--dropdownTrigger {
     @include flexCentered(column);
     padding: 0;
+  }
+
+
+
+  .table-cell.table-cell--checkbox {
+    grid-area: table-cell-checkbox / 1 / 1;
+
+    @media screen and (min-width: $screen-width-sm) {
+      grid-area: table-cell-checkbox / 1 / 1;
+    }
+  }
+
+  .table-attrs {
+    grid-area: table-cell-checkbox / 3 / 1;
+
+    padding: 0 10px;
+
+    @media screen and (min-width: $screen-width-sm) {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+
+      padding: 0;
+    }
   }
 </style>

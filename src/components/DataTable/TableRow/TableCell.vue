@@ -91,11 +91,24 @@
 <!-- Style ------------------------------------------------------------------->
 <style lang="scss">
   .table-cell {
-    display: grid;
-    align-items: center;
+    display: flex;
     border-bottom: 1px solid $bdr-color--light;
-    padding: 10px;
+    padding: 5px;
     position: relative;
+    text-align: left;
+
+
+    font-size: 0.7rem;
+
+
+    @media screen and (min-width: $screen-width-sm) {
+      display: grid;
+      align-items: center;
+      padding: 10px;
+      text-align: center;
+
+      font-size: inherit;
+    }
 
     .table-cell-actions {
       display: flex;

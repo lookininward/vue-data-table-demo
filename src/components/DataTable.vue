@@ -268,7 +268,11 @@
     width: 100vw;
     height: 100vh;
     display: grid;
-    grid-template-rows: 70px 40px 30px auto 30px;
+    grid-template-rows: 50px 40px 60px auto 30px;
+
+    @media screen and (min-width: $screen-width-sm) {
+      grid-template-rows: 70px 40px 30px auto 30px;
+    }
   }
 
   //-- Grid Row 1 -- Project Info ---------------

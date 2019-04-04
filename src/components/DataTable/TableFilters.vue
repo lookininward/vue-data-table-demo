@@ -59,17 +59,23 @@
   //-- Grid Row 2 -------------------------------
   .data-filters {
     display: flex;
+    // flex-direction: column;
     border-top: 1px solid $bdr-color--light2;
+
+    @media screen and (min-width: $screen-width-sm) {
+      flex-direction: row;
+    }
   }
 
   .data-filters .input.input--search {
     display: grid;
     border: none;
+    border-bottom: 1px solid $bdr-color--light2;
     border-right: 1px solid $bdr-color--light2;
     background-color: $bg-color--light;
     font-size: $font-lg;
     color: $txt-color--dark;
-    padding: 5px 20px;
+    padding: 0px 20px;
     outline: 0;
   }
 
@@ -82,6 +88,12 @@
       margin-right: 15px;
       cursor: pointer;
     }
+  }
 
+  .data-filters .input.input--search,
+  .data-filters .filter-options {
+    // height: 40px;
+    // min-height: 40px;
+    // max-height: 40px;
   }
 </style>
