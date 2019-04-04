@@ -22,7 +22,7 @@ describe('TableFooter.vue', () => {
     })
 
     const totalRows = wrapper.find('[data-test-TotalRows]')
-    expect(totalRows.text()).toBe(`Rows: ${items.length}`)
+    expect(totalRows.text()).toBe(`Total Rows: ${items.length}`)
   })
 
 })
