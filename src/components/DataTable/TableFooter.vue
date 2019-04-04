@@ -32,6 +32,10 @@
         @click="setPage(idx - 1)"
       >
         {{idx}}
+
+        <template v-if="(idx -1) === currentPage">
+          Current
+        </template>
       </button>
     </div>
 
@@ -46,7 +50,8 @@
     props: {
      totalItems: { type: Number },
      selectedItems: { type: Number },
-     totalPages: { type: Number }
+     totalPages: { type: Number },
+     currentPage: { type: Number }
    },
 
    methods: {

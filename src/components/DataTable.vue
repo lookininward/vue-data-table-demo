@@ -48,6 +48,7 @@
       :selectedItems="selectedItems ? selectedItems.length : 0"
       :totalPages="pages.length"
       @setCurrentPage="setCurrentPage"
+      :currentPage="currentPage"
     />
   </div>
 </template>
@@ -82,8 +83,9 @@
         reverse: false,
         searchText: '',
         selectedItems: [],
-        currentPage: 1,
-        perPage: 20
+        currentPage: 0,
+        perPage: 20,
+        pages: []
       }
     },
 
@@ -108,7 +110,7 @@
       },
 
       sortedItems() {
-        let items = this.paginatedItems ? this.paginatedItems : []
+        let items = this.items ? this.items : []
         const sortKey = this.sortKey
         const sortType = this.sortType
         const reverse = this.reverse
@@ -147,11 +149,16 @@
           return itemValues.toString().toLowerCase().includes(searchText)
         })
 
-        return filteredResults
-      },
+        this.calculatePages(filteredResults)
+        let paginatedItems = this.paginatedItems ? this.paginatedItems : []
 
-      pages() {
-        return this.calculatePages()
+        let newRes = paginatedItems.filter(item => {
+          const itemValues = Object.values(item)
+          itemValues.forEach(val => { val.toString().toLowerCase()})
+          return itemValues.toString().toLowerCase().includes(searchText)
+        })
+
+        return newRes
       },
 
       paginatedItems() {
@@ -163,6 +170,7 @@
     methods: {
 
       sortTableBy(sortKey, sortType) {
+        this.currentPage = 0
         this.reverse = (this.sortKey == sortKey) ? ! this.reverse : false
         this.sortKey = sortKey
         this.sortType = sortType
@@ -179,14 +187,13 @@
         }
       },
 
-      calculatePages() {
-        let numItems = this.items ? this.items.length : 0
+      calculatePages(items) {
+        let numItems = items ? items.length : 0
         let numItemsPerPage = this.perPage
-        let items = this.items
         let pages = []
         let pageSet = []
 
-        for (var i = 0; i < numItems; i++ ) {
+        for (var i = 0; i <= numItems; i++ ) {
 
           if (pageSet.length >= numItemsPerPage) {
             pages.push(pageSet)
@@ -195,11 +202,16 @@
 
           if (pageSet.length < numItemsPerPage) {
             pageSet.push(items[i])
+            pageSet = pageSet.filter(Boolean);
           }
 
         }
 
-        return pages
+        if (pageSet.length) {
+          pages.push(pageSet)
+        }
+
+        return this.pages = pages
       },
 
       setCurrentPage(pageNum) {
