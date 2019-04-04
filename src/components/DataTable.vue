@@ -6,8 +6,8 @@
   >
 
     <!-- Description --------------------------->
-    <ProjectDescription
-      data-test-component="ProjectDescription"
+    <ProjectInfo
+      data-test-component="ProjectInfo"
     />
 
     <!-- Table Filters ------------------------->
@@ -46,13 +46,16 @@
       data-test-component="TableFooter"
       :totalItems="items ? items.length : 0"
       :selectedItems="selectedItems ? selectedItems.length : 0"
+      :totalPages="pages.length"
+      @setCurrentPage="setCurrentPage"
+      :currentPage="currentPage"
     />
   </div>
 </template>
 
 <!-- Script ------------------------------------------------------------------>
 <script>
-  import ProjectDescription from '@/components/DataTable/ProjectDescription.vue'
+  import ProjectInfo from '@/components/DataTable/ProjectInfo.vue'
   import TableFilters from '@/components/DataTable/TableFilters.vue'
   import TableHeader from '@/components/DataTable/TableHeader.vue'
   import TableRow from '@/components/DataTable/TableRow.vue'
@@ -66,7 +69,7 @@
     },
 
     components: {
-      ProjectDescription,
+      ProjectInfo,
       TableFilters,
       TableHeader,
       TableRow,
@@ -79,7 +82,10 @@
         sortType: null,
         reverse: false,
         searchText: '',
-        selectedItems: []
+        selectedItems: [],
+        currentPage: 0,
+        perPage: 20,
+        pages: []
       }
     },
 
@@ -143,7 +149,20 @@
           return itemValues.toString().toLowerCase().includes(searchText)
         })
 
-        return filteredResults
+        this.calculatePages(filteredResults)
+        let paginatedItems = this.paginatedItems ? this.paginatedItems : []
+
+        let newRes = paginatedItems.filter(item => {
+          const itemValues = Object.values(item)
+          itemValues.forEach(val => { val.toString().toLowerCase()})
+          return itemValues.toString().toLowerCase().includes(searchText)
+        })
+
+        return newRes
+      },
+
+      paginatedItems() {
+        return this.pages[this.currentPage]
       }
 
     },
@@ -151,6 +170,7 @@
     methods: {
 
       sortTableBy(sortKey, sortType) {
+        this.currentPage = 0
         this.reverse = (this.sortKey == sortKey) ? ! this.reverse : false
         this.sortKey = sortKey
         this.sortType = sortType
@@ -165,6 +185,37 @@
         } else {
           selectedItems.push(itemID)
         }
+      },
+
+      calculatePages(items) {
+        let numItems = items ? items.length : 0
+        let numItemsPerPage = this.perPage
+        let pages = []
+        let pageSet = []
+
+        for (var i = 0; i <= numItems; i++ ) {
+
+          if (pageSet.length >= numItemsPerPage) {
+            pages.push(pageSet)
+            pageSet = []
+          }
+
+          if (pageSet.length < numItemsPerPage) {
+            pageSet.push(items[i])
+            pageSet = pageSet.filter(Boolean);
+          }
+
+        }
+
+        if (pageSet.length) {
+          pages.push(pageSet)
+        }
+
+        return this.pages = pages
+      },
+
+      setCurrentPage(pageNum) {
+        this.currentPage = pageNum
       }
 
     }
@@ -174,192 +225,63 @@
 <!-- Style ------------------------------------------------------------------->
 <style lang="scss">
 
+  //-- Buttons ----------------------------------
+  .btn {
+    min-width: 20px;
+    background-color: $bg-color--light;
+    border: 1px solid $bdr-color--light;
+    border-radius: 10px;
+    padding: 3px 5px;
+    font-size: $font-sm;
+    cursor: pointer;
+    outline: 0;
+    transition: all .2s;
+
+    &:hover {
+      background-color: $color-black-1;
+      color: $txt-color--light;
+    }
+  }
+
+  .btn.btn--confirm {
+    &:hover {
+      background-color: $bg-color--green;
+      color: $txt-color--light;
+    }
+  }
+
+  .btn.btn--pageNumber {
+    margin: 0 2px;
+    padding: 2px 10px;
+
+    &:last-child {
+      margin: 0 0 0 2px;
+    }
+
+    &.is-active {
+      border: 1px solid $color-black-1;
+    }
+  }
+
   //-- Data Table ---------------------------------
   .data-table {
     width: 100vw;
     height: 100vh;
     display: grid;
-    grid-template-rows: 70px 40px 30px auto 20px;
+    grid-template-rows: 70px 40px 30px auto 30px;
   }
 
+  //-- Grid Row 1 -- Project Info ---------------
+  //-- Grid Row 2 -- Table Filters --------------
+  //-- Grid Row 3 -- Header ---------------------
 
-  //-- Grid Row 1 ---------------------------------
-  .project-description {
-    @include flexCentered(column);
-    align-items: flex-start;
-    padding: 0 20px;
-  }
-
-  .Links {
-    display: flex;
-  }
-
-  .LinkItem {
-    margin-right: 8px;
-  }
-
-
-  //-- Grid Row 2 ---------------------------------
-  .data-filters {
-    display: flex;
-    border-top: 1px solid $bdr-color--light2;
-  }
-
-  .data-filters .input.input--search {
-    display: grid;
-    border: none;
-    border-right: 1px solid $bdr-color--light2;
-    background-color: $bg-color--light;
-    font-size: 16px;
-    color: $txt-color--dark;
-    padding: 5px 20px;
-    outline: 0;
-  }
-
-  .data-filters .filter-options {
-    display: flex;
-    align-items: center;
-    padding: 0 20px;
-
-    i {
-      margin-right: 15px;
-      cursor: pointer;
-    }
-
-  }
-
-
-  //-- Grid Row 3 ---------------------------------
-  //-- Header -------------------------------------
-  .table-header {
-    display: grid;
-    grid-template-columns: 50px 5px repeat(auto-fit, minmax(0px, 1fr));
-    align-items: center;
-    border-top: 1px solid $bdr-color--light2;
-    border-bottom: 1px solid $bdr-color--light2;
-    background-color: $bg-color--grey;
-    color: $txt-color--light;
-  }
-
-  .table-header-cell {
-    @include flexCentered(column);
-    position: relative;
-    font-weight: 500;
-    color: $txt-color--dark;
-    transition: all .3s;
-    cursor: pointer;
-
-    i {
-      position: absolute;
-      right: 20px;
-    }
-
-    &.table-header-cell--dropdown i {
-      position: unset;
-      cursor: pointer;
-    }
-  }
-
-  .table-header-cell.table-header-cell--Active {
-    font-weight: 600;
-  }
-
-
-  //-- Grid Rows Auto -----------------------------
-  //-- Body ---------------------------------------
+  //-- Grid Rows Auto ---------------------------
+  //-- Body -------------------------------------
   .table-body {
     display: grid;
     grid-auto-rows: 1fr;
     overflow-y: auto;
   }
 
-  .table-row {
-    display: grid;
-    grid-template-columns: 50px 5px repeat(auto-fit, minmax(0px, 1fr));
-    background-color: $bg-color--light;
-
-    &:hover {
-      background-color: $bg-color--grey;
-    }
-  }
-
-  .table-cell {
-    display: grid;
-    align-items: center;
-    border-bottom: 1px solid $bdr-color--light;
-    padding: 10px;
-    position: relative;
-
-
-    .edit-field {
-      display: none;
-      position: absolute;
-      top: 5px;
-      right: 5px;
-
-      background-color: #fff;
-      border: 1px solid $bdr-color--light;
-      border-radius: 10px;
-      padding: 3px 5px;
-      font-size: 12px;
-
-      cursor: pointer !important;
-    }
-
-    &:hover {
-      .edit-field {
-        display: flex;
-      }
-    }
-
-    .cell-textarea {
-      border: none;
-      outline: 0;
-      padding: 10px;
-      margin-bottom: 10px;
-      font-family: 'Avenir', Helvetica, Arial, sans-serif;
-      font-size: .85rem;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      text-align: center;
-      color: #2c3e50;
-    }
-
-    .edit-actions {
-      display: flex;
-      justify-content: center;
-
-      button {
-        margin: 0 5px;
-      }
-    }
-
-  }
-
-  .table-cell.table-cell--checkbox,
-  .table-cell.table-cell--dropdownTrigger {
-    @include flexCentered(column);
-    padding: 0;
-  }
-
-  .table-cell.table-cell--dropdownTrigger i {
-    color: $txt-color--light2;
-    cursor: pointer;
-
-    &:hover {
-      color: $txt-color--dark;
-    }
-  }
-
-
-  //-- Grid Row 5 ---------------------------------
-  //-- Footer -------------------------------------
-  .table-footer {
-    display: flex;
-    align-items: center;
-    background-color: $bg-color--grey;
-    border-top: 1px solid $bdr-color--light2;
-    padding: 0 20px;
-    font-size: 12px;
-  }
+  //-- Grid Row 5 -- Footer ---------------------
 </style>

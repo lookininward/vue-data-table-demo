@@ -2,30 +2,32 @@
 <template>
   <div
     data-test-component="TableCell"
+    class="table-cell"
   >
     <template v-if="isEditing">
       <textarea
-        data-test-textarea
-        class="cell-textarea"
+        data-test-input="textarea"
+        class="table-cell-textarea"
         v-model="newValue"
       >
       </textarea>
 
-      <div class="edit-actions">
+      <div class="table-cell-actions">
         <button
           data-test-btn="cancelUpdateField"
+          class="btn"
           @click="isEditing=false"
         >
           Cancel
         </button>
         <button
           data-test-btn="updateField"
+          class="btn btn--confirm"
           @click="submit()"
         >
           Save
         </button>
       </div>
-
     </template>
 
     <template v-else>
@@ -35,7 +37,7 @@
       <div
         data-test-btn="editField"
         v-if="isEditable"
-        class="edit-field"
+        class="btn btn--edit"
         @click="isEditing=true"
       >
         Edit
@@ -85,3 +87,46 @@
 
   }
 </script>
+
+<!-- Style ------------------------------------------------------------------->
+<style lang="scss">
+  .table-cell {
+    display: grid;
+    align-items: center;
+    border-bottom: 1px solid $bdr-color--light;
+    padding: 10px;
+    position: relative;
+
+    .table-cell-actions {
+      display: flex;
+      justify-content: center;
+
+      button {
+        margin: 0 5px;
+      }
+    }
+
+    .btn.btn--edit {
+      display: none;
+      position: absolute;
+      top: 5px;
+      right: 5px;
+    }
+
+    &:hover {
+      .btn.btn--edit {
+        display: flex;
+      }
+    }
+
+    .table-cell-textarea {
+      @include fontStandard();
+      background-color: $bg-color--light;
+      border: 1px solid $bdr-color--light;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 10px;
+      outline: 0;
+    }
+  }
+</style>

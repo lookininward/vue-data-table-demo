@@ -1,5 +1,4 @@
 import { mount, shallowMount } from '@vue/test-utils'
-import { randomInt } from '../helpers.js'
 import DataTable from '@/components/DataTable.vue'
 
 describe('DataTable.vue', () => {
@@ -15,7 +14,7 @@ describe('DataTable.vue', () => {
 
   it('generates correct number of rows', () => {
     let items = []
-    for (let i = 0; i < randomInt(1000); i++) {
+    for (let i = 0; i < 100; i++) {
       items.push({ name: 'Kyra Lester'})
     }
 
@@ -23,9 +22,11 @@ describe('DataTable.vue', () => {
       propsData:  { items }
     })
 
+    expect(wrapper.vm.pages.length).toBe(5)
+    expect(wrapper.vm.items.length).toBe(100)
     expect(
       wrapper.findAll('[data-test-component="TableRow"]').length
-    ).toBe(items.length)
+    ).toBe(wrapper.vm.perPage)
   })
 
   it('can sort table by search', () => {

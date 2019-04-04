@@ -66,40 +66,39 @@
 
 <!-- Style ------------------------------------------------------------------->
 <style lang="scss">
-  div.tippy-tooltip.row-dropdown-theme {
+  .table-cell.table-cell--dropdownTrigger i {
+    color: $txt-color--light2;
+    cursor: pointer;
+
+    &:hover {
+      color: $txt-color--dark;
+    }
+  }
+
+  .row-dropdown-theme {
     padding: 0;
-    background-color: #fff;
-    border: 0 solid rgba(0, 0, 0, .15);
+    background-color: $bg-color--light;
     box-shadow: 0 50px 100px rgba(50, 50, 93, .1),
                 0 15px 35px rgba(50, 50, 93, .15),
                 0 5px 15px rgba(0, 0, 0, .1);
   }
 
   .row-dropdown {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    background-color: #fff;
+    @include flexCentered(column);
+    @include fontStandard();
     min-width: 100px;
     max-width: 100px;
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    font-size: .85rem;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
   }
 
   .row-dropdown-option {
     width: 100%;
     padding: 5px 10px;
-    background-color: #fff;
-    color: #000;
+    background-color: $bg-color--light;
     cursor: pointer;
 
      &:hover {
-      background-color: #f6f9fc;
+      background-color: $color-black-1;
+      color: $txt-color--light;
     }
   }
 </style>
