@@ -235,17 +235,31 @@
     font-size: $font-sm;
     cursor: pointer;
     outline: 0;
+    transition: all .2s;
 
     &:hover {
-      background-color: $bg-color--grey;
+      background-color: $color-black-1;
+      color: $txt-color--light;
+    }
+  }
+
+  .btn.btn--confirm {
+    &:hover {
+      background-color: $bg-color--green;
+      color: $txt-color--light;
     }
   }
 
   .btn.btn--pageNumber {
     margin: 0 2px;
+    padding: 2px 10px;
 
     &:last-child {
       margin: 0 0 0 2px;
+    }
+
+    &.is-active {
+      border: 1px solid $color-black-1;
     }
   }
 

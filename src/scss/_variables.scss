@@ -4,10 +4,13 @@ $color-white-2:     #e9ecef;
 $color-grey-1:      rgba(0, 0, 0, 0.05);
 $color-grey-2:      #f6f9fc;
 $color-black-1:     #2c3e50;
+$color-green-1:     #28a745;
+
 
 //-- Backgrounds --------------------------------------------------------------
 $bg-color--light:   $color-white-1;
 $bg-color--grey:    $color-grey-2;
+$bg-color--green:   $color-green-1;
 
 
 //-- Borders ------------------------------------------------------------------
@@ -19,6 +22,7 @@ $bdr-color--light2: $color-grey-1;
 $txt-color--light:  $color-white-1;
 $txt-color--light2: $color-grey-1;
 $txt-color--dark:   $color-black-1;
+
 
 //-- Font Size ----------------------------------------------------------------
 $font-sm:           .75rem;

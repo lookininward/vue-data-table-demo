@@ -74,4 +74,10 @@
       background-color: $bg-color--grey;
     }
   }
+
+  .table-cell.table-cell--checkbox,
+  .table-cell.table-cell--dropdownTrigger {
+    @include flexCentered(column);
+    padding: 0;
+  }
 </style>

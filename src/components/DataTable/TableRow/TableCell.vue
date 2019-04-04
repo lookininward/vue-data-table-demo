@@ -2,30 +2,32 @@
 <template>
   <div
     data-test-component="TableCell"
+    class="table-cell"
   >
     <template v-if="isEditing">
       <textarea
-        data-test-textarea
-        class="cell-textarea"
+        data-test-input="textarea"
+        class="table-cell-textarea"
         v-model="newValue"
       >
       </textarea>
 
-      <div class="edit-actions">
+      <div class="table-cell-actions">
         <button
           data-test-btn="cancelUpdateField"
+          class="btn"
           @click="isEditing=false"
         >
           Cancel
         </button>
         <button
           data-test-btn="updateField"
+          class="btn btn--confirm"
           @click="submit()"
         >
           Save
         </button>
       </div>
-
     </template>
 
     <template v-else>
@@ -35,7 +37,7 @@
       <div
         data-test-btn="editField"
         v-if="isEditable"
-        class="edit-field"
+        class="btn btn--edit"
         @click="isEditing=true"
       >
         Edit
@@ -95,36 +97,7 @@
     padding: 10px;
     position: relative;
 
-    .edit-field {
-      display: none;
-      position: absolute;
-      top: 5px;
-      right: 5px;
-
-      background-color: #fff;
-      border: 1px solid $bdr-color--light;
-      border-radius: 10px;
-      padding: 3px 5px;
-      font-size: $font-md;
-
-      cursor: pointer !important;
-    }
-
-    &:hover {
-      .edit-field {
-        display: flex;
-      }
-    }
-
-    .cell-textarea {
-      border: none;
-      outline: 0;
-      padding: 10px;
-      margin-bottom: 10px;
-      @include fontStandard();
-    }
-
-    .edit-actions {
+    .table-cell-actions {
       display: flex;
       justify-content: center;
 
@@ -133,20 +106,27 @@
       }
     }
 
-  }
-
-  .table-cell.table-cell--checkbox,
-  .table-cell.table-cell--dropdownTrigger {
-    @include flexCentered(column);
-    padding: 0;
-  }
-
-  .table-cell.table-cell--dropdownTrigger i {
-    color: $txt-color--light2;
-    cursor: pointer;
+    .btn.btn--edit {
+      display: none;
+      position: absolute;
+      top: 5px;
+      right: 5px;
+    }
 
     &:hover {
-      color: $txt-color--dark;
+      .btn.btn--edit {
+        display: flex;
+      }
+    }
+
+    .table-cell-textarea {
+      @include fontStandard();
+      background-color: $bg-color--light;
+      border: 1px solid $bdr-color--light;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 10px;
+      outline: 0;
     }
   }
 </style>

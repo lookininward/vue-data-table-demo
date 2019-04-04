@@ -29,13 +29,10 @@
         v-for="idx in totalPages"
         v-bind:key="idx"
         class="btn btn--pageNumber"
+        :class="((idx -1) === currentPage ) ? 'is-active' : ''"
         @click="setPage(idx - 1)"
       >
         {{idx}}
-
-        <template v-if="(idx -1) === currentPage">
-          Current
-        </template>
       </button>
     </div>
 
