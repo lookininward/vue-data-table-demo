@@ -174,25 +174,6 @@
 <!-- Style ------------------------------------------------------------------->
 <style lang="scss">
 
-  //-- Variables ----------------------------------
-  $bg-color--light:   #fff;
-  $bg-color--grey:    #f6f9fc;
-  $txt-color--light:  #fff;
-  $txt-color--light2: rgba(0, 0, 0, 0.05);
-  $txt-color--dark:   #2c3e50;
-  $bdr-color--light:  #e9ecef;
-  $bdr-color--light2: rgba(0, 0, 0, 0.05);
-
-
-  //-- Mixins -------------------------------------
-  @mixin flexCentered($direction) {
-    display: flex;
-    flex-direction: $direction;
-    justify-content: center;
-    align-items: center;
-  }
-
-
   //-- Data Table ---------------------------------
   .data-table {
     width: 100vw;
@@ -321,7 +302,7 @@
       border-radius: 10px;
       padding: 3px 5px;
       font-size: 12px;
-      
+
       cursor: pointer !important;
     }
 
