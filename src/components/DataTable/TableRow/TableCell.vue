@@ -88,7 +88,9 @@
 
 <!-- Style ------------------------------------------------------------------->
 <style lang="scss">
-  .table-cell {
+
+  //-- Standard View ----------------------------
+  .data-table .table-cell {
     position: relative;
     display: grid;
     grid-template-columns: 1fr;
@@ -96,6 +98,8 @@
     padding: 5px 10px;
     font-size: 0.7rem;
     text-align: left;
+    overflow-x: auto;
+    overflow-y: hidden;
 
     @media screen and (min-width: $screen-width-sm) {
       align-items: center;
@@ -137,4 +141,13 @@
       outline: 0;
     }
   }
+
+  //-- List View --------------------------------
+  .data-table.data-table--list .table-cell {
+
+    @media screen and (min-width: $screen-width-sm) {
+      padding: 3px 10px;
+    }
+  }
+
 </style>

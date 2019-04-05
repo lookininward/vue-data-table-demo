@@ -24,6 +24,11 @@
     >
       <i class="fas fa-sliders-h"></i>
       <i class="fas fa-filter"></i>
+      <i
+        class="fas fa-list"
+        @click="listView()"
+      >
+      </i>
     </div>
   </div>
 </template>
@@ -46,6 +51,10 @@
 
      updateValue: function (value) {
         this.$emit('input', value)
+      },
+
+      listView() {
+        this.$emit('toggleListView')
       }
 
     }

@@ -38,10 +38,18 @@
           >
             {{ header.header }}
             <template v-if="reverse">
-              <i class="fas fa-long-arrow-alt-up"></i>
+              <i
+                data-test-sortIndicator
+                class="fas fa-long-arrow-alt-up table-sort-indicator"
+              >
+              </i>
             </template>
             <template v-else>
-              <i class="fas fa-long-arrow-alt-down"></i>
+              <i
+                data-test-sortIndicator
+                class="fas fa-long-arrow-alt-down table-sort-indicator"
+              >
+              </i>
             </template>
           </div>
         </template>
@@ -92,52 +100,61 @@
 <!-- Style ------------------------------------------------------------------->
 <style scoped lang="scss">
 
-  //-- Grid Row 3 ---------------------------------
-  .table-header {
+  //-- Grid Row 3 -------------------------------
+
+  //-- Standard View ----------------------------
+  .data-table .table-header {
     border-top: 1px solid $bdr-color--light2;
     border-bottom: 1px solid $bdr-color--light2;
     background-color: $bg-color--grey;
     color: $txt-color--light;
-  }
 
-  .table-header-cell {
-    position: relative;
-    @include flexCentered(column);
-    align-items: flex-start;
-    padding: 0px 10px;
-    font-size: 12px;
-    font-weight: 500;
-    color: $txt-color--dark;
-    cursor: pointer;
-    transition: all .3s;
-
-    @media screen and (min-width: $screen-width-sm) {
-      padding: 0;
-      font-size: inherit;
-      align-items: center;
-    }
-
-    i {
-      position: absolute;
-      right: 20px;
-    }
-
-    &.table-header-cell--dropdown {
-      align-items: center;
-    }
-
-    &.table-header-cell--dropdown i {
-      position: unset;
+    .table-header-cell {
+      position: relative;
+      @include flexCentered(column);
+      align-items: flex-start;
+      padding: 0px 10px;
+      font-size: 12px;
+      font-weight: 500;
+      color: $txt-color--dark;
       cursor: pointer;
+      transition: all .3s;
+      overflow-x: auto;
+
+      @media screen and (min-width: $screen-width-sm) {
+        padding: 0;
+        align-items: center;
+        font-size: inherit;
+      }
+
+      .table-sort-indicator {
+        position: absolute;
+        right: 20px;
+      }
+
+      &.table-header-cell--active {
+        font-weight: 600;
+      }
+
+      &.table-header-cell--checkbox,
+      &.table-header-cell--dropdown {
+        display: grid;
+        align-items: center;
+        padding: 0px;
+        cursor: auto;
+      }
+
+      &.table-header-cell--dropdown i {
+        cursor: pointer;
+      }
     }
   }
 
-  .table-header-cell.table-header-cell--active {
-    font-weight: 600;
-  }
+  //-- List View --------------------------------
+  .data-table.data-table--list .table-header {
 
-  .table-header-attrs {
-    max-height: 60px;
-    overflow-y: auto;
+    .table-header-attrs {
+      display: none;
+    }
   }
 </style>

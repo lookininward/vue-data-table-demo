@@ -3,6 +3,7 @@
   <div
     data-test-component="DataTable"
     class="data-table"
+    :class="listView ? 'data-table--list' : '' "
   >
 
     <!-- Description --------------------------->
@@ -14,6 +15,7 @@
     <TableFilters
       data-test-component="TableFilters"
       v-model="searchText"
+      @toggleListView="toggleListView"
     />
 
     <!-- Table Header -------------------------->
@@ -85,7 +87,8 @@
         selectedItems: [],
         currentPage: 0,
         perPage: 20,
-        pages: []
+        pages: [],
+        listView: false
       }
     },
 
@@ -216,6 +219,10 @@
 
       setCurrentPage(pageNum) {
         this.currentPage = pageNum
+      },
+
+      toggleListView() {
+        return this.listView = !this.listView
       }
 
     }
@@ -264,14 +271,79 @@
   }
 
   //-- Data Table ---------------------------------
+  //-- Standard View ----------------------------
   .data-table {
     width: 100vw;
     height: 100vh;
     display: grid;
-    grid-template-rows: 50px 40px 60px auto 30px;
+    grid-template-rows: 50px 40px 40px auto 30px;
 
     @media screen and (min-width: $screen-width-sm) {
       grid-template-rows: 70px 40px 30px auto 30px;
+    }
+
+    .table-row {
+      display: grid;
+      grid-template-columns: 30px 1fr;
+      grid-template-rows: 1fr;
+
+      @media screen and (min-width: $screen-width-sm) {
+        grid-template-columns: 55px 1fr;
+        grid-template-rows: auto;
+      }
+    }
+
+    .table-header, {
+      display: grid;
+      grid-template-columns: 30px 1fr;
+      grid-template-rows: 1fr;
+
+      @media screen and (min-width: $screen-width-sm) {
+        grid-template-columns: 55px 1fr 15px;
+      }
+    }
+
+    .table-header-cell.table-header-cell--checkbox,
+    .table-cell.table-cell--dropdownTrigger {
+      padding: 0;
+      align-items: center;
+    }
+
+    .table-header-actions,
+    .table-row-actions {
+      grid-area: table-cell-actions / 1 / 1;
+      border-right: 1px solid $bdr-color--light;
+
+      @media screen and (min-width: $screen-width-sm) {
+        grid-area: table-cell-actions / 1 / 1;
+        border: none;
+      }
+
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+      grid-template-columns: 1fr;
+
+      @media screen and (min-width: $screen-width-sm) {
+        grid-template-rows: 1fr;
+        grid-template-columns: 50px 5px;
+      }
+    }
+
+    .table-header-attrs,
+    .table-attrs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(0px, 1fr));
+      padding: 0;
+    }
+  }
+
+  //-- List View --------------------------------
+  .data-table.data-table--list {
+
+    .table-header-attrs,
+    .table-attrs {
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(auto-fit, minmax(0px, 1fr));
     }
   }
 
@@ -290,62 +362,6 @@
   //-- Grid Row 5 -- Footer ---------------------
 
   //-- Grid - Table Header, Table Rows ----------
-  .table-row {
-    display: grid;
-    grid-template-columns: 30px 1fr;
-    grid-template-rows: 1fr;
 
-    @media screen and (min-width: $screen-width-sm) {
-      grid-template-columns: 55px 1fr;
-      grid-template-rows: auto;
-    }
-  }
-
-  .table-header, {
-    display: grid;
-    grid-template-columns: 30px 1fr;
-    grid-template-rows: 1fr;
-
-    @media screen and (min-width: $screen-width-sm) {
-      grid-template-columns: 55px 1fr 15px;
-    }
-  }
-
-  .table-header-cell.table-header-cell--checkbox,
-  .table-cell.table-cell--dropdownTrigger {
-    padding: 0;
-    align-items: center;
-  }
-
-  .table-header-actions,
-  .table-row-actions {
-    grid-area: table-cell-actions / 1 / 1;
-    border-right: 1px solid $bdr-color--light;
-
-    @media screen and (min-width: $screen-width-sm) {
-      grid-area: table-cell-actions / 1 / 1;
-      border: none;
-    }
-
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    grid-template-columns: 1fr;
-
-    @media screen and (min-width: $screen-width-sm) {
-      grid-template-rows: 1fr;
-      grid-template-columns: 50px 5px;
-    }
-  }
-
-  .table-header-attrs,
-  .table-attrs {
-    grid-area: table-cell-attrs / 2 / 1;
-    padding: 0 0px;
-
-    @media screen and (min-width: $screen-width-sm) {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(0px, 1fr));
-      padding: 0;
-    }
-  }
+  
 </style>

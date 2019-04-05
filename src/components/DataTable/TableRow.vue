@@ -72,22 +72,37 @@
 
 <!-- Style ------------------------------------------------------------------->
 <style scoped lang="scss">
-  .table-row {
-    background-color: $bg-color--light;
-    border-bottom: 1px solid #000;
 
-    &:hover {
-      background-color: $bg-color--grey;
+  //-- Standard View ----------------------------
+  .data-table {
+
+    .table-row {
+      background-color: $bg-color--light;
+
+      &:hover {
+        background-color: $bg-color--grey;
+      }
+
+      @media screen and (min-width: $screen-width-sm) {
+        border: none;
+      }
     }
 
-    @media screen and (min-width: $screen-width-sm) {
-      border: none;
+    .table-cell.table-cell--checkbox,
+    .table-cell.table-cell--dropdownTrigger {
+      @include flexCentered(column);
+      padding: 0;
     }
+
   }
 
-  .table-cell.table-cell--checkbox,
-  .table-cell.table-cell--dropdownTrigger {
-    @include flexCentered(column);
-    padding: 0;
+  //-- List View --------------------------------
+  .data-table.data-table--list {
+
+    .table-row {
+      border-bottom: 1px solid $bdr-color--dark;
+    }
+
   }
+
 </style>
