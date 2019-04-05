@@ -1,5 +1,4 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
-import { randomInt } from '../helpers.js'
 import TableCell from '@/components/DataTable/TableRow/TableCell.vue'
 import Vuex from 'vuex'
 
@@ -18,26 +17,14 @@ describe('TableCell.vue', () => {
   let itemAttr = "This is a something something"
 
   it('component does render without editable field', () => {
-    const wrapper = shallowMount(TableCell, {
-      propsData: { item, itemAttr }
-    })
-
-    expect(
-      wrapper.attributes()['data-test-component']
-    ).toBe('TableCell')
-
-    expect(wrapper.contains('[data-test-itemField]')).toBe(true)
+    const wrapper = shallowMount(TableCell, { propsData: { item, itemAttr }})
+    expect(wrapper.attributes()['data-test-component']).toBe('TableCell')
     expect(wrapper.contains('[data-test-btn="editField"]')).toBe(false)
   })
 
   it('component does render with editable field', () => {
     itemAttr = "Curabitur dictum. Phasellus in"
-
-    const wrapper = shallowMount(TableCell, {
-      propsData: { item, itemAttr }
-    })
-
-    expect(wrapper.contains('[data-test-itemField]')).toBe(true)
+    const wrapper = shallowMount(TableCell, { propsData: { item, itemAttr } })
     expect(wrapper.contains('[data-test-btn="editField"]')).toBe(true)
   })
 

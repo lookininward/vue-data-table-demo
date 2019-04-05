@@ -31,9 +31,7 @@
     </template>
 
     <template v-else>
-      <div data-test-itemField>
-        {{ itemAttr}}
-      </div>
+      {{ itemAttr}}
       <div
         data-test-btn="editField"
         v-if="isEditable"
@@ -92,14 +90,14 @@
 <style lang="scss">
   .table-cell {
     position: relative;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr;
     border-bottom: 1px solid $bdr-color--light;
     padding: 5px 10px;
     font-size: 0.7rem;
     text-align: left;
 
     @media screen and (min-width: $screen-width-sm) {
-      display: grid;
       align-items: center;
       padding: 10px;
       font-size: inherit;
@@ -107,8 +105,9 @@
     }
 
     .table-cell-actions {
-      display: flex;
-      justify-content: center;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
 
       .btn {
         margin: 0 5px;

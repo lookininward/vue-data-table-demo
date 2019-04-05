@@ -58,8 +58,8 @@
 
   //-- Grid Row 2 -------------------------------
   .data-filters {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
     border-top: 1px solid $bdr-color--light2;
   }
 

@@ -25,7 +25,7 @@
       </div>
     </div>
 
-    <!-- Headers ----------------------------->
+    <!-- Headers ------------------------------->
     <div class="table-header-attrs">
       <template v-for="(header, idx) in headers">
 
@@ -57,6 +57,13 @@
           </div>
         </template>
       </template>
+    </div>
+
+    <!-- Scrollbar Spacer ---------------------->
+    <div
+      data-test-scrollbarSpacer
+      class="table-header-scrollbarSpacer"
+    >
     </div>
   </div>
 </template>

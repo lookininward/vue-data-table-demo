@@ -283,22 +283,31 @@
   //-- Body -------------------------------------
   .table-body {
     display: grid;
-    grid-auto-rows: 1fr;
+    grid-auto-rows: minmax(min-content, max-content);
     overflow-y: auto;
   }
 
   //-- Grid Row 5 -- Footer ---------------------
 
   //-- Grid - Table Header, Table Rows ----------
-  .table-header, // table-header-row
   .table-row {
     display: grid;
     grid-template-columns: 30px 1fr;
     grid-template-rows: 1fr;
 
     @media screen and (min-width: $screen-width-sm) {
-      grid-template-columns: 60px repeat(auto-fit, minmax(0px, 1fr));
+      grid-template-columns: 55px 1fr;
       grid-template-rows: auto;
+    }
+  }
+
+  .table-header, {
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    grid-template-rows: 1fr;
+
+    @media screen and (min-width: $screen-width-sm) {
+      grid-template-columns: 55px 1fr 15px;
     }
   }
 
@@ -324,7 +333,7 @@
 
     @media screen and (min-width: $screen-width-sm) {
       grid-template-rows: 1fr;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 50px 5px;
     }
   }
 

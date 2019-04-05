@@ -66,16 +66,29 @@
 
   //-- Grid Row 5 ---------------------------------
   .table-footer {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr;
     align-items: center;
-    justify-content: space-between;
     background-color: $bg-color--grey;
     border-top: 1px solid $bdr-color--light2;
     padding: 0 20px;
     font-size: $font-sm;
+
+    @media screen and (min-width: $screen-width-sm) {
+      grid-template-columns: 1fr 1fr;
+    }
   }
 
   .table-footer-info {
+    display: none;
+
+    @media screen and (min-width: $screen-width-sm) {
+      display: flex;
+    }
+  }
+
+  .table-footer-pages {
     display: flex;
+    justify-content: flex-end;
   }
 </style>
