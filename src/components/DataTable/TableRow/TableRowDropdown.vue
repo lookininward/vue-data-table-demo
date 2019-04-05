@@ -67,16 +67,6 @@
 <!-- Style ------------------------------------------------------------------->
 <style lang="scss">
 
-  .table-cell.table-cell--dropdownTrigger {
-    grid-area: table-cell-dropdownTrigger / 2 / 1;
-
-    @media screen and (min-width: $screen-width-sm) {
-      grid-area: table-cell-dropdownTrigger / 2 / 1;
-    }
-  }
-
-
-
   .table-cell.table-cell--dropdownTrigger i {
     color: $txt-color--light2;
     cursor: pointer;

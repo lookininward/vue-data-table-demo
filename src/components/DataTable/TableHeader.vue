@@ -5,26 +5,30 @@
     class="table-header"
   >
 
-    <!-- Select All checkbox ----------------->
-    <div
-      data-test-TableCellCheckbox
-      class="table-header-cell table-header-cell--checkbox"
-    >
-      <input type="checkbox">
-    </div>
+    <!-- Row Actions --------------------------->
+    <div class="table-header-actions">
 
-    <!-- All Items Dropdown ------------------>
-    <div
-      data-test-TableHeaderCellDropDown
-      class="table-header-cell table-header-cell--dropdown"
-    >
-      <i class="fas fa-ellipsis-v"></i>
+      <!-- Select All checkbox ----------------->
+      <div
+        data-test-TableCellCheckbox
+        class="table-header-cell table-header-cell--checkbox"
+      >
+        <input type="checkbox">
+      </div>
+
+      <!-- All Items Dropdown ------------------>
+      <div
+        data-test-TableHeaderCellDropDown
+        class="table-header-cell table-header-cell--dropdown"
+      >
+        <i class="fas fa-ellipsis-v"></i>
+      </div>
     </div>
 
     <!-- Headers ----------------------------->
-    <div class="table-attrs">
+    <div class="table-header-attrs">
       <template v-for="(header, idx) in headers">
-      
+
         <template v-if="header.header === sortKey">
           <div
             data-test-HeaderCell
@@ -83,46 +87,36 @@
 
   //-- Grid Row 3 ---------------------------------
   .table-header {
-    display: grid;
-
-    align-items: center;
     border-top: 1px solid $bdr-color--light2;
     border-bottom: 1px solid $bdr-color--light2;
     background-color: $bg-color--grey;
     color: $txt-color--light;
-
-
-    grid-template-columns: 30px 5px 1fr;
-    grid-template-rows: 1fr;
-
-
-    @media screen and (min-width: $screen-width-sm) {
-      grid-template-columns: 50px 5px 1fr;
-    }
-
   }
 
   .table-header-cell {
-    @include flexCentered(column);
     position: relative;
+    @include flexCentered(column);
+    align-items: flex-start;
+    padding: 0px 10px;
+    font-size: 12px;
     font-weight: 500;
     color: $txt-color--dark;
-    transition: all .3s;
     cursor: pointer;
-
-    padding: 3px 5px;
-
-    font-size: 12px;
+    transition: all .3s;
 
     @media screen and (min-width: $screen-width-sm) {
       padding: 0;
-
       font-size: inherit;
+      align-items: center;
     }
 
     i {
       position: absolute;
       right: 20px;
+    }
+
+    &.table-header-cell--dropdown {
+      align-items: center;
     }
 
     &.table-header-cell--dropdown i {
@@ -131,37 +125,12 @@
     }
   }
 
-  .table-header-cell.table-header-cell--Active {
+  .table-header-cell.table-header-cell--active {
     font-weight: 600;
   }
 
-
-  .table-header-cell.table-header-cell--checkbox {
-    grid-area: table-header-cell-checkbox / 1 / 1;
-
-    @media screen and (min-width: $screen-width-sm) {
-      grid-area: table-header-cell-checkbox / 1 / 1;
-    }
-
-  }
-
-  .table-attrs {
-    grid-area: table-cell-checkbox / 3 / 1;
+  .table-header-attrs {
     max-height: 60px;
     overflow-y: auto;
-
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-
-
-    padding: 0 10px;
-
-    @media screen and (min-width: $screen-width-sm) {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    }
   }
-
-
 </style>

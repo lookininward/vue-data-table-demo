@@ -59,12 +59,8 @@
   //-- Grid Row 2 -------------------------------
   .data-filters {
     display: flex;
-    // flex-direction: column;
+    flex-direction: row;
     border-top: 1px solid $bdr-color--light2;
-
-    @media screen and (min-width: $screen-width-sm) {
-      flex-direction: row;
-    }
   }
 
   .data-filters .input.input--search {
@@ -88,12 +84,5 @@
       margin-right: 15px;
       cursor: pointer;
     }
-  }
-
-  .data-filters .input.input--search,
-  .data-filters .filter-options {
-    // height: 40px;
-    // min-height: 40px;
-    // max-height: 40px;
   }
 </style>

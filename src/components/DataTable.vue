@@ -288,4 +288,55 @@
   }
 
   //-- Grid Row 5 -- Footer ---------------------
+
+  //-- Grid - Table Header, Table Rows ----------
+  .table-header, // table-header-row
+  .table-row {
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    grid-template-rows: 1fr;
+
+    @media screen and (min-width: $screen-width-sm) {
+      grid-template-columns: 60px repeat(auto-fit, minmax(0px, 1fr));
+      grid-template-rows: auto;
+    }
+  }
+
+  .table-header-cell.table-header-cell--checkbox,
+  .table-cell.table-cell--dropdownTrigger {
+    padding: 0;
+    align-items: center;
+  }
+
+  .table-header-actions,
+  .table-row-actions {
+    grid-area: table-cell-actions / 1 / 1;
+    border-right: 1px solid $bdr-color--light;
+
+    @media screen and (min-width: $screen-width-sm) {
+      grid-area: table-cell-actions / 1 / 1;
+      border: none;
+    }
+
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr;
+
+    @media screen and (min-width: $screen-width-sm) {
+      grid-template-rows: 1fr;
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .table-header-attrs,
+  .table-attrs {
+    grid-area: table-cell-attrs / 2 / 1;
+    padding: 0 0px;
+
+    @media screen and (min-width: $screen-width-sm) {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(0px, 1fr));
+      padding: 0;
+    }
+  }
 </style>

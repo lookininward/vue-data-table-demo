@@ -91,30 +91,26 @@
 <!-- Style ------------------------------------------------------------------->
 <style lang="scss">
   .table-cell {
+    position: relative;
     display: flex;
     border-bottom: 1px solid $bdr-color--light;
-    padding: 5px;
-    position: relative;
-    text-align: left;
-
-
+    padding: 5px 10px;
     font-size: 0.7rem;
-
+    text-align: left;
 
     @media screen and (min-width: $screen-width-sm) {
       display: grid;
       align-items: center;
       padding: 10px;
-      text-align: center;
-
       font-size: inherit;
+      text-align: center;
     }
 
     .table-cell-actions {
       display: flex;
       justify-content: center;
 
-      button {
+      .btn {
         margin: 0 5px;
       }
     }
