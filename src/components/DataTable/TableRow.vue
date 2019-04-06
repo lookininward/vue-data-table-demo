@@ -33,7 +33,7 @@
       <TableCell
         data-test-component="TableCell"
         class="table-cell"
-        v-for="(itemAttr, idx) in item"
+        v-for="(itemAttr, idx) in displayItem"
         :item="item"
         :itemAttr="itemAttr"
         :key="idx + '--cell'"
@@ -51,12 +51,28 @@
     name: 'TableRow',
 
     props: {
-      item: { type: Object }
+      item: { type: Object },
+      hiddenFields: { type: Array }
     },
 
     components: {
       TableRowDropdown,
       TableCell
+    },
+
+    computed: {
+
+      displayItem() {
+        let item = this.item
+        let displayItem = Object.assign({}, item)
+        let hiddenFields = this.hiddenFields ? this.hiddenFields : []
+
+        hiddenFields.forEach(field => {
+          delete displayItem[field]
+        })
+
+        return displayItem
+      }
     },
 
     methods: {

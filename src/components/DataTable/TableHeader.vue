@@ -66,40 +66,46 @@
     <!-- Headers ------------------------------->
     <div class="table-header-attrs">
       <template v-for="(header, idx) in headers">
-        <template v-if="header.header === sortKey">
-          <div
-            data-test-HeaderCell
-            class="table-header-cell table-header-cell--active"
-            :key="idx + '--header'"
-            @click="sort(header.header, header.type)"
-          >
-            {{ header.header }}
-            <template v-if="reverse">
-              <i
-                data-test-sortIndicator
-                class="fas fa-long-arrow-alt-up table-sort-indicator"
-              >
-              </i>
-            </template>
-            <template v-else>
-              <i
-                data-test-sortIndicator
-                class="fas fa-long-arrow-alt-down table-sort-indicator"
-              >
-              </i>
-            </template>
-          </div>
-        </template>
 
-        <template v-else>
-          <div
-            data-test-HeaderCell
-            class="table-header-cell"
-            :key="idx + '--header'"
-            @click="sort(header.header, header.type)"
-          >
-            {{ header.header }}
-          </div>
+
+        <template
+          v-if="!hiddenFields.includes(header.header)"
+        >
+          <template v-if="header.header === sortKey">
+            <div
+              data-test-HeaderCell
+              class="table-header-cell table-header-cell--active"
+              :key="idx + '--header'"
+              @click="sort(header.header, header.type)"
+            >
+              {{ header.header }}
+              <template v-if="reverse">
+                <i
+                  data-test-sortIndicator
+                  class="fas fa-long-arrow-alt-up table-sort-indicator"
+                >
+                </i>
+              </template>
+              <template v-else>
+                <i
+                  data-test-sortIndicator
+                  class="fas fa-long-arrow-alt-down table-sort-indicator"
+                >
+                </i>
+              </template>
+            </div>
+          </template>
+
+          <template v-else>
+            <div
+              data-test-HeaderCell
+              class="table-header-cell"
+              :key="idx + '--header'"
+              @click="sort(header.header, header.type)"
+            >
+              {{ header.header }}
+            </div>
+          </template>
         </template>
       </template>
     </div>
@@ -120,6 +126,7 @@
 
     props: {
      headers: { type: Array },
+     hiddenFields: { type: Array },
      sortKey: { type: String },
      reverse: { type: Boolean },
      listView: { type: Boolean }
@@ -210,17 +217,17 @@
 
   }
 
-   .info-popover-theme {
-      @include tippyBaseTheme();
-    }
+  .info-popover-theme {
+    @include tippyBaseTheme();
+  }
 
-    .info-popover {
-      @include fontStandard();
-      text-align: left;
-      padding: 10px 15px;
-      background-color: $bg-color--light;
-      color: $txt-color--dark;
-    }
+  .info-popover {
+    @include fontStandard();
+    text-align: left;
+    padding: 10px 15px;
+    background-color: $bg-color--light;
+    color: $txt-color--dark;
+  }
 
   //-- List View --------------------------------
   .data-table.data-table--list .table-header {

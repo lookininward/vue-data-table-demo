@@ -18,6 +18,7 @@
       </a>
 
       <!-- Search -------------------------------->
+      <!-- searchInput -->
       <input
         data-test-input="Search"
         ref="SearchComponent"
@@ -41,12 +42,69 @@
       >
         <i class="fas fa-sliders-h"></i>
       </div>
+
+      <!-- Data Filters  -->
       <div
-        data-test-btn=""
-        class="filter filter--"
+        data-test-btn="dataFiltersPopoverTrigger"
+        class="filter filter--dataFilters"
+        v-tippy="{
+          reactive: true,
+          interactive : true,
+          trigger : 'click',
+          placement: 'bottom',
+          html: '#filters-popover',
+          theme : 'filters-popover',
+          duration: 100
+        }"
       >
         <i class="fas fa-filter"></i>
       </div>
+
+      <div
+        id="filters-popover"
+        data-test-popover="filters"
+        class="info-popover"
+        v-tippy-html
+      >
+
+        <!-- Items Per Page -->
+        <div
+          class="filter-section filter-section--perPage"
+        >
+          <div class="filter-section-header">
+            Items Per Page
+          </div>
+          <div>
+            <select>
+              <option v-bind:value="{ number: 5 }">5</option>
+              <option v-bind:value="{ number: 10 }">10</option>
+              <option v-bind:value="{ number: 20 }">20</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Filter Columns -->
+        <div
+          class="filter-section filter-section--dataColumns"
+        >
+          <div class="filter-section-header">
+            Data Columns
+          </div>
+          <label
+            v-for="(header, idx) in headers"
+            v-bind:key="idx"
+          >
+            <input
+              type="checkbox"
+              :checked="!hiddenFields.includes(header)"
+              @click="toggleFields(header.header)"
+            >
+            {{ header.header }}
+          </label>
+        </div>
+      </div>
+
+      <!-- List View  -->
       <div
         data-test-btn="listView"
         class="filter filter--listView"
@@ -76,13 +134,22 @@
 
 <!-- Script ------------------------------------------------------------------>
 <script>
+  import Vue from 'vue'
+  import VueTippy from 'vue-tippy'
+
   export default {
     name: 'TableFilters',
 
     props: {
-     searchText: { type: String },
-     listView: { type: Boolean }
-   },
+      searchText: { type: String },
+      listView: { type: Boolean },
+      headers: { type: Array },
+      hiddenFields: { type: Array }
+    },
+
+    created() {
+      Vue.use(VueTippy)
+    },
 
     mounted() {
       let refs = this.$refs
@@ -91,12 +158,16 @@
 
     methods: {
 
-     updateValue: function (value) {
+      updateValue: function (value) {
         this.$emit('input', value)
       },
 
       toggleListView() {
         this.$emit('toggleListView')
+      },
+
+      toggleFields(field) {
+        this.$emit('toggleFields', field)
       }
 
     }
@@ -105,7 +176,7 @@
 </script>
 
 <!-- Style ------------------------------------------------------------------->
-<style scoped lang="scss">
+<style lang="scss">
 
   //-- Grid Row 2 -------------------------------
   .data-filters {
@@ -186,5 +257,25 @@
     @media screen and (min-width: $screen-width-sm) {
       display: none;
     }
+  }
+
+  .filter-section {
+    padding: 5px 0;
+  }
+
+  .filter-section-header {
+    font-weight: 500;
+  }
+
+  .filter-section.filter-section--dataColumns {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(auto-fit, minmax(0px, 1fr));
+  }
+
+  .filter-section.filter-section--perPage{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
   }
 </style>

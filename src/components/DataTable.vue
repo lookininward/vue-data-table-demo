@@ -10,14 +10,18 @@
     <TableFilters
       data-test-component="TableFilters"
       v-model="searchText"
-      @toggleListView="toggleListView"
+      :headers="headers"
+      :hiddenFields="hiddenFields"
       :listView="listView"
+      @toggleListView="toggleListView"
+      @toggleFields="toggleFields"
     />
 
     <!-- Table Header -------------------------->
     <TableHeader
       data-test-component="TableHeader"
       :headers="headers"
+      :hiddenFields="hiddenFields"
       :sortKey="sortKey"
       :reverse="reverse"
       :listView="listView"
@@ -36,6 +40,8 @@
         v-for="item in sortedItems"
         v-bind:item="item"
         v-bind:key="item.id"
+        :headers="headers"
+        v-bind:hiddenFields="hiddenFields"
         @toggleSelect="toggleSelect"
       />
     </div>
@@ -46,8 +52,8 @@
       :totalItems="items ? items.length : 0"
       :selectedItems="selectedItems ? selectedItems.length : 0"
       :totalPages="pages.length"
-      @setCurrentPage="setCurrentPage"
       :currentPage="currentPage"
+      @setCurrentPage="setCurrentPage"
     />
   </div>
 </template>
@@ -83,13 +89,14 @@
         currentPage: 0,
         perPage: 20,
         pages: [],
-        listView: false
+        listView: false,
+        hiddenFields: []
       }
     },
 
     computed: {
 
-      headers() {
+      headers() { // fields
         let items = this.items ? this.items : []
         let headers = items.length ? Object.keys(items[0]) : []
         let result = []
@@ -218,6 +225,19 @@
 
       toggleListView() {
         return this.listView = !this.listView
+      },
+
+      toggleFields(field) {
+        let hiddenFields = this.hiddenFields
+
+        if (hiddenFields.includes(field)) {
+          this.hiddenFields = hiddenFields.filter(hiddenField => {
+            return hiddenField != field
+          })
+        } else {
+          hiddenFields.push(field)
+        }
+
       }
 
     }
@@ -350,4 +370,21 @@
   //-- Grid Row 5 -- Footer ---------------------
 
   //-- Grid - Table Header, Table Rows ----------
+
+  .filters-popover-theme {
+    @include tippyBaseTheme();
+  }
+
+  .info-popover {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 2fr;
+
+
+    @include fontStandard();
+    text-align: left;
+    padding: 10px 15px;
+    background-color: $bg-color--light;
+    color: $txt-color--dark;
+  }
 </style>
