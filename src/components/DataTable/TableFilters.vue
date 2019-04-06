@@ -125,7 +125,7 @@
     border-bottom: 1px solid $bdr-color--dark;
 
     @media screen and (min-width: $screen-width-sm) {
-      grid-template-columns: 60px 1fr;
+      grid-template-columns: .25fr 1fr;
       border-bottom: none;
     }
   }

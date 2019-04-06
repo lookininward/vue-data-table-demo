@@ -25,10 +25,47 @@
       </div>
     </div>
 
+    <!-- Edit Mode (row orientation) ----------->
+    <div
+      v-if="listView"
+      class="edit-mode"
+    >
+      Quick Edit Mode
+
+      <i
+        data-test-btn="popoverTrigger"
+        class="fas fa-info-circle popover-trigger"
+        v-tippy="{
+          reactive: true,
+          interactive : true,
+          trigger : 'click',
+          placement: 'bottom',
+          html: '#info-popover',
+          theme : 'info-popover',
+          duration: 100
+        }"
+      >
+      </i>
+
+      <div
+        id="info-popover"
+        data-test-popover="info"
+        class="info-popover"
+        v-tippy-html
+      >
+        <template v-for="(header, idx) in headers">
+          <div
+            v-bind:key="idx"
+          >
+            {{ header.header }}
+          </div>
+        </template>
+      </div>
+    </div>
+
     <!-- Headers ------------------------------->
     <div class="table-header-attrs">
       <template v-for="(header, idx) in headers">
-
         <template v-if="header.header === sortKey">
           <div
             data-test-HeaderCell
@@ -84,7 +121,8 @@
     props: {
      headers: { type: Array },
      sortKey: { type: String },
-     reverse: { type: Boolean }
+     reverse: { type: Boolean },
+     listView: { type: Boolean }
     },
 
     methods: {
@@ -98,7 +136,7 @@
 </script>
 
 <!-- Style ------------------------------------------------------------------->
-<style scoped lang="scss">
+<style lang="scss">
 
   //-- Grid Row 3 -------------------------------
 
@@ -128,8 +166,13 @@
       }
 
       .table-sort-indicator {
-        position: absolute;
-        right: 20px;
+        display: none;
+
+        @media screen and (min-width: $screen-width-sm) {
+          display: flex;
+          position: absolute;
+          right: 20px;
+        }
       }
 
       &.table-header-cell--active {
@@ -148,13 +191,50 @@
         cursor: pointer;
       }
     }
+
+    .edit-mode {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 10px;
+      color: $txt-color--dark;
+      font-weight: 600;
+    }
+
+    .popover-trigger {
+      font-size: $font-lg;
+      color: $txt-color--dark;
+      margin-left: 8px;
+    }
+
   }
+
+   .info-popover-theme {
+      @include tippyBaseTheme();
+    }
+
+    .info-popover {
+      @include fontStandard();
+      text-align: left;
+      padding: 10px 15px;
+      background-color: $bg-color--light;
+      color: $txt-color--dark;
+    }
 
   //-- List View --------------------------------
   .data-table.data-table--list .table-header {
 
     .table-header-attrs {
       display: none;
+    }
+
+    .table-header-scrollbarSpacer {
+      display: none;
+
+      @media screen and (min-width: $screen-width-sm) {
+        display: flex;
+      }
     }
   }
 </style>

@@ -20,6 +20,7 @@
       :headers="headers"
       :sortKey="sortKey"
       :reverse="reverse"
+      :listView="listView"
       @sortColumns="sortTableBy"
     />
 
@@ -263,7 +264,7 @@
     width: 100vw;
     height: 100vh;
     display: grid;
-    grid-template-rows: 80px 40px auto 30px;
+    grid-template-rows: 80px 50px auto 30px;
 
     @media screen and (min-width: $screen-width-sm) {
       grid-template-rows: 40px 30px auto 30px;
