@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { API, graphqlOperation } from 'aws-amplify'
+import * as mutations from './graphql/mutations'
+import * as queries from './graphql/queries'
 
 Vue.use(Vuex)
 
@@ -12,44 +15,47 @@ export default new Vuex.Store({
   mutations: {
 
     FETCH_ITEMS(state, items) {
-      state.items = items
+      state.items = items.data.listItems.items
     }
 
   },
 
   actions: {
 
-    fetchData({commit}) {
-      fetch('http://localhost:3000/items')
-      .then(res => { return res.text() })
-      .then(data => { commit('FETCH_ITEMS', JSON.parse(data)) })
+    async fetchData({commit}) {
+      const data = await API.graphql(graphqlOperation(queries.listItems))
+      commit('FETCH_ITEMS', data)
     },
 
-    deleteItem({dispatch}, itemID) {
-      fetch(`http://localhost:3000/items/${itemID}`, { method: 'DELETE'})
-      .then(res => { return res.text() })
-      .then(() => { dispatch('fetchData') })
+    async deleteItem({dispatch}, itemID) {
+      await API.graphql(
+        graphqlOperation(mutations.deleteItem, {
+          input: {
+            "id": itemID
+          }
+        })
+      )
+
+      dispatch('fetchData')
     },
 
-    editItem({dispatch}, data) {
-      let item = data.item
-      let newValue = data.newValue
+    async editItem({dispatch}, data) {
+      const item = data.item
+      const newValue = data.newValue
 
-      let payload = {
-        id: item.id,
-        name: item.name,
-        description: newValue,
-        date: item.date,
-        amount: item.amount
-      }
+      await API.graphql(
+        graphqlOperation(mutations.updateItem, {
+          input: {
+            "id": item.id,
+            "name" : item.name,
+            "description" : newValue,
+            "date" : item.date,
+            "amount" : item.amount
+          }
+        })
+      )
 
-      fetch(`http://localhost:3000/items/${item.id}/`, {
-        method: 'PUT',
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      })
-      .then(res => { return res.text() })
-      .then(() => { dispatch('fetchData') })
+      dispatch('fetchData')
     }
 
   }
