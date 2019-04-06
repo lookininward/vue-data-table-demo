@@ -1,5 +1,4 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
-import { randomInt } from '../helpers.js'
 import TableRowDropdown from '@/components/DataTable/TableRow/TableRowDropdown.vue'
 import Vuex from 'vuex'
 
@@ -16,9 +15,7 @@ describe('TableRowDropdown.vue', () => {
   }
 
   it('component does render', () => {
-    const wrapper = shallowMount(TableRowDropdown, {
-      propsData: { item }
-    })
+    const wrapper = shallowMount(TableRowDropdown, { propsData: { item } })
 
     expect(
       wrapper.attributes()['data-test-component']

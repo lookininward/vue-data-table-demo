@@ -14,14 +14,9 @@ describe('DataTable.vue', () => {
 
   it('generates correct number of rows', () => {
     let items = []
-    for (let i = 0; i < 100; i++) {
-      items.push({ name: 'Kyra Lester'})
-    }
+    for (let i = 0; i < 100; i++) { items.push({ name: 'Kyra Lester'}) }
 
-    const wrapper = shallowMount(DataTable, {
-      propsData:  { items }
-    })
-
+    const wrapper = shallowMount(DataTable, { propsData:  { items }})
     expect(wrapper.vm.pages.length).toBe(5)
     expect(wrapper.vm.items.length).toBe(100)
     expect(
@@ -54,10 +49,7 @@ describe('DataTable.vue', () => {
       }
     ]
 
-    const wrapper = mount(DataTable, {
-      propsData:  { items }
-    })
-
+    const wrapper = mount(DataTable, { propsData:  { items } })
     let rows = wrapper.findAll('[data-test-component="TableRow"]')
     let search = wrapper.find('[data-test-input="Search"]')
     expect(search.contains('[data-test-input="Search"]')).toBe(true)
@@ -81,9 +73,7 @@ describe('DataTable.vue', () => {
       "amount": 345.54
     }]
 
-    const wrapper = shallowMount(DataTable, {
-      propsData:  { items }
-    })
+    const wrapper = shallowMount(DataTable, { propsData:  { items } })
 
     // none selected
     expect(wrapper.vm.selectedItems.length).toBe(0)

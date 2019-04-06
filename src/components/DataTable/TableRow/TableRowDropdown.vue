@@ -66,6 +66,7 @@
 
 <!-- Style ------------------------------------------------------------------->
 <style lang="scss">
+
   .table-cell.table-cell--dropdownTrigger i {
     color: $txt-color--light2;
     cursor: pointer;

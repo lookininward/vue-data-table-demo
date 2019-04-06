@@ -30,10 +30,7 @@ describe('DataTable.vue sort', () => {
   let item2 = items[1]
   let item3 = items[2]
 
-  const wrapperDataTable = mount(DataTable, {
-    propsData: { items }
-  })
-
+  const wrapperDataTable = mount(DataTable, { propsData: { items }})
   let rows = wrapperDataTable.findAll('[data-test-component="TableRow"]')
   let row1Cells = rows.at(0).findAll('[data-test-component="TableCell"]')
   let row2Cells = rows.at(1).findAll('[data-test-component="TableCell"]')

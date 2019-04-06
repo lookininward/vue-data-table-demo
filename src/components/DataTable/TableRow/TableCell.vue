@@ -31,9 +31,7 @@
     </template>
 
     <template v-else>
-      <div data-test-itemField>
-        {{ itemAttr}}
-      </div>
+      {{ itemAttr}}
       <div
         data-test-btn="editField"
         v-if="isEditable"
@@ -90,18 +88,32 @@
 
 <!-- Style ------------------------------------------------------------------->
 <style lang="scss">
-  .table-cell {
-    display: grid;
-    align-items: center;
-    border-bottom: 1px solid $bdr-color--light;
-    padding: 10px;
+
+  //-- Standard View ----------------------------
+  .data-table .table-cell {
     position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    border-bottom: 1px solid $bdr-color--light;
+    padding: 5px 10px;
+    font-size: 0.7rem;
+    text-align: left;
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    @media screen and (min-width: $screen-width-sm) {
+      align-items: center;
+      padding: 10px;
+      font-size: inherit;
+      text-align: center;
+    }
 
     .table-cell-actions {
-      display: flex;
-      justify-content: center;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
 
-      button {
+      .btn {
         margin: 0 5px;
       }
     }
@@ -129,4 +141,13 @@
       outline: 0;
     }
   }
+
+  //-- List View --------------------------------
+  .data-table.data-table--list .table-cell {
+
+    @media screen and (min-width: $screen-width-sm) {
+      padding: 3px 10px;
+    }
+  }
+
 </style>

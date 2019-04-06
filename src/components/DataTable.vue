@@ -3,17 +3,15 @@
   <div
     data-test-component="DataTable"
     class="data-table"
+    :class="listView ? 'data-table--list' : '' "
   >
-
-    <!-- Description --------------------------->
-    <ProjectInfo
-      data-test-component="ProjectInfo"
-    />
 
     <!-- Table Filters ------------------------->
     <TableFilters
       data-test-component="TableFilters"
       v-model="searchText"
+      @toggleListView="toggleListView"
+      :listView="listView"
     />
 
     <!-- Table Header -------------------------->
@@ -55,7 +53,6 @@
 
 <!-- Script ------------------------------------------------------------------>
 <script>
-  import ProjectInfo from '@/components/DataTable/ProjectInfo.vue'
   import TableFilters from '@/components/DataTable/TableFilters.vue'
   import TableHeader from '@/components/DataTable/TableHeader.vue'
   import TableRow from '@/components/DataTable/TableRow.vue'
@@ -69,7 +66,6 @@
     },
 
     components: {
-      ProjectInfo,
       TableFilters,
       TableHeader,
       TableRow,
@@ -85,7 +81,8 @@
         selectedItems: [],
         currentPage: 0,
         perPage: 20,
-        pages: []
+        pages: [],
+        listView: false
       }
     },
 
@@ -216,6 +213,10 @@
 
       setCurrentPage(pageNum) {
         this.currentPage = pageNum
+      },
+
+      toggleListView() {
+        return this.listView = !this.listView
       }
 
     }
@@ -236,11 +237,8 @@
     cursor: pointer;
     outline: 0;
     transition: all .2s;
-
-    &:hover {
-      background-color: $color-black-1;
-      color: $txt-color--light;
-    }
+    @include hoverState();
+    @include activeState();
   }
 
   .btn.btn--confirm {
@@ -257,18 +255,83 @@
     &:last-child {
       margin: 0 0 0 2px;
     }
-
-    &.is-active {
-      border: 1px solid $color-black-1;
-    }
   }
 
   //-- Data Table ---------------------------------
+  //-- Standard View ----------------------------
   .data-table {
     width: 100vw;
     height: 100vh;
     display: grid;
-    grid-template-rows: 70px 40px 30px auto 30px;
+    grid-template-rows: 80px 40px auto 30px;
+
+    @media screen and (min-width: $screen-width-sm) {
+      grid-template-rows: 40px 30px auto 30px;
+    }
+
+    .table-row {
+      display: grid;
+      grid-template-columns: 30px 1fr;
+      grid-template-rows: 1fr;
+
+      @media screen and (min-width: $screen-width-sm) {
+        grid-template-columns: 55px 1fr;
+        grid-template-rows: auto;
+      }
+    }
+
+    .table-header, {
+      display: grid;
+      grid-template-columns: 30px 1fr;
+      grid-template-rows: 1fr;
+
+      @media screen and (min-width: $screen-width-sm) {
+        grid-template-columns: 55px 1fr 15px;
+      }
+    }
+
+    .table-header-cell.table-header-cell--checkbox,
+    .table-cell.table-cell--dropdownTrigger {
+      padding: 0;
+      align-items: center;
+    }
+
+    .table-header-actions,
+    .table-row-actions {
+      grid-area: table-cell-actions / 1 / 1;
+      border-right: 1px solid $bdr-color--light;
+
+      @media screen and (min-width: $screen-width-sm) {
+        grid-area: table-cell-actions / 1 / 1;
+        border: none;
+      }
+
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+      grid-template-columns: 1fr;
+
+      @media screen and (min-width: $screen-width-sm) {
+        grid-template-rows: 1fr;
+        grid-template-columns: 50px 5px;
+      }
+    }
+
+    .table-header-attrs,
+    .table-attrs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(0px, 1fr));
+      padding: 0;
+    }
+  }
+
+  //-- List View --------------------------------
+  .data-table.data-table--list {
+
+    .table-header-attrs,
+    .table-attrs {
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(auto-fit, minmax(0px, 1fr));
+    }
   }
 
   //-- Grid Row 1 -- Project Info ---------------
@@ -279,9 +342,11 @@
   //-- Body -------------------------------------
   .table-body {
     display: grid;
-    grid-auto-rows: 1fr;
+    grid-auto-rows: minmax(min-content, max-content);
     overflow-y: auto;
   }
 
   //-- Grid Row 5 -- Footer ---------------------
+
+  //-- Grid - Table Header, Table Rows ----------
 </style>

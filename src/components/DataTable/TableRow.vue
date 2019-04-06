@@ -5,33 +5,40 @@
     class="table-row"
   >
 
-    <!-- Select Item checkbox ------------------>
-    <div
-      data-test-TableCellCheckbox
-      class="table-cell table-cell--checkbox"
-    >
-      <input
-        data-test-checkbox
-        type="checkbox"
-        @click="toggle(item.id)"
+    <!-- Row Actions --------------------------->
+    <div class="table-row-actions">
+
+      <!-- Select Item checkbox ------------------>
+      <div
+        data-test-TableCellCheckbox
+        class="table-cell table-cell--checkbox"
       >
+        <input
+          data-test-checkbox
+          type="checkbox"
+          @click="toggle(item.id)"
+        >
+      </div>
+
+      <!-- Row Dropdown -------------------------->
+      <TableRowDropdown
+        data-test-component="TableRowDropdown"
+        :item="item"
+      />
+
     </div>
 
-    <!-- Row Dropdown -------------------------->
-    <TableRowDropdown
-      data-test-component="TableRowDropdown"
-      :item="item"
-    />
-
     <!-- Table Cells --------------------------->
-    <TableCell
-      data-test-component="TableCell"
-      class="table-cell"
-      v-for="(itemAttr, idx) in item"
-      :item="item"
-      :itemAttr="itemAttr"
-      :key="idx + '--cell'"
-    />
+    <div class="table-attrs">
+      <TableCell
+        data-test-component="TableCell"
+        class="table-cell"
+        v-for="(itemAttr, idx) in item"
+        :item="item"
+        :itemAttr="itemAttr"
+        :key="idx + '--cell'"
+      />
+    </div>
   </div>
 </template>
 
@@ -65,19 +72,37 @@
 
 <!-- Style ------------------------------------------------------------------->
 <style scoped lang="scss">
-  .table-row {
-    display: grid;
-    grid-template-columns: 50px 5px repeat(auto-fit, minmax(0px, 1fr));
-    background-color: $bg-color--light;
 
-    &:hover {
-      background-color: $bg-color--grey;
+  //-- Standard View ----------------------------
+  .data-table {
+
+    .table-row {
+      background-color: $bg-color--light;
+
+      &:hover {
+        background-color: $bg-color--grey;
+      }
+
+      @media screen and (min-width: $screen-width-sm) {
+        border: none;
+      }
     }
+
+    .table-cell.table-cell--checkbox,
+    .table-cell.table-cell--dropdownTrigger {
+      @include flexCentered(column);
+      padding: 0;
+    }
+
   }
 
-  .table-cell.table-cell--checkbox,
-  .table-cell.table-cell--dropdownTrigger {
-    @include flexCentered(column);
-    padding: 0;
+  //-- List View --------------------------------
+  .data-table.data-table--list {
+
+    .table-row {
+      border-bottom: 1px solid $bdr-color--dark;
+    }
+
   }
+
 </style>
