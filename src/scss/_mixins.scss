@@ -13,3 +13,17 @@
   text-align: center;
   color: $color-black-1;
 }
+
+@mixin activeState() {
+  &.is-active {
+    background-color: $color-black-1;
+    color: $txt-color--light;
+  }
+}
+
+@mixin hoverState() {
+  &:hover {
+    background-color: $color-black-1;
+    color: $txt-color--light;
+  }
+}

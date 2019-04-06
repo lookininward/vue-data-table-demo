@@ -118,7 +118,7 @@
       font-weight: 500;
       color: $txt-color--dark;
       cursor: pointer;
-      transition: all .3s;
+      transition: all .2s;
       overflow-x: auto;
 
       @media screen and (min-width: $screen-width-sm) {
