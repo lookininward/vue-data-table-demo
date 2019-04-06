@@ -23,7 +23,11 @@ export default new Vuex.Store({
   actions: {
 
     async fetchData({commit}) {
-      const data = await API.graphql(graphqlOperation(queries.listItems))
+      const data = await API.graphql(
+        graphqlOperation(queries.listItems, {
+          limit: 200
+        })
+      )
       commit('FETCH_ITEMS', data)
     },
 
