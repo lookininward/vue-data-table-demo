@@ -5,7 +5,12 @@ describe('TableRow.vue', () => {
 
   it('component does render', () => {
     let item = { "id": "3471DA17-401F-9633-BF81-4CADA6FD5C79" }
-    let wrapper = shallowMount(TableRow, {propsData:  { item }})
+    let wrapper = shallowMount(TableRow, {
+      propsData:  {
+        item,
+        selectedItemIDs: []
+      }
+    })
     expect(wrapper.attributes()['data-test-component']).toBe('TableRow')
   })
 
@@ -18,7 +23,12 @@ describe('TableRow.vue', () => {
       "amount": 345.54
     }
 
-    let wrapper = mount(TableRow, {propsData: { item }})
+    let wrapper = mount(TableRow, {
+      propsData: {
+        item,
+        selectedItemIDs: []
+      }
+    })
     let tableCells = wrapper.findAll('[data-test-component="TableCell"]')
     let itemKeys = Object.keys(item)
 

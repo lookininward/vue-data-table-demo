@@ -13,11 +13,15 @@
         data-test-TableCellCheckbox
         class="table-cell table-cell--checkbox"
       >
-        <input
-          data-test-checkbox
-          type="checkbox"
+        <i
+          class="input input--checkbox"
+          :class="selectedItemIDs.includes(item.id) ?
+                  'far fa-check-square' :
+                  'far fa-square'"
           @click="toggle(item.id)"
         >
+        </i>
+
       </div>
 
       <!-- Row Popover ------------------------->
@@ -52,7 +56,8 @@
 
     props: {
       item: { type: Object },
-      hiddenFields: { type: Array }
+      hiddenFields: { type: Array },
+      selectedItemIDs: { type: Array }
     },
 
     components: {

@@ -27,7 +27,10 @@
       :sortKey="sortKey"
       :reverse="reverse"
       :listView="listView"
+      :numItems="items ? items.length : 0"
+      :numSelectedItemIDs="selectedItemIDs ? selectedItemIDs.length : 0"
       @sortColumns="sortTableBy"
+      @selectAllItems="selectAllItems"
     />
 
     <!-- Table Body ---------------------------->
@@ -44,6 +47,7 @@
         :item="item"
         :headers="headers"
         :hiddenFields="hiddenFields"
+        :selectedItemIDs="selectedItemIDs"
         @toggleSelect="toggleSelect"
       />
     </div>
@@ -52,7 +56,7 @@
     <TableFooter
       data-test-component="TableFooter"
       :totalItems="items ? items.length : 0"
-      :selectedItems="selectedItems ? selectedItems.length : 0"
+      :numSelectedItemIDs="selectedItemIDs.length"
       :totalPages="pages.length"
       :currentPage="currentPage"
       @setCurrentPage="setCurrentPage"
@@ -87,7 +91,7 @@
         sortType: null,
         reverse: false,
         searchText: '',
-        selectedItems: [],
+        selectedItemIDs: [],
         currentPage: 0,
         perPage: 20,
         pages: [],
@@ -184,13 +188,13 @@
       },
 
       toggleSelect(itemID) {
-        const selectedItems = this.selectedItems
+        const selectedItemIDs = this.selectedItemIDs
 
-        if (selectedItems.includes(itemID)) {
-          const idx = selectedItems.findIndex(x => x === itemID)
-          selectedItems.splice(idx, 1)
+        if (selectedItemIDs.includes(itemID)) {
+          const idx = selectedItemIDs.findIndex(x => x === itemID)
+          selectedItemIDs.splice(idx, 1)
         } else {
-          selectedItems.push(itemID)
+          selectedItemIDs.push(itemID)
         }
       },
 
@@ -244,6 +248,22 @@
 
       setPerPage(value) {
         this.perPage = value
+      },
+
+      selectAllItems() {
+        let items = this.items
+        const selectedItemIDs = this.selectedItemIDs
+        let result = []
+
+        if (!selectedItemIDs.length) {
+          items.forEach(item => {
+            if (!selectedItemIDs.includes(item.id)) {
+              result.push(item.id)
+            }
+          })
+        }
+
+        this.selectedItemIDs = result
       }
 
     }
@@ -281,6 +301,17 @@
 
     &:last-child {
       margin: 0 0 0 2px;
+    }
+  }
+
+  //-- Inputs -----------------------------------
+
+  i.input.input--checkbox {
+    font-size: $font-lg;
+    cursor: pointer;
+
+    @media screen and (min-width: $screen-width-sm) {
+      margin: 2px;
     }
   }
 

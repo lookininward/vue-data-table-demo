@@ -73,19 +73,19 @@ describe('DataTable.vue', () => {
       "amount": 345.54
     }]
 
-    const wrapper = shallowMount(DataTable, { propsData:  { items } })
+    const wrapper = shallowMount(DataTable, { propsData: { items } })
 
     // none selected
-    expect(wrapper.vm.selectedItems.length).toBe(0)
+    expect(wrapper.vm.selectedItemIDs.length).toBe(0)
 
     // toggle select item method on component
     wrapper.vm.toggleSelect(items[0].id)
 
     // includes selection
-    expect(wrapper.vm.selectedItems.length).toBe(1)
+    expect(wrapper.vm.selectedItemIDs.length).toBe(1)
 
     expect(
-      wrapper.vm.selectedItems[0]
+      wrapper.vm.selectedItemIDs[0]
     ).toBe("3471DA17-401F-9633-BF81-4CADA6FD5C79")
   })
 

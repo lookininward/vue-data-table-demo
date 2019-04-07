@@ -13,7 +13,14 @@
         data-test-TableCellCheckbox
         class="table-header-cell table-header-cell--checkbox"
       >
-        <input type="checkbox">
+        <i
+          class="input input--checkbox"
+          :class="allItemsSelected ?
+                  'fas fa-check-square is-active' :
+                  'far fa-square'"
+          @click="selectAll()"
+        >
+        </i>
       </div>
 
       <!-- All Items Popover ------------------->
@@ -98,17 +105,31 @@
     name: 'TableHeader',
 
     props: {
-     headers: { type: Array },
-     hiddenFields: { type: Array },
-     sortKey: { type: String },
-     reverse: { type: Boolean },
-     listView: { type: Boolean }
+      headers: { type: Array },
+      hiddenFields: { type: Array },
+      sortKey: { type: String },
+      reverse: { type: Boolean },
+      listView: { type: Boolean },
+      numItems: { type: Number },
+      numSelectedItemIDs: { type: Number }
+    },
+
+    computed: {
+
+      allItemsSelected() {
+        return this.numItems  === this.numSelectedItemIDs
+      }
+
     },
 
     methods: {
 
       sort(header, type) {
         this.$emit('sortColumns', header, type)
+      },
+
+      selectAll() {
+        this.$emit('selectAllItems')
       }
 
     }
@@ -160,6 +181,13 @@
       &.table-header-cell--popoverTrigger {
         &:hover {
           background-color: inherit;
+        }
+      }
+
+      &.table-header-cell--popoverTrigger,
+      &.table-header-cell--checkbox {
+        &:hover {
+          color: $txt-color--dark;
         }
       }
 
