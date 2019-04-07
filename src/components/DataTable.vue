@@ -317,12 +317,6 @@
       }
     }
 
-    .table-header-cell.table-header-cell--checkbox,
-    .table-cell.table-cell--dropdownTrigger {
-      padding: 0;
-      align-items: center;
-    }
-
     .table-header-actions,
     .table-row-actions {
       grid-area: table-cell-actions / 1 / 1;

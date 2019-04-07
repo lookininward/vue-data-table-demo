@@ -1,18 +1,18 @@
 <!-- Template ---------------------------------------------------------------->
 <template>
   <div
-    data-test-component="TableRowDropdown"
-    class="table-cell table-cell--dropdownTrigger"
+    data-test-component="rowPopover"
+    class="table-cell table-cell--rowPopover"
   >
     <div
-      data-test-dropdown="itemRow"
+      data-test-popover="rowPopover"
       v-bind:id="`item-${item.id}`"
-      class="row-dropdown"
+      class="row-popover"
       v-tippy-html
     >
       <div
         data-test-btn="deleteItem"
-        class="row-dropdown-option"
+        class="row-popover-option"
         @click="deleteItem(item.id)"
       >
         Delete
@@ -20,7 +20,7 @@
     </div>
 
     <i
-      data-test-btn="dropdownTrigger"
+      data-test-btn="popoverTrigger"
       class="fas fa-ellipsis-v"
       v-tippy="{
         reactive: true,
@@ -28,7 +28,7 @@
         trigger : 'click',
         placement: 'right',
         html: `#item-${item.id}`,
-        theme : 'row-dropdown',
+        theme : 'popover',
         duration: 100
       }"
     >
@@ -43,7 +43,7 @@
   import { mapActions } from 'vuex'
 
   export default {
-    name: 'TableRow',
+    name: 'RowPopover',
 
     props: {
       item: { type: Object }
@@ -65,9 +65,13 @@
 </script>
 
 <!-- Style ------------------------------------------------------------------->
-<style lang="scss">
+<style scoped lang="scss">
+  .table-cell.table-cell--rowPopover {
+    @include flexCentered(column);
+    padding: 0;
+  }
 
-  .table-cell.table-cell--dropdownTrigger i {
+  .table-cell.table-cell--rowPopover i {
     color: $txt-color--light2;
     cursor: pointer;
 
@@ -76,19 +80,16 @@
     }
   }
 
-  .row-dropdown-theme {
-    @include tippyBaseTheme();
-  }
-
-  .row-dropdown {
+  .row-popover {
     @include flexCentered(column);
     @include fontStandard();
-    min-width: 100px;
-    max-width: 100px;
+    width: 100px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(auto-fit, minmax(0px, 1fr));
   }
 
-  .row-dropdown-option {
-    width: 100%;
+  .row-popover-option {
     padding: 5px 10px;
     background-color: $bg-color--light;
     cursor: pointer;

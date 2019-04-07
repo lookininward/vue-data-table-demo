@@ -5,13 +5,13 @@
     class="table-cell"
   >
     {{ itemAttr}}
+
     <EditPopover
       v-if="isEditable"
       data-test-component="editPopoverTrigger"
       :item="item"
       :itemAttr="itemAttr"
     />
-
   </div>
 </template>
 

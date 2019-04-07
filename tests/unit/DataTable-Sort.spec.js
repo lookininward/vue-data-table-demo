@@ -98,4 +98,5 @@ describe('DataTable.vue sort', () => {
     expect(wrapperDataTable.vm.sortedItems[1]).toBe(item2)
     expect(wrapperDataTable.vm.sortedItems[2]).toBe(item1)
   })
+
 })

@@ -93,7 +93,9 @@
       stopEditingField: function () {
         this.isEditing = false
         let popoverTrigger = this.$refs["edit-popover-trigger"]
-        popoverTrigger._tippy.hide()
+        if (popoverTrigger._tippy) {
+          popoverTrigger._tippy.hide()
+        }
       }
     }
   }

@@ -16,10 +16,10 @@
         <input type="checkbox">
       </div>
 
-      <!-- All Items Dropdown ------------------>
+      <!-- All Items Popover ------------------->
       <div
-        data-test-TableHeaderCellDropDown
-        class="table-header-cell table-header-cell--dropdown"
+        data-test-TableHeaderCellPopoverTrigger
+        class="table-header-cell table-header-cell--popoverTrigger"
       >
         <i class="fas fa-ellipsis-v"></i>
       </div>
@@ -181,14 +181,14 @@
       }
 
       &.table-header-cell--checkbox,
-      &.table-header-cell--dropdown {
+      &.table-header-cell--popoverTrigger {
         display: grid;
         align-items: center;
         padding: 0px;
         cursor: auto;
       }
 
-      &.table-header-cell--dropdown i {
+      &.table-header-cell--popoverTrigger i {
         cursor: pointer;
       }
     }

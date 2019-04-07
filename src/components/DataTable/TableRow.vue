@@ -20,9 +20,9 @@
         >
       </div>
 
-      <!-- Row Dropdown -------------------------->
-      <TableRowDropdown
-        data-test-component="TableRowDropdown"
+      <!-- Row Popover ------------------------->
+      <RowPopover
+        data-test-component="RowPopover"
         :item="item"
       />
 
@@ -44,7 +44,7 @@
 
 <!-- Script ------------------------------------------------------------------>
 <script>
-  import TableRowDropdown from '@/components/DataTable/TableRow/TableRowDropdown.vue'
+  import RowPopover from '@/components/DataTable/TableRow/RowPopover.vue'
   import TableCell from '@/components/DataTable/TableRow/TableCell.vue'
 
   export default {
@@ -56,7 +56,7 @@
     },
 
     components: {
-      TableRowDropdown,
+      RowPopover,
       TableCell
     },
 
@@ -104,21 +104,16 @@
       }
     }
 
-    .table-cell.table-cell--checkbox,
-    .table-cell.table-cell--dropdownTrigger {
+    .table-cell.table-cell--checkbox {
       @include flexCentered(column);
       padding: 0;
     }
-
   }
 
   //-- List View --------------------------------
   .data-table.data-table--list {
-
     .table-row {
       border-bottom: 1px solid $bdr-color--dark;
     }
-
   }
-
 </style>
