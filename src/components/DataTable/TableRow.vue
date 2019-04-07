@@ -103,11 +103,6 @@
         border: none;
       }
     }
-
-    .table-cell.table-cell--checkbox {
-      @include flexCentered(column);
-      padding: 0;
-    }
   }
 
   //-- List View --------------------------------

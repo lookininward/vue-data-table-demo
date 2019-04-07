@@ -347,8 +347,18 @@
 
       @media screen and (min-width: $screen-width-sm) {
         grid-template-rows: 1fr;
-        grid-template-columns: 50px 5px;
+        grid-template-columns: 30px 25px;
         border: none;
+      }
+    }
+
+    .table-header-cell.table-header-cell--checkbox,
+    .table-cell.table-cell--checkbox {
+      @include flexCentered(column);
+      padding: 0;
+
+      @media screen and (min-width: $screen-width-sm) {
+        align-items: flex-end;
       }
     }
 

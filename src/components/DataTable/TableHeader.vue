@@ -130,7 +130,6 @@
     .table-header-cell {
       position: relative;
       @include flexCentered(column);
-      @include activeState();
       @include hoverState();
       align-items: flex-start;
       padding: 0px 10px;
@@ -159,13 +158,14 @@
 
       &.table-header-cell--checkbox,
       &.table-header-cell--popoverTrigger {
-        display: grid;
-        align-items: center;
-        cursor: auto;
-
         &:hover {
           background-color: inherit;
         }
+      }
+
+      &.table-header-cell--popoverTrigger {
+        align-items: center;
+        cursor: auto;
       }
 
       &.table-header-cell--popoverTrigger i {

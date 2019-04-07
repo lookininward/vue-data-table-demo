@@ -71,7 +71,7 @@
     align-items: center;
     background-color: $bg-color--grey;
     border-top: 1px solid $bdr-color--light2;
-    padding: 0 20px;
+    padding: 0 15px;
     font-size: $font-sm;
 
     @media screen and (min-width: $screen-width-sm) {
