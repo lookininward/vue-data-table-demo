@@ -34,14 +34,14 @@
 
       <i
         data-test-btn="popoverTrigger"
-        class="fas fa-info-circle popover-trigger"
+        class="fas fa-sort popover-trigger"
         v-tippy="{
           reactive: true,
           interactive : true,
           trigger : 'click',
           placement: 'bottom',
           html: '#info-popover',
-          theme : 'info-popover',
+          theme : 'popover',
           duration: 100
         }"
       >
@@ -50,66 +50,45 @@
       <div
         id="info-popover"
         data-test-popover="info"
-        class="info-popover"
+        class="popover"
         v-tippy-html
       >
-        <template v-for="(header, idx) in headers">
+        <div class="popover-options-list">
           <div
+            v-for="(header, idx) in headers"
             v-bind:key="idx"
+            class="popover-option"
+            :class="header.header === sortKey ? 'is-active' : ''"
+            @click="sort(header.header, header.type)"
           >
             {{ header.header }}
           </div>
-        </template>
+        </div>
       </div>
     </div>
 
     <!-- Headers ------------------------------->
     <div class="table-header-attrs">
       <template v-for="(header, idx) in headers">
-
-
-        <template
+        <div
+          data-test-HeaderCell
           v-if="!hiddenFields.includes(header.header)"
+          class="table-header-cell"
+          :class="header.header === sortKey ? 'is-active' : ''"
+          :key="idx + '--header'"
+          @click="sort(header.header, header.type)"
         >
-          <template v-if="header.header === sortKey">
-            <div
-              data-test-HeaderCell
-              class="table-header-cell table-header-cell--active"
-              :key="idx + '--header'"
-              @click="sort(header.header, header.type)"
-            >
-              {{ header.header }}
-              <template v-if="reverse">
-                <i
-                  data-test-sortIndicator
-                  class="fas fa-long-arrow-alt-up table-sort-indicator"
-                >
-                </i>
-              </template>
-              <template v-else>
-                <i
-                  data-test-sortIndicator
-                  class="fas fa-long-arrow-alt-down table-sort-indicator"
-                >
-                </i>
-              </template>
-            </div>
-          </template>
+          {{ header.header }}
 
-          <template v-else>
-            <div
-              data-test-HeaderCell
-              class="table-header-cell"
-              :key="idx + '--header'"
-              @click="sort(header.header, header.type)"
-            >
-              {{ header.header }}
-            </div>
-          </template>
-        </template>
+          <i
+            v-if="header.header === sortKey"
+            data-test-sortIndicator
+            class="fas fa-sort table-sort-indicator"
+          >
+          </i>
+        </div>
       </template>
     </div>
-
   </div>
 </template>
 
@@ -151,6 +130,8 @@
     .table-header-cell {
       position: relative;
       @include flexCentered(column);
+      @include activeState();
+      @include hoverState();
       align-items: flex-start;
       padding: 0px 10px;
       font-size: 12px;
@@ -176,16 +157,15 @@
         }
       }
 
-      &.table-header-cell--active {
-        font-weight: 600;
-      }
-
       &.table-header-cell--checkbox,
       &.table-header-cell--popoverTrigger {
         display: grid;
         align-items: center;
-        padding: 0px;
         cursor: auto;
+
+        &:hover {
+          background-color: inherit;
+        }
       }
 
       &.table-header-cell--popoverTrigger i {
@@ -194,10 +174,7 @@
     }
 
     .edit-mode {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
+      @include flexCentered(row);
       padding: 0 10px;
       color: $txt-color--dark;
       font-weight: 600;
@@ -208,19 +185,6 @@
       color: $txt-color--dark;
       margin-left: 8px;
     }
-
-  }
-
-  .info-popover-theme {
-    @include tippyBaseTheme();
-  }
-
-  .info-popover {
-    @include fontStandard();
-    text-align: left;
-    padding: 10px 15px;
-    background-color: $bg-color--light;
-    color: $txt-color--dark;
   }
 
   //-- List View --------------------------------

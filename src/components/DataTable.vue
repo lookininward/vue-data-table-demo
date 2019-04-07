@@ -40,10 +40,10 @@
       <TableRow
         data-test-component="TableRow"
         v-for="item in sortedItems"
-        v-bind:item="item"
         v-bind:key="item.id"
+        :item="item"
         :headers="headers"
-        v-bind:hiddenFields="hiddenFields"
+        :hiddenFields="hiddenFields"
         @toggleSelect="toggleSelect"
       />
     </div>
@@ -284,6 +284,36 @@
     }
   }
 
+  //-- Popovers ---------------------------------
+  .popover-theme {
+    @include tippyBaseTheme();
+  }
+
+  .popover {
+    @include fontStandard();
+    text-align: left;
+    background-color: $bg-color--light;
+    color: $txt-color--dark;
+  }
+
+  .popover.popover--standard {
+    @include fontStandard();
+    text-align: left;
+    padding: 10px 15px;
+    background-color: $bg-color--light;
+    color: $txt-color--dark;
+  }
+
+  .popover-options-list {
+    .popover-option {
+      width: 100%;
+      padding: 3px 8px;
+      @include activeState();
+      @include hoverState();
+      cursor: pointer;
+    }
+  }
+
   //-- Data Table ---------------------------------
   //-- Standard View ----------------------------
   .data-table {
@@ -296,18 +326,9 @@
       grid-template-rows: 40px 30px auto 30px;
     }
 
+    //-- maintain alignment of header, row columns --
+    .table-header,
     .table-row {
-      display: grid;
-      grid-template-columns: 30px 1fr;
-      grid-template-rows: 1fr;
-
-      @media screen and (min-width: $screen-width-sm) {
-        grid-template-columns: 55px 1fr;
-        grid-template-rows: auto;
-      }
-    }
-
-    .table-header, {
       display: grid;
       grid-template-columns: 30px 1fr;
       grid-template-rows: 1fr;
@@ -319,21 +340,15 @@
 
     .table-header-actions,
     .table-row-actions {
-      grid-area: table-cell-actions / 1 / 1;
-      border-right: 1px solid $bdr-color--light;
-
-      @media screen and (min-width: $screen-width-sm) {
-        grid-area: table-cell-actions / 1 / 1;
-        border: none;
-      }
-
       display: grid;
       grid-template-rows: 1fr 1fr;
       grid-template-columns: 1fr;
+      border-right: 1px solid $bdr-color--light;
 
       @media screen and (min-width: $screen-width-sm) {
         grid-template-rows: 1fr;
         grid-template-columns: 50px 5px;
+        border: none;
       }
     }
 
@@ -341,13 +356,11 @@
     .table-attrs {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(0px, 1fr));
-      padding: 0;
     }
   }
 
   //-- List View --------------------------------
   .data-table.data-table--list {
-
     .table-header-attrs,
     .table-attrs {
       grid-template-columns: 1fr;
@@ -368,28 +381,4 @@
   }
 
   //-- Grid Row 5 -- Footer ---------------------
-
-  //-- Grid - Table Header, Table Rows ----------
-
-  .filters-popover-theme {
-    @include tippyBaseTheme();
-  }
-
-  .info-popover {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 2fr;
-
-
-    @include fontStandard();
-    text-align: left;
-    padding: 10px 15px;
-    background-color: $bg-color--light;
-    color: $txt-color--dark;
-  }
-
-  //-- Popovers ---------------------------------
-  .popover-theme {
-    @include tippyBaseTheme();
-  }
 </style>

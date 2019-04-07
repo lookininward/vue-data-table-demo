@@ -32,16 +32,9 @@
 
     <!-- Filters ------------------------------->
     <div
-      data-test-component="Filters"
-      ref="Filters"
+      data-test-filters
       class="filter-options"
     >
-      <div
-        data-test-btn=""
-        class="filter filter--one"
-      >
-        <i class="fas fa-sliders-h"></i>
-      </div>
 
       <!-- Data Filters  -->
       <div
@@ -53,7 +46,7 @@
           trigger : 'click',
           placement: 'bottom',
           html: '#filters-popover',
-          theme : 'filters-popover',
+          theme : 'popover',
           duration: 100
         }"
       >
@@ -63,14 +56,12 @@
       <div
         id="filters-popover"
         data-test-popover="filters"
-        class="info-popover"
+        class="popover popover--standard"
         v-tippy-html
       >
 
         <!-- Items Per Page -->
-        <div
-          class="filter-section filter-section--perPage"
-        >
+        <div class="filter-section filter-section--perPage">
           <div class="filter-section-header">
             Items Per Page
           </div>
@@ -78,6 +69,7 @@
             <select
               v-model="perPage"
               v-on:input="updatePerPage($event.target.value)"
+              class="input input--select"
             >
               <option
                 v-bind:value="5"
@@ -99,15 +91,14 @@
         </div>
 
         <!-- Filter Columns -->
-        <div
-          class="filter-section filter-section--dataColumns"
-        >
+        <div class="filter-section filter-section--dataColumns">
           <div class="filter-section-header">
             Data Columns
           </div>
           <label
             v-for="(header, idx) in headers"
             v-bind:key="idx"
+            class="label label--dataColumnOption"
           >
             <input
               type="checkbox"
@@ -129,15 +120,18 @@
         <i class="fas fa-list"></i>
       </div>
 
+      <!-- Github Project Repo  -->
       <a
-        class="filter filter--"
+        class="filter"
         href="https://github.com/lookininward/data-table"
         target="_blank"
       >
         <i class="fas fa-code"></i>
       </a>
+
+      <!-- Contact Vinoth Michael Xavier -->
       <a
-        class="filter filter--"
+        class="filter"
         href="mailto:vinoth.michaelxavier@gmail.com"
         target="_blank"
       >
@@ -210,6 +204,8 @@
     }
   }
 
+
+  //-- Logo + Search ----------------------------
   .logoSearch {
     display: grid;
     grid-template-columns: 1fr 4fr;
@@ -229,7 +225,7 @@
     text-decoration: none;
   }
 
-  .data-filters .input.input--search {
+  .input.input--search {
     display: grid;
     border: none;
     border-right: 1px solid $bdr-color--light2;
@@ -241,16 +237,15 @@
 
     @media screen and (min-width: $screen-width-sm) {
       font-size: $font-lg;
-      padding: 0 28px;
+      padding: 0 15px 3px 15px;
     }
   }
 
-  .data-filters .filter-options {
+  //-- Filter Options ---------------------------
+  .filter-options {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(0px, 1fr));
     align-items: center;
-    padding: 0;
-
 
     @media screen and (min-width: $screen-width-sm) {
       grid-template-columns: repeat(auto-fit, minmax(0px, 50px));
@@ -258,44 +253,55 @@
   }
 
   .filter {
+    @include flexCentered(row);
+    @include hoverState();
     width: 100%;
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     cursor: pointer;
-    @include hoverState();
     font-size: $font-md;
     color: $txt-color--dark;
     text-decoration: none;
     transition: all .2s;
   }
 
-  .filter.filter--listView {
-    @include activeState();
-
-    @media screen and (min-width: $screen-width-sm) {
-      display: none;
-    }
-  }
-
   .filter-section {
-    padding: 5px 0;
+    margin-bottom: 5px;
   }
 
   .filter-section-header {
-    font-weight: 500;
+    margin-bottom: 8px;
+    font-weight: 600;
+    cursor: default;
   }
 
   .filter-section.filter-section--dataColumns {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: repeat(auto-fit, minmax(0px, 1fr));
+
+    .label.label--dataColumnOption {
+      cursor: pointer;
+    }
   }
 
-  .filter-section.filter-section--perPage{
+  .filter-section.filter-section--perPage {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
+
+    .input.input--select {
+      width: 100%;
+      cursor: pointer;
+      outline: 0;
+    }
+  }
+
+  //-- List View --------------------------------
+  .filter.filter--listView {
+    @include activeState();
+
+    @media screen and (min-width: $screen-width-sm) {
+      display: none;
+    }
   }
 </style>

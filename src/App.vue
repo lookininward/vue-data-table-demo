@@ -16,6 +16,7 @@ body {
 
 #app {
   @include fontStandard();
+  user-select: none;
 }
 
 h3 {
