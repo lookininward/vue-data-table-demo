@@ -13,8 +13,10 @@
       :headers="headers"
       :hiddenFields="hiddenFields"
       :listView="listView"
+      :perPage="perPage"
       @toggleListView="toggleListView"
       @toggleFields="toggleFields"
+      @setPerPage="setPerPage"
     />
 
     <!-- Table Header -------------------------->
@@ -238,6 +240,10 @@
           hiddenFields.push(field)
         }
 
+      },
+
+      setPerPage(value) {
+        this.perPage = value
       }
 
     }

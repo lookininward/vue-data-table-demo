@@ -75,10 +75,25 @@
             Items Per Page
           </div>
           <div>
-            <select>
-              <option v-bind:value="{ number: 5 }">5</option>
-              <option v-bind:value="{ number: 10 }">10</option>
-              <option v-bind:value="{ number: 20 }">20</option>
+            <select
+              v-model="perPage"
+              v-on:input="updatePerPage($event.target.value)"
+            >
+              <option
+                v-bind:value="5"
+              >
+                5
+              </option>
+              <option
+                v-bind:value="10"
+              >
+                10
+              </option>
+              <option
+                v-bind:value="20"
+              >
+                20
+              </option>
             </select>
           </div>
         </div>
@@ -144,7 +159,8 @@
       searchText: { type: String },
       listView: { type: Boolean },
       headers: { type: Array },
-      hiddenFields: { type: Array }
+      hiddenFields: { type: Array },
+      perPage: { type: Number }
     },
 
     created() {
@@ -160,6 +176,10 @@
 
       updateValue: function (value) {
         this.$emit('input', value)
+      },
+
+      updatePerPage: function (value) {
+        this.$emit('setPerPage', parseInt(value))
       },
 
       toggleListView() {
