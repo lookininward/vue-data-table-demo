@@ -313,7 +313,7 @@
       grid-template-rows: 1fr;
 
       @media screen and (min-width: $screen-width-sm) {
-        grid-template-columns: 55px 1fr 15px;
+        grid-template-columns: 55px 1fr;
       }
     }
 
@@ -392,5 +392,10 @@
     padding: 10px 15px;
     background-color: $bg-color--light;
     color: $txt-color--dark;
+  }
+
+  //-- Popovers ---------------------------------
+  .popover-theme {
+    @include tippyBaseTheme();
   }
 </style>

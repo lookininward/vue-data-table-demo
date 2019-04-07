@@ -110,12 +110,6 @@
       </template>
     </div>
 
-    <!-- Scrollbar Spacer ---------------------->
-    <div
-      data-test-scrollbarSpacer
-      class="table-header-scrollbarSpacer"
-    >
-    </div>
   </div>
 </template>
 
@@ -231,17 +225,8 @@
 
   //-- List View --------------------------------
   .data-table.data-table--list .table-header {
-
     .table-header-attrs {
       display: none;
-    }
-
-    .table-header-scrollbarSpacer {
-      display: none;
-
-      @media screen and (min-width: $screen-width-sm) {
-        display: flex;
-      }
     }
   }
 </style>
