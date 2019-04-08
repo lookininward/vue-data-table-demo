@@ -18,6 +18,7 @@
       </a>
 
       <!-- Search -------------------------------->
+      <!-- searchInput -->
       <input
         data-test-input="Search"
         ref="SearchComponent"
@@ -31,22 +32,85 @@
 
     <!-- Filters ------------------------------->
     <div
-      data-test-component="Filters"
-      ref="Filters"
+      data-test-filters
       class="filter-options"
     >
+
+      <!-- Data Filters  -->
       <div
-        data-test-btn=""
-        class="filter filter--one"
-      >
-        <i class="fas fa-sliders-h"></i>
-      </div>
-      <div
-        data-test-btn=""
-        class="filter filter--"
+        data-test-btn="dataFiltersPopoverTrigger"
+        class="filter filter--dataFilters"
+        v-tippy="{
+          reactive: true,
+          interactive : true,
+          trigger : 'click',
+          placement: 'bottom',
+          html: '#filters-popover',
+          theme : 'popover',
+          duration: 100
+        }"
       >
         <i class="fas fa-filter"></i>
       </div>
+
+      <div
+        id="filters-popover"
+        data-test-popover="filters"
+        class="popover popover--standard"
+        v-tippy-html
+      >
+
+        <!-- Items Per Page -->
+        <div class="filter-section filter-section--perPage">
+          <div class="filter-section-header">
+            Items Per Page
+          </div>
+          <div>
+            <select
+              v-model="perPage"
+              v-on:input="updatePerPage($event.target.value)"
+              class="input input--select"
+            >
+              <option
+                v-bind:value="5"
+              >
+                5
+              </option>
+              <option
+                v-bind:value="10"
+              >
+                10
+              </option>
+              <option
+                v-bind:value="20"
+              >
+                20
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Filter Columns -->
+        <div class="filter-section filter-section--dataColumns">
+          <div class="filter-section-header">
+            Data Columns
+          </div>
+          <label
+            v-for="(header, idx) in headers"
+            v-bind:key="idx"
+            class="label label--dataColumnOption"
+          >
+            <input
+              type="checkbox"
+              :checked="!hiddenFields.includes(header)"
+              @click="toggleFields(header.header)"
+            >
+            {{ header.header }}
+          </label>
+        </div>
+      </div>
+
+      <!-- List View  -->
       <div
         data-test-btn="listView"
         class="filter filter--listView"
@@ -56,15 +120,18 @@
         <i class="fas fa-list"></i>
       </div>
 
+      <!-- Github Project Repo  -->
       <a
-        class="filter filter--"
+        class="filter"
         href="https://github.com/lookininward/data-table"
         target="_blank"
       >
         <i class="fas fa-code"></i>
       </a>
+
+      <!-- Contact Vinoth Michael Xavier -->
       <a
-        class="filter filter--"
+        class="filter"
         href="mailto:vinoth.michaelxavier@gmail.com"
         target="_blank"
       >
@@ -76,13 +143,23 @@
 
 <!-- Script ------------------------------------------------------------------>
 <script>
+  import Vue from 'vue'
+  import VueTippy from 'vue-tippy'
+
   export default {
     name: 'TableFilters',
 
     props: {
-     searchText: { type: String },
-     listView: { type: Boolean }
-   },
+      searchText: { type: String },
+      listView: { type: Boolean },
+      headers: { type: Array },
+      hiddenFields: { type: Array },
+      perPage: { type: Number }
+    },
+
+    created() {
+      Vue.use(VueTippy)
+    },
 
     mounted() {
       let refs = this.$refs
@@ -91,12 +168,20 @@
 
     methods: {
 
-     updateValue: function (value) {
+      updateValue: function (value) {
         this.$emit('input', value)
+      },
+
+      updatePerPage: function (value) {
+        this.$emit('setPerPage', parseInt(value))
       },
 
       toggleListView() {
         this.$emit('toggleListView')
+      },
+
+      toggleFields(field) {
+        this.$emit('toggleFields', field)
       }
 
     }
@@ -105,7 +190,7 @@
 </script>
 
 <!-- Style ------------------------------------------------------------------->
-<style scoped lang="scss">
+<style lang="scss">
 
   //-- Grid Row 2 -------------------------------
   .data-filters {
@@ -119,6 +204,8 @@
     }
   }
 
+
+  //-- Logo + Search ----------------------------
   .logoSearch {
     display: grid;
     grid-template-columns: 1fr 4fr;
@@ -138,7 +225,7 @@
     text-decoration: none;
   }
 
-  .data-filters .input.input--search {
+  .input.input--search {
     display: grid;
     border: none;
     border-right: 1px solid $bdr-color--light2;
@@ -150,16 +237,15 @@
 
     @media screen and (min-width: $screen-width-sm) {
       font-size: $font-lg;
-      padding: 0 28px;
+      padding: 0 15px 3px 15px;
     }
   }
 
-  .data-filters .filter-options {
+  //-- Filter Options ---------------------------
+  .filter-options {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(0px, 1fr));
     align-items: center;
-    padding: 0;
-
 
     @media screen and (min-width: $screen-width-sm) {
       grid-template-columns: repeat(auto-fit, minmax(0px, 50px));
@@ -167,19 +253,50 @@
   }
 
   .filter {
+    @include flexCentered(row);
+    @include hoverState();
     width: 100%;
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     cursor: pointer;
-    @include hoverState();
     font-size: $font-md;
     color: $txt-color--dark;
     text-decoration: none;
     transition: all .2s;
   }
 
+  .filter-section {
+    margin-bottom: 5px;
+  }
+
+  .filter-section-header {
+    margin-bottom: 8px;
+    font-weight: 600;
+    cursor: default;
+  }
+
+  .filter-section.filter-section--dataColumns {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(auto-fit, minmax(0px, 1fr));
+
+    .label.label--dataColumnOption {
+      cursor: pointer;
+    }
+  }
+
+  .filter-section.filter-section--perPage {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+
+    .input.input--select {
+      width: 100%;
+      cursor: pointer;
+      outline: 0;
+    }
+  }
+
+  //-- List View --------------------------------
   .filter.filter--listView {
     @include activeState();
 

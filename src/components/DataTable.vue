@@ -10,18 +10,27 @@
     <TableFilters
       data-test-component="TableFilters"
       v-model="searchText"
-      @toggleListView="toggleListView"
+      :headers="headers"
+      :hiddenFields="hiddenFields"
       :listView="listView"
+      :perPage="perPage"
+      @toggleListView="toggleListView"
+      @toggleFields="toggleFields"
+      @setPerPage="setPerPage"
     />
 
     <!-- Table Header -------------------------->
     <TableHeader
       data-test-component="TableHeader"
       :headers="headers"
+      :hiddenFields="hiddenFields"
       :sortKey="sortKey"
       :reverse="reverse"
       :listView="listView"
+      :numItems="items ? items.length : 0"
+      :numSelectedItemIDs="selectedItemIDs ? selectedItemIDs.length : 0"
       @sortColumns="sortTableBy"
+      @selectAllItems="selectAllItems"
     />
 
     <!-- Table Body ---------------------------->
@@ -34,8 +43,11 @@
       <TableRow
         data-test-component="TableRow"
         v-for="item in sortedItems"
-        v-bind:item="item"
         v-bind:key="item.id"
+        :item="item"
+        :headers="headers"
+        :hiddenFields="hiddenFields"
+        :selectedItemIDs="selectedItemIDs"
         @toggleSelect="toggleSelect"
       />
     </div>
@@ -44,10 +56,10 @@
     <TableFooter
       data-test-component="TableFooter"
       :totalItems="items ? items.length : 0"
-      :selectedItems="selectedItems ? selectedItems.length : 0"
+      :numSelectedItemIDs="selectedItemIDs.length"
       :totalPages="pages.length"
-      @setCurrentPage="setCurrentPage"
       :currentPage="currentPage"
+      @setCurrentPage="setCurrentPage"
     />
   </div>
 </template>
@@ -79,17 +91,18 @@
         sortType: null,
         reverse: false,
         searchText: '',
-        selectedItems: [],
+        selectedItemIDs: [],
         currentPage: 0,
         perPage: 20,
         pages: [],
-        listView: false
+        listView: false,
+        hiddenFields: []
       }
     },
 
     computed: {
 
-      headers() {
+      headers() { // fields
         let items = this.items ? this.items : []
         let headers = items.length ? Object.keys(items[0]) : []
         let result = []
@@ -175,13 +188,13 @@
       },
 
       toggleSelect(itemID) {
-        const selectedItems = this.selectedItems
+        const selectedItemIDs = this.selectedItemIDs
 
-        if (selectedItems.includes(itemID)) {
-          const idx = selectedItems.findIndex(x => x === itemID)
-          selectedItems.splice(idx, 1)
+        if (selectedItemIDs.includes(itemID)) {
+          const idx = selectedItemIDs.findIndex(x => x === itemID)
+          selectedItemIDs.splice(idx, 1)
         } else {
-          selectedItems.push(itemID)
+          selectedItemIDs.push(itemID)
         }
       },
 
@@ -218,6 +231,39 @@
 
       toggleListView() {
         return this.listView = !this.listView
+      },
+
+      toggleFields(field) {
+        let hiddenFields = this.hiddenFields
+
+        if (hiddenFields.includes(field)) {
+          this.hiddenFields = hiddenFields.filter(hiddenField => {
+            return hiddenField != field
+          })
+        } else {
+          hiddenFields.push(field)
+        }
+
+      },
+
+      setPerPage(value) {
+        this.perPage = value
+      },
+
+      selectAllItems() {
+        let items = this.items
+        const selectedItemIDs = this.selectedItemIDs
+        let result = []
+
+        if (!selectedItemIDs.length) {
+          items.forEach(item => {
+            if (!selectedItemIDs.includes(item.id)) {
+              result.push(item.id)
+            }
+          })
+        }
+
+        this.selectedItemIDs = result
       }
 
     }
@@ -258,6 +304,47 @@
     }
   }
 
+  //-- Inputs -----------------------------------
+
+  i.input.input--checkbox {
+    font-size: $font-lg;
+    cursor: pointer;
+
+    @media screen and (min-width: $screen-width-sm) {
+      margin: 2px;
+    }
+  }
+
+  //-- Popovers ---------------------------------
+  .popover-theme {
+    @include tippyBaseTheme();
+  }
+
+  .popover {
+    @include fontStandard();
+    text-align: left;
+    background-color: $bg-color--light;
+    color: $txt-color--dark;
+  }
+
+  .popover.popover--standard {
+    @include fontStandard();
+    text-align: left;
+    padding: 10px 15px;
+    background-color: $bg-color--light;
+    color: $txt-color--dark;
+  }
+
+  .popover-options-list {
+    .popover-option {
+      width: 100%;
+      padding: 3px 8px;
+      @include activeState();
+      @include hoverState();
+      cursor: pointer;
+    }
+  }
+
   //-- Data Table ---------------------------------
   //-- Standard View ----------------------------
   .data-table {
@@ -270,6 +357,8 @@
       grid-template-rows: 40px 30px auto 30px;
     }
 
+    //-- maintain alignment of header, row columns --
+    .table-header,
     .table-row {
       display: grid;
       grid-template-columns: 30px 1fr;
@@ -277,43 +366,30 @@
 
       @media screen and (min-width: $screen-width-sm) {
         grid-template-columns: 55px 1fr;
-        grid-template-rows: auto;
       }
-    }
-
-    .table-header, {
-      display: grid;
-      grid-template-columns: 30px 1fr;
-      grid-template-rows: 1fr;
-
-      @media screen and (min-width: $screen-width-sm) {
-        grid-template-columns: 55px 1fr 15px;
-      }
-    }
-
-    .table-header-cell.table-header-cell--checkbox,
-    .table-cell.table-cell--dropdownTrigger {
-      padding: 0;
-      align-items: center;
     }
 
     .table-header-actions,
     .table-row-actions {
-      grid-area: table-cell-actions / 1 / 1;
-      border-right: 1px solid $bdr-color--light;
-
-      @media screen and (min-width: $screen-width-sm) {
-        grid-area: table-cell-actions / 1 / 1;
-        border: none;
-      }
-
       display: grid;
       grid-template-rows: 1fr 1fr;
       grid-template-columns: 1fr;
+      border-right: 1px solid $bdr-color--light;
 
       @media screen and (min-width: $screen-width-sm) {
         grid-template-rows: 1fr;
-        grid-template-columns: 50px 5px;
+        grid-template-columns: 30px 25px;
+        border: none;
+      }
+    }
+
+    .table-header-cell.table-header-cell--checkbox,
+    .table-cell.table-cell--checkbox {
+      @include flexCentered(column);
+      padding: 0;
+
+      @media screen and (min-width: $screen-width-sm) {
+        align-items: flex-end;
       }
     }
 
@@ -321,13 +397,11 @@
     .table-attrs {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(0px, 1fr));
-      padding: 0;
     }
   }
 
   //-- List View --------------------------------
   .data-table.data-table--list {
-
     .table-header-attrs,
     .table-attrs {
       grid-template-columns: 1fr;
@@ -348,6 +422,4 @@
   }
 
   //-- Grid Row 5 -- Footer ---------------------
-
-  //-- Grid - Table Header, Table Rows ----------
 </style>

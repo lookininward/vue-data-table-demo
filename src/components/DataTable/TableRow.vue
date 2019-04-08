@@ -13,16 +13,20 @@
         data-test-TableCellCheckbox
         class="table-cell table-cell--checkbox"
       >
-        <input
-          data-test-checkbox
-          type="checkbox"
+        <i
+          class="input input--checkbox"
+          :class="selectedItemIDs.includes(item.id) ?
+                  'far fa-check-square' :
+                  'far fa-square'"
           @click="toggle(item.id)"
         >
+        </i>
+
       </div>
 
-      <!-- Row Dropdown -------------------------->
-      <TableRowDropdown
-        data-test-component="TableRowDropdown"
+      <!-- Row Popover ------------------------->
+      <RowPopover
+        data-test-component="RowPopover"
         :item="item"
       />
 
@@ -33,7 +37,7 @@
       <TableCell
         data-test-component="TableCell"
         class="table-cell"
-        v-for="(itemAttr, idx) in item"
+        v-for="(itemAttr, idx) in displayItem"
         :item="item"
         :itemAttr="itemAttr"
         :key="idx + '--cell'"
@@ -44,19 +48,36 @@
 
 <!-- Script ------------------------------------------------------------------>
 <script>
-  import TableRowDropdown from '@/components/DataTable/TableRow/TableRowDropdown.vue'
+  import RowPopover from '@/components/DataTable/TableRow/RowPopover.vue'
   import TableCell from '@/components/DataTable/TableRow/TableCell.vue'
 
   export default {
     name: 'TableRow',
 
     props: {
-      item: { type: Object }
+      item: { type: Object },
+      hiddenFields: { type: Array },
+      selectedItemIDs: { type: Array }
     },
 
     components: {
-      TableRowDropdown,
+      RowPopover,
       TableCell
+    },
+
+    computed: {
+
+      displayItem() {
+        let item = this.item
+        let displayItem = Object.assign({}, item)
+        let hiddenFields = this.hiddenFields ? this.hiddenFields : []
+
+        hiddenFields.forEach(field => {
+          delete displayItem[field]
+        })
+
+        return displayItem
+      }
     },
 
     methods: {
@@ -87,22 +108,12 @@
         border: none;
       }
     }
-
-    .table-cell.table-cell--checkbox,
-    .table-cell.table-cell--dropdownTrigger {
-      @include flexCentered(column);
-      padding: 0;
-    }
-
   }
 
   //-- List View --------------------------------
   .data-table.data-table--list {
-
     .table-row {
       border-bottom: 1px solid $bdr-color--dark;
     }
-
   }
-
 </style>

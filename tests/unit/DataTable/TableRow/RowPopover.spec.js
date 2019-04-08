@@ -1,28 +1,22 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
-import TableRowDropdown from '@/components/DataTable/TableRow/TableRowDropdown.vue'
+import RowPopover from '@/components/DataTable/TableRow/RowPopover.vue'
 import Vuex from 'vuex'
 
 const localVue = createLocalVue()
 localVue.use(Vuex)
 
-describe('TableRowDropdown.vue', () => {
-  let item = {
-    "id": "3471DA17-401F-9633-BF81-4CADA6FD5C79",
-    "name": "Kyra Lester",
-    "description": "Curabitur dictum. Phasellus in",
-    "date": "2017-07-23T04:24:49-07:00",
-    "amount": 345.54
-  }
+describe('RowPopover.vue', () => {
+  let item = { "id": "3471DA17-401F-9633-BF81-4CADA6FD5C79" }
 
   it('component does render', () => {
-    const wrapper = shallowMount(TableRowDropdown, { propsData: { item } })
+    const wrapper = shallowMount(RowPopover, { propsData: { item } })
 
     expect(
       wrapper.attributes()['data-test-component']
-    ).toBe('TableRowDropdown')
+    ).toBe('rowPopover')
 
-    expect(wrapper.contains('[data-test-btn="dropdownTrigger"]')).toBe(true)
-    expect(wrapper.contains('[data-test-dropdown="itemRow"]')).toBe(true)
+    expect(wrapper.contains('[data-test-btn="popoverTrigger"]')).toBe(true)
+    expect(wrapper.contains('[data-test-popover="rowPopover"]')).toBe(true)
     expect(wrapper.contains('[data-test-btn="deleteItem"]')).toBe(true)
   })
 
@@ -35,7 +29,7 @@ describe('TableRowDropdown.vue', () => {
       actions
     })
 
-    const wrapper = shallowMount(TableRowDropdown, {
+    const wrapper = shallowMount(RowPopover, {
       store,
       localVue,
       propsData: { item }

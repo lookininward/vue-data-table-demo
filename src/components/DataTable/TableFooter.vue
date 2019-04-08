@@ -17,8 +17,8 @@
       </div>
 
       <div data-test-SelectedItems>
-        <template v-if="selectedItems">
-          Selected Rows: {{ selectedItems }}
+        <template v-if="numSelectedItemIDs">
+          Selected Rows: {{ numSelectedItemIDs }}
         </template>
       </div>
     </div>
@@ -46,7 +46,7 @@
 
     props: {
      totalItems: { type: Number },
-     selectedItems: { type: Number },
+     numSelectedItemIDs: { type: Number },
      totalPages: { type: Number },
      currentPage: { type: Number }
    },
@@ -71,7 +71,7 @@
     align-items: center;
     background-color: $bg-color--grey;
     border-top: 1px solid $bdr-color--light2;
-    padding: 0 20px;
+    padding: 0 15px;
     font-size: $font-sm;
 
     @media screen and (min-width: $screen-width-sm) {

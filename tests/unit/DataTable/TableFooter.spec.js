@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import { randomInt } from '../helpers.js'
+import { randomInt } from '../../helpers.js'
 import TableFooter from '@/components/DataTable/TableFooter.vue'
 
 describe('TableFooter.vue', () => {

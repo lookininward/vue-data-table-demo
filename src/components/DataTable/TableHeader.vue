@@ -13,13 +13,20 @@
         data-test-TableCellCheckbox
         class="table-header-cell table-header-cell--checkbox"
       >
-        <input type="checkbox">
+        <i
+          class="input input--checkbox"
+          :class="allItemsSelected ?
+                  'fas fa-check-square is-active' :
+                  'far fa-square'"
+          @click="selectAll()"
+        >
+        </i>
       </div>
 
-      <!-- All Items Dropdown ------------------>
+      <!-- All Items Popover ------------------->
       <div
-        data-test-TableHeaderCellDropDown
-        class="table-header-cell table-header-cell--dropdown"
+        data-test-TableHeaderCellPopoverTrigger
+        class="table-header-cell table-header-cell--popoverTrigger"
       >
         <i class="fas fa-ellipsis-v"></i>
       </div>
@@ -34,14 +41,14 @@
 
       <i
         data-test-btn="popoverTrigger"
-        class="fas fa-info-circle popover-trigger"
+        class="fas fa-sort popover-trigger"
         v-tippy="{
           reactive: true,
           interactive : true,
           trigger : 'click',
           placement: 'bottom',
           html: '#info-popover',
-          theme : 'info-popover',
+          theme : 'popover',
           duration: 100
         }"
       >
@@ -50,65 +57,44 @@
       <div
         id="info-popover"
         data-test-popover="info"
-        class="info-popover"
+        class="popover"
         v-tippy-html
       >
-        <template v-for="(header, idx) in headers">
+        <div class="popover-options-list">
           <div
+            v-for="(header, idx) in headers"
             v-bind:key="idx"
+            class="popover-option"
+            :class="header.header === sortKey ? 'is-active' : ''"
+            @click="sort(header.header, header.type)"
           >
             {{ header.header }}
           </div>
-        </template>
+        </div>
       </div>
     </div>
 
     <!-- Headers ------------------------------->
     <div class="table-header-attrs">
       <template v-for="(header, idx) in headers">
-        <template v-if="header.header === sortKey">
-          <div
-            data-test-HeaderCell
-            class="table-header-cell table-header-cell--active"
-            :key="idx + '--header'"
-            @click="sort(header.header, header.type)"
-          >
-            {{ header.header }}
-            <template v-if="reverse">
-              <i
-                data-test-sortIndicator
-                class="fas fa-long-arrow-alt-up table-sort-indicator"
-              >
-              </i>
-            </template>
-            <template v-else>
-              <i
-                data-test-sortIndicator
-                class="fas fa-long-arrow-alt-down table-sort-indicator"
-              >
-              </i>
-            </template>
-          </div>
-        </template>
+        <div
+          data-test-HeaderCell
+          v-if="!hiddenFields.includes(header.header)"
+          class="table-header-cell"
+          :class="header.header === sortKey ? 'is-active' : ''"
+          :key="idx + '--header'"
+          @click="sort(header.header, header.type)"
+        >
+          {{ header.header }}
 
-        <template v-else>
-          <div
-            data-test-HeaderCell
-            class="table-header-cell"
-            :key="idx + '--header'"
-            @click="sort(header.header, header.type)"
+          <i
+            v-if="header.header === sortKey"
+            data-test-sortIndicator
+            class="fas fa-sort table-sort-indicator"
           >
-            {{ header.header }}
-          </div>
-        </template>
+          </i>
+        </div>
       </template>
-    </div>
-
-    <!-- Scrollbar Spacer ---------------------->
-    <div
-      data-test-scrollbarSpacer
-      class="table-header-scrollbarSpacer"
-    >
     </div>
   </div>
 </template>
@@ -119,16 +105,31 @@
     name: 'TableHeader',
 
     props: {
-     headers: { type: Array },
-     sortKey: { type: String },
-     reverse: { type: Boolean },
-     listView: { type: Boolean }
+      headers: { type: Array },
+      hiddenFields: { type: Array },
+      sortKey: { type: String },
+      reverse: { type: Boolean },
+      listView: { type: Boolean },
+      numItems: { type: Number },
+      numSelectedItemIDs: { type: Number }
+    },
+
+    computed: {
+
+      allItemsSelected() {
+        return this.numItems  === this.numSelectedItemIDs
+      }
+
     },
 
     methods: {
 
       sort(header, type) {
         this.$emit('sortColumns', header, type)
+      },
+
+      selectAll() {
+        this.$emit('selectAllItems')
       }
 
     }
@@ -150,6 +151,7 @@
     .table-header-cell {
       position: relative;
       @include flexCentered(column);
+      @include hoverState();
       align-items: flex-start;
       padding: 0px 10px;
       font-size: 12px;
@@ -175,28 +177,32 @@
         }
       }
 
-      &.table-header-cell--active {
-        font-weight: 600;
+      &.table-header-cell--checkbox,
+      &.table-header-cell--popoverTrigger {
+        &:hover {
+          background-color: inherit;
+        }
       }
 
-      &.table-header-cell--checkbox,
-      &.table-header-cell--dropdown {
-        display: grid;
+      &.table-header-cell--popoverTrigger,
+      &.table-header-cell--checkbox {
+        &:hover {
+          color: $txt-color--dark;
+        }
+      }
+
+      &.table-header-cell--popoverTrigger {
         align-items: center;
-        padding: 0px;
         cursor: auto;
       }
 
-      &.table-header-cell--dropdown i {
+      &.table-header-cell--popoverTrigger i {
         cursor: pointer;
       }
     }
 
     .edit-mode {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
+      @include flexCentered(row);
       padding: 0 10px;
       color: $txt-color--dark;
       font-weight: 600;
@@ -207,34 +213,12 @@
       color: $txt-color--dark;
       margin-left: 8px;
     }
-
   }
-
-   .info-popover-theme {
-      @include tippyBaseTheme();
-    }
-
-    .info-popover {
-      @include fontStandard();
-      text-align: left;
-      padding: 10px 15px;
-      background-color: $bg-color--light;
-      color: $txt-color--dark;
-    }
 
   //-- List View --------------------------------
   .data-table.data-table--list .table-header {
-
     .table-header-attrs {
       display: none;
-    }
-
-    .table-header-scrollbarSpacer {
-      display: none;
-
-      @media screen and (min-width: $screen-width-sm) {
-        display: flex;
-      }
     }
   }
 </style>
