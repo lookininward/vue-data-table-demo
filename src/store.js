@@ -43,6 +43,20 @@ export default new Vuex.Store({
       dispatch('fetchData')
     },
 
+    // batch deleteItem request or make new query
+    async deleteSelectedItems({dispatch}, itemIDs) {
+      itemIDs.forEach(itemID => {
+        API.graphql(
+          graphqlOperation(mutations.deleteItem, {
+            input: {
+              "id": itemID
+            }
+          })
+        )
+      })
+      dispatch('fetchData')
+    },
+
     async editItem({dispatch}, data) {
       const item = data.item
       const newValue = data.newValue

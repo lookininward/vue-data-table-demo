@@ -633,7 +633,6 @@ describe('DataTable.vue', () => {
     expect(wrapper.vm.sortedItems).toEqual(wrapper.vm.pages[4])
   })
 
-
   it('can toggle Quick Edit mode', () => {
     let items = [{ name: 'Kyra Lester'}]
     const wrapper = shallowMount(DataTable, { propsData: { items }})
@@ -645,6 +644,3 @@ describe('DataTable.vue', () => {
     expect(wrapper.attributes('class')).toBe('data-table data-table--list')
   })
 })
-
-// can delete all selected items RowPopover (HeaderRow?) delete -- Vuex
-// test emitted events

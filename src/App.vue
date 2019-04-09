@@ -98,4 +98,24 @@
       cursor: pointer;
     }
   }
+
+  .row-popover {
+    @include flexCentered(column);
+    @include fontStandard();
+    width: 100px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(auto-fit, minmax(0px, 1fr));
+  }
+
+  .row-popover-option {
+    padding: 5px 10px;
+    background-color: $bg-color--light;
+    cursor: pointer;
+
+     &:hover {
+      background-color: $color-black-1;
+      color: $txt-color--light;
+    }
+  }
 </style>

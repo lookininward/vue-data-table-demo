@@ -28,7 +28,35 @@
         data-test-TableHeaderCellPopoverTrigger
         class="table-header-cell table-header-cell--popoverTrigger"
       >
-        <i class="fas fa-ellipsis-v"></i>
+        <i
+          class="fas fa-ellipsis-v"
+          v-tippy="{
+            reactive: true,
+            interactive : true,
+            trigger : 'click',
+            placement: 'right',
+            html: `#headerPopover`,
+            theme : 'popover',
+            duration: 100
+          }"
+        >
+        </i>
+
+        <div
+          id="headerPopover"
+          data-test-popover="headerPopover"
+          class="row-popover"
+          v-tippy-html
+        >
+          <div
+            data-test-btn="deleteSelectedItems"
+            class="row-popover-option"
+            @click="deleteSelectedItems(selectedItemIDs)"
+          >
+            Delete
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -101,6 +129,10 @@
 
 <!-- Script ------------------------------------------------------------------>
 <script>
+  import Vue from 'vue'
+  import VueTippy from 'vue-tippy'
+  import { mapActions } from 'vuex'
+
   export default {
     name: 'TableHeader',
 
@@ -111,13 +143,19 @@
       reverse: { type: Boolean },
       listView: { type: Boolean },
       numItems: { type: Number },
-      numSelectedItemIDs: { type: Number }
+      selectedItemIDs: { type: Array }
+    },
+
+    created() {
+      Vue.use(VueTippy)
     },
 
     computed: {
 
       allItemsSelected() {
-        return this.numItems  === this.numSelectedItemIDs
+        return this.numItems === (this.selectedItemIDs ?
+                                  this.selectedItemIDs.length :
+                                  0)
       }
 
     },
@@ -130,7 +168,11 @@
 
       selectAll() {
         this.$emit('selectAllItems')
-      }
+      },
+
+      ...mapActions([
+        'deleteSelectedItems'
+      ])
 
     }
   }

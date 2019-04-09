@@ -28,7 +28,7 @@
       :reverse="reverse"
       :listView="listView"
       :numItems="items ? items.length : 0"
-      :numSelectedItemIDs="selectedItemIDs ? selectedItemIDs.length : 0"
+      :selectedItemIDs="selectedItemIDs"
       @sortColumns="sortTableBy"
       @selectAllItems="selectAllItems"
     />
