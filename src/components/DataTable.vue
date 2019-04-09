@@ -198,7 +198,7 @@
         }
       },
 
-      calculatePages(items) {
+      calculatePages(items) { // internal method
         let numItems = items ? items.length : 0
         let numItemsPerPage = this.perPage
         let pages = []
@@ -229,7 +229,7 @@
         this.currentPage = pageNum
       },
 
-      toggleListView() {
+      toggleListView() { // Quick Edit Mode
         return this.listView = !this.listView
       },
 

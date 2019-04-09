@@ -9,11 +9,9 @@
     <div class="table-row-actions">
 
       <!-- Select Item checkbox ------------------>
-      <div
-        data-test-TableCellCheckbox
-        class="table-cell table-cell--checkbox"
-      >
+      <div class="table-cell table-cell--checkbox">
         <i
+          data-test-TableCellCheckbox
           class="input input--checkbox"
           :class="selectedItemIDs.includes(item.id) ?
                   'far fa-check-square' :
