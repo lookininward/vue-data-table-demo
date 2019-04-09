@@ -10,7 +10,7 @@
     <TableFilters
       data-test-component="TableFilters"
       v-model="searchText"
-      :headers="headers"
+      :dataFields="dataFields"
       :hiddenFields="hiddenFields"
       :listView="listView"
       :perPage="perPage"
@@ -22,14 +22,14 @@
     <!-- Table Header -------------------------->
     <TableHeader
       data-test-component="TableHeader"
-      :headers="headers"
+      :dataFields="dataFields"
       :hiddenFields="hiddenFields"
       :sortKey="sortKey"
       :reverse="reverse"
       :listView="listView"
       :numItems="items ? items.length : 0"
       :selectedItemIDs="selectedItemIDs"
-      @sortColumns="sortTableBy"
+      @sortTableBy="sortTableBy"
       @selectAllItems="selectAllItems"
     />
 
@@ -45,7 +45,6 @@
         v-for="item in sortedItems"
         v-bind:key="item.id"
         :item="item"
-        :headers="headers"
         :hiddenFields="hiddenFields"
         :selectedItemIDs="selectedItemIDs"
         @toggleSelect="toggleSelect"
@@ -102,17 +101,17 @@
 
     computed: {
 
-      headers() { // dataFields
+      dataFields() {
         let items = this.items ? this.items : []
-        let headers = items.length ? Object.keys(items[0]) : []
+        let fields = items.length ? Object.keys(items[0]) : []
         let result = []
 
-        headers.forEach(header => {
-          let data = items[0] ? items[0][header] : 'string'
+        fields.forEach(field => {
+          let data = items[0] ? items[0][field] : 'string'
           let type = typeof data
 
           result.push({
-            header,
+            field,
             type
           })
         })

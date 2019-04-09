@@ -96,16 +96,16 @@
             Data Columns
           </div>
           <label
-            v-for="(header, idx) in headers"
+            v-for="(dataField, idx) in dataFields"
             v-bind:key="idx"
             class="label label--dataColumnOption"
           >
             <input
               type="checkbox"
-              :checked="!hiddenFields.includes(header)"
-              @click="toggleFields(header.header)"
+              :checked="!hiddenFields.includes(dataField)"
+              @click="toggleFields(dataField.header)"
             >
-            {{ header.header }}
+            {{ dataField.header }}
           </label>
         </div>
       </div>
@@ -152,7 +152,7 @@
     props: {
       searchText: { type: String },
       listView: { type: Boolean },
-      headers: { type: Array },
+      dataFields: { type: Array },
       hiddenFields: { type: Array },
       perPage: { type: Number }
     },

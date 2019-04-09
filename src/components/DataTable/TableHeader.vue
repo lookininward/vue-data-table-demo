@@ -90,13 +90,13 @@
       >
         <div class="popover-options-list">
           <div
-            v-for="(header, idx) in headers"
+            v-for="(dataField, idx) in dataFields"
             v-bind:key="idx"
             class="popover-option"
-            :class="header.header === sortKey ? 'is-active' : ''"
-            @click="sort(header.header, header.type)"
+            :class="dataField.header === sortKey ? 'is-active' : ''"
+            @click="sortData(dataField.header, dataField.type)"
           >
-            {{ header.header }}
+            {{ dataField.header }}
           </div>
         </div>
       </div>
@@ -104,19 +104,19 @@
 
     <!-- Headers ------------------------------->
     <div class="table-header-attrs">
-      <template v-for="(header, idx) in headers">
+      <template v-for="(dataField, idx) in dataFields">
         <div
           data-test-HeaderCell
-          v-if="!hiddenFields.includes(header.header)"
+          v-if="!hiddenFields.includes(dataField.header)"
           class="table-header-cell"
-          :class="header.header === sortKey ? 'is-active' : ''"
+          :class="dataField.header === sortKey ? 'is-active' : ''"
           :key="idx + '--header'"
-          @click="sort(header.header, header.type)"
+          @click="sortData(dataField.header, dataField.type)"
         >
-          {{ header.header }}
+          {{ dataField.header }}
 
           <i
-            v-if="header.header === sortKey"
+            v-if="dataField.header === sortKey"
             data-test-sortIndicator
             class="fas fa-sort table-sort-indicator"
           >
@@ -137,13 +137,13 @@
     name: 'TableHeader',
 
     props: {
-      headers: { type: Array },
-      hiddenFields: { type: Array },
-      sortKey: { type: String },
-      reverse: { type: Boolean },
-      listView: { type: Boolean },
-      numItems: { type: Number },
-      selectedItemIDs: { type: Array }
+      dataFields: Array,
+      hiddenFields: Array,
+      sortKey: String,
+      reverse: Boolean,
+      listView: Boolean,
+      numItems: Number,
+      selectedItemIDs: Array
     },
 
     created() {
@@ -162,8 +162,8 @@
 
     methods: {
 
-      sort(header, type) {
-        this.$emit('sortColumns', header, type)
+      sortData(field, type) {
+        this.$emit('sortTableBy', field, type)
       },
 
       selectAll() {

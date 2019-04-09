@@ -58,7 +58,7 @@ describe('DataTable.vue', () => {
 
   //-- Computed ---------------------------------------------------------------
 
-  it('headers() computed correctly returns headers with data type', () => {
+  it('dataFields() returns data fields with type', () => {
     let items = [{
       "id": "3471DA17-401F-9633-BF81-4CADA6FD5C79",
       "name": "Kyra Lester",
@@ -69,28 +69,30 @@ describe('DataTable.vue', () => {
 
     let itemKeys = Object.keys(items[0])
     const wrapper = shallowMount(DataTable, { propsData:  { items }})
-    expect(wrapper.vm.headers.length).toBe(5)
+    expect(wrapper.vm.dataFields.length).toBe(5)
 
-    expect(wrapper.vm.headers[0]).toEqual({
-      "header": itemKeys[0],
-      "type": "string"
-    })
-
-    expect(wrapper.vm.headers[1]).toEqual({
-      "header": itemKeys[1],
-      "type": "string"
-    })
-    expect(wrapper.vm.headers[2]).toEqual({
-      "header": itemKeys[2],
+    expect(wrapper.vm.dataFields[0]).toEqual({
+      "field": itemKeys[0],
       "type": "string"
     })
 
-    expect(wrapper.vm.headers[3]).toEqual({
-      "header": itemKeys[3],
+    expect(wrapper.vm.dataFields[1]).toEqual({
+      "field": itemKeys[1],
       "type": "string"
     })
-    expect(wrapper.vm.headers[4]).toEqual({
-      "header": itemKeys[4],
+
+    expect(wrapper.vm.dataFields[2]).toEqual({
+      "field": itemKeys[2],
+      "type": "string"
+    })
+
+    expect(wrapper.vm.dataFields[3]).toEqual({
+      "field": itemKeys[3],
+      "type": "string"
+    })
+
+    expect(wrapper.vm.dataFields[4]).toEqual({
+      "field": itemKeys[4],
       "type": "number"
     })
   })
