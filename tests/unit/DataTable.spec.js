@@ -450,8 +450,8 @@ describe('DataTable.vue', () => {
     // return all results when no search input
     const wrapper = mount(DataTable, { propsData:  { items } })
     let rows = wrapper.findAll('[data-test-component="TableRow"]')
-    let search = wrapper.find('[data-test-input="Search"]')
-    expect(search.contains('[data-test-input="Search"]')).toBe(true)
+    let search = wrapper.find('[data-test-input="searchText"]')
+    expect(search.contains('[data-test-input="searchText"]')).toBe(true)
     expect(rows.length).toBe(3)
     expect(wrapper.vm.sortedItems.length).toBe(3)
 
@@ -591,7 +591,7 @@ describe('DataTable.vue', () => {
       wrapperDataTable.findAll('[data-test-component="TableCell"]').at(0).text().includes('3471DA17-401F-9633-BF81-4CADA6FD5C79')
     ).toBe(true)
 
-    wrapperDataTable.vm.toggleFields('id') // check for each key
+    wrapperDataTable.vm.toggleDisplayField('id') // check for each key
 
     expect(
       wrapperDataTable.findAll('[data-test-component="TableCell"]').length
@@ -611,11 +611,11 @@ describe('DataTable.vue', () => {
     expect(wrapper.vm.sortedItems.length).toBe(20)
     expect(wrapper.vm.pages.length).toBe(5)
 
-    wrapper.vm.setPerPage(5)
+    wrapper.vm.setItemsPerPage(5)
     expect(wrapper.vm.sortedItems.length).toBe(5)
     expect(wrapper.vm.pages.length).toBe(20)
 
-    wrapper.vm.setPerPage(10)
+    wrapper.vm.setItemsPerPage(10)
     expect(wrapper.vm.sortedItems.length).toBe(10)
     expect(wrapper.vm.pages.length).toBe(10)
   })
@@ -638,11 +638,11 @@ describe('DataTable.vue', () => {
   it('can toggle Quick Edit mode', () => {
     let items = [{ name: 'Kyra Lester'}]
     const wrapper = shallowMount(DataTable, { propsData: { items }})
-    expect(wrapper.vm.listView).toBe(false)
+    expect(wrapper.vm.inQuickEdit).toBe(false)
     expect(wrapper.attributes('class')).toBe('data-table')
 
-    wrapper.vm.toggleListView()
-    expect(wrapper.vm.listView).toBe(true)
+    wrapper.vm.toggleQuickEditMode()
+    expect(wrapper.vm.inQuickEdit).toBe(true)
     expect(wrapper.attributes('class')).toBe('data-table data-table--list')
   })
 })

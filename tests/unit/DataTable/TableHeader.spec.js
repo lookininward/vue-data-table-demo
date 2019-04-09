@@ -1,4 +1,5 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
+import { randomInt } from '../../helpers.js'
 import TableHeader from '@/components/DataTable/TableHeader.vue'
 import Vuex from 'vuex'
 
@@ -63,6 +64,43 @@ describe('TableHeader.vue', () => {
     const btn = wrapper.find('[data-test-btn="deleteSelectedItems"]')
     btn.trigger('click')
     expect(actions.deleteSelectedItems).toHaveBeenCalled()
+  })
+
+  it('detects that all items are selected', () => {
+    let items = []
+    for (var i = 0; i < 100; i++) { items.push({ 'id' : '12453'}) }
+    let selectedItemIDs = items.map(id => id)
+
+    const wrapper = shallowMount(TableHeader, {
+      propsData: {
+        items,
+        numItems: items.length,
+        selectedItemIDs
+      }
+    })
+
+    // start all checked
+    let checkbox = wrapper.find('[data-test-input="selectAllCheckbox"]')
+    expect(wrapper.vm.selectedItemIDs.length).toBe(100)
+    expect(wrapper.vm.allItemsSelected).toBe(true)
+    expect(
+      checkbox.attributes('class')
+    ).toBe('input input--checkbox fas fa-check-square is-active')
+
+    // less than all checked
+    let newSelectedIDs = []
+    let numSelected = randomInt(0,99)
+
+    for (var i = 0; i < numSelected; i++) {
+      newSelectedIDs.push({ 'id' : '12453'})
+    }
+
+    wrapper.setProps({ selectedItemIDs: newSelectedIDs })
+    expect(wrapper.vm.selectedItemIDs.length).toBe(numSelected)
+    expect(wrapper.vm.allItemsSelected).toBe(false)
+    expect(
+      checkbox.attributes('class')
+    ).toBe('input input--checkbox far fa-square')
   })
 
 })

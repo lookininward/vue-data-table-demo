@@ -3,7 +3,7 @@
   <div
     data-test-component="DataTable"
     class="data-table"
-    :class="listView ? 'data-table--list' : '' "
+    :class="inQuickEdit ? 'data-table--list' : '' "
   >
 
     <!-- Table Filters ------------------------->
@@ -12,11 +12,11 @@
       v-model="searchText"
       :dataFields="dataFields"
       :hiddenFields="hiddenFields"
-      :listView="listView"
       :perPage="perPage"
-      @toggleListView="toggleListView"
-      @toggleFields="toggleFields"
-      @setPerPage="setPerPage"
+      :inQuickEdit="inQuickEdit"
+      @toggleDisplayField="toggleDisplayField"
+      @setItemsPerPage="setItemsPerPage"
+      @toggleQuickEditMode="toggleQuickEditMode"
     />
 
     <!-- Table Header -------------------------->
@@ -26,7 +26,7 @@
       :hiddenFields="hiddenFields"
       :sortKey="sortKey"
       :reverse="reverse"
-      :listView="listView"
+      :inQuickEdit="inQuickEdit"
       :numItems="items ? items.length : 0"
       :selectedItemIDs="selectedItemIDs"
       @sortTableBy="sortTableBy"
@@ -94,7 +94,7 @@
         currentPage: 0,
         perPage: 20,
         pages: [],
-        listView: false,
+        inQuickEdit: false,
         hiddenFields: []
       }
     },
@@ -253,7 +253,7 @@
         this.sortType = sortType
       },
 
-      toggleFields(field) {
+      toggleDisplayField(field) {
         let hiddenFields = this.hiddenFields
 
         if (hiddenFields.includes(field)) {
@@ -266,7 +266,7 @@
 
       },
 
-      setPerPage(value) {
+      setItemsPerPage(value) {
         this.perPage = value
       },
 
@@ -274,8 +274,8 @@
         this.currentPage = pageNum
       },
 
-      toggleListView() { // Quick Edit Mode
-        return this.listView = !this.listView
+      toggleQuickEditMode() {
+        return this.inQuickEdit = !this.inQuickEdit
       }
 
     }

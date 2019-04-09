@@ -14,6 +14,7 @@
         class="table-header-cell table-header-cell--checkbox"
       >
         <i
+          data-test-input="selectAllCheckbox"
           class="input input--checkbox"
           :class="allItemsSelected ?
                   'fas fa-check-square is-active' :
@@ -53,7 +54,7 @@
             class="row-popover-option"
             @click="deleteSelectedItems(selectedItemIDs)"
           >
-            Delete
+            Delete All
           </div>
         </div>
 
@@ -62,7 +63,7 @@
 
     <!-- Edit Mode (row orientation) ----------->
     <div
-      v-if="listView"
+      v-if="inQuickEdit"
       class="edit-mode"
     >
       Quick Edit Mode
@@ -93,10 +94,10 @@
             v-for="(dataField, idx) in dataFields"
             v-bind:key="idx"
             class="popover-option"
-            :class="dataField.header === sortKey ? 'is-active' : ''"
-            @click="sortData(dataField.header, dataField.type)"
+            :class="dataField.field === sortKey ? 'is-active' : ''"
+            @click="sortData(dataField.field, dataField.type)"
           >
-            {{ dataField.header }}
+            {{ dataField.field }}
           </div>
         </div>
       </div>
@@ -107,16 +108,16 @@
       <template v-for="(dataField, idx) in dataFields">
         <div
           data-test-HeaderCell
-          v-if="!hiddenFields.includes(dataField.header)"
+          v-if="!hiddenFields.includes(dataField.field)"
           class="table-header-cell"
-          :class="dataField.header === sortKey ? 'is-active' : ''"
+          :class="dataField.field === sortKey ? 'is-active' : ''"
           :key="idx + '--header'"
-          @click="sortData(dataField.header, dataField.type)"
+          @click="sortData(dataField.field, dataField.type)"
         >
-          {{ dataField.header }}
+          {{ dataField.field }}
 
           <i
-            v-if="dataField.header === sortKey"
+            v-if="dataField.field === sortKey"
             data-test-sortIndicator
             class="fas fa-sort table-sort-indicator"
           >
@@ -141,7 +142,7 @@
       hiddenFields: Array,
       sortKey: String,
       reverse: Boolean,
-      listView: Boolean,
+      inQuickEdit: Boolean,
       numItems: Number,
       selectedItemIDs: Array
     },
