@@ -32,7 +32,6 @@ describe('DataTable.vue', () => {
         //-- when some are selected, all are deselected
 
   it('component does render', () => {
-    // check for key DOM elements
     const wrapper = shallowMount(DataTable)
     expect(wrapper.attributes()['data-test-component']).toBe('DataTable')
     expect(wrapper.contains('[data-test-component="DataTable"]')).toBe(true)
@@ -41,11 +40,274 @@ describe('DataTable.vue', () => {
     expect(wrapper.contains('[data-test-component="TableFooter"]')).toBe(true)
   })
 
-  // headers() computed correctly returns headers with data type
-  // breakout sort code from sortedItems() and test independently
-  // breakout search code from sortedItems() and test independently
-  // calculatePages(items) breaks up data into correct page sets
-  // paginatedItems() return subset of setPages based on current set page
+  it('headers() computed correctly returns headers with data type', () => {
+    let items = [{
+      "id": "3471DA17-401F-9633-BF81-4CADA6FD5C79",
+      "name": "Kyra Lester",
+      "description": "Curabitur dictum. Phasellus in",
+      "date": "2017-07-23T04:24:49-07:00",
+      "amount": 345.54
+    }]
+
+    let itemKeys = Object.keys(items[0])
+    const wrapper = shallowMount(DataTable, { propsData:  { items }})
+    expect(wrapper.vm.headers.length).toBe(5)
+
+    expect(wrapper.vm.headers[0]).toEqual({
+      "header": itemKeys[0],
+      "type": "string"
+    })
+
+    expect(wrapper.vm.headers[1]).toEqual({
+      "header": itemKeys[1],
+      "type": "string"
+    })
+    expect(wrapper.vm.headers[2]).toEqual({
+      "header": itemKeys[2],
+      "type": "string"
+    })
+
+    expect(wrapper.vm.headers[3]).toEqual({
+      "header": itemKeys[3],
+      "type": "string"
+    })
+    expect(wrapper.vm.headers[4]).toEqual({
+      "header": itemKeys[4],
+      "type": "number"
+    })
+  })
+
+  // sortedItems() computed -- rename
+    //-- _filterItemsBySearch()
+    //-- _sortItemsByField()
+    //-- _paginateItems()
+
+  it('_filterItemsBySearch() filters data by search text', () => {
+    let items = [
+      {
+        "id": "3471DA17-401F-9633-BF81-4CADA6FD5C79",
+        "name": "Kyra Lester",
+        "description": "Curabitur dictum. Phasellus in",
+        "date": "2017-07-23T04:24:49-07:00",
+        "amount": 345.54
+      },
+      {
+        "id": "9F5C9912-936A-FB85-1EDB-9DA87BE7FF1E",
+        "name": "Buckminster Alvarado",
+        "description": "dui, in sodales elit erat vitae risus. Duis a mi",
+        "date": "2018-11-08T05:44:15-08:00",
+        "amount": 677.08
+      },
+      {
+        "id": "B743AC82-3613-13A2-2E42-E0C1F5CBF8A6",
+        "name": "Athena Smith",
+        "description": "massa lobortis ultrices. Vivamus rhoncus.",
+        "date": "2018-11-11T06:19:57-08:00",
+        "amount": 73.67
+      }
+    ]
+
+    const wrapper = shallowMount(DataTable, { propsData:  { items }})
+
+    // verify current sort order and defaults
+    expect(wrapper.vm.sortedItems.length).toBe(3)
+    expect(wrapper.vm.sortedItems[0]).toEqual(items[0])
+    expect(wrapper.vm.sortedItems[1]).toEqual(items[1])
+    expect(wrapper.vm.sortedItems[2]).toEqual(items[2])
+    expect(wrapper.vm.sortKey).toBe(null)
+    expect(wrapper.vm.sortType).toBe(null)
+    expect(wrapper.vm.reverse).toBe(false)
+
+    // sort by id
+    expect(
+      wrapper.vm._filterItemsBySearch(
+        items,
+        '' //searchText
+      ).length
+    ).toBe(3)
+
+    expect(
+      wrapper.vm._filterItemsBySearch(
+        items,
+        'Athena'
+      )
+    ).toEqual([items[2]])
+  })
+
+  // issue with sorting by amount
+  it('_sortItemsByField() internal method correctly sorts data', () => {
+    let items = [
+      {
+        "id": "3471DA17-401F-9633-BF81-4CADA6FD5C79",
+        "name": "Kyra Lester",
+        "description": "Curabitur dictum. Phasellus in",
+        "date": "2017-07-23T04:24:49-07:00",
+        "amount": 345.54
+      },
+      {
+        "id": "9F5C9912-936A-FB85-1EDB-9DA87BE7FF1E",
+        "name": "Buckminster Alvarado",
+        "description": "dui, in sodales elit erat vitae risus. Duis a mi",
+        "date": "2018-11-08T05:44:15-08:00",
+        "amount": 677.08
+      },
+      {
+        "id": "B743AC82-3613-13A2-2E42-E0C1F5CBF8A6",
+        "name": "Athena Smith",
+        "description": "massa lobortis ultrices. Vivamus rhoncus.",
+        "date": "2018-11-11T06:19:57-08:00",
+        "amount": 73.67
+      }
+    ]
+
+    const wrapper = shallowMount(DataTable, { propsData:  { items }})
+
+    // verify current sort order and defaults
+    expect(wrapper.vm.items.length).toBe(3)
+    expect(wrapper.vm.sortedItems[0]).toEqual(items[0])
+    expect(wrapper.vm.sortedItems[1]).toEqual(items[1])
+    expect(wrapper.vm.sortedItems[2]).toEqual(items[2])
+    expect(wrapper.vm.sortKey).toBe(null)
+    expect(wrapper.vm.sortType).toBe(null)
+    expect(wrapper.vm.reverse).toBe(false)
+
+    // sort by id
+    wrapper.vm._sortItemsByField(
+      items,
+      'id', // sortKey
+      'string', // sortType
+      false // reverse
+    )
+
+    expect(wrapper.vm.sortedItems[0]).toEqual(items[0])
+    expect(wrapper.vm.sortedItems[1]).toEqual(items[1])
+    expect(wrapper.vm.sortedItems[2]).toEqual(items[2])
+
+    // reverse
+    wrapper.vm._sortItemsByField(items, 'id', 'string', true)
+    expect(wrapper.vm.sortedItems[0]).toEqual(items[2])
+    expect(wrapper.vm.sortedItems[1]).toEqual(items[1])
+    expect(wrapper.vm.sortedItems[2]).toEqual(items[0])
+
+    // sort by name
+    wrapper.vm._sortItemsByField(items, 'name', 'string', false)
+    expect(wrapper.vm.sortedItems[0]).toEqual(items[2])
+    expect(wrapper.vm.sortedItems[1]).toEqual(items[1])
+    expect(wrapper.vm.sortedItems[2]).toEqual(items[0])
+
+    // reverse
+    wrapper.vm._sortItemsByField(items, 'name', 'string', true)
+    expect(wrapper.vm.sortedItems[0]).toEqual(items[0])
+    expect(wrapper.vm.sortedItems[1]).toEqual(items[1])
+    expect(wrapper.vm.sortedItems[2]).toEqual(items[2])
+
+    // sort by description
+    wrapper.vm._sortItemsByField(items, 'description', 'string', false)
+    expect(wrapper.vm.sortedItems[0]).toEqual(items[0])
+    expect(wrapper.vm.sortedItems[1]).toEqual(items[1])
+    expect(wrapper.vm.sortedItems[2]).toEqual(items[2])
+
+    // reverse
+    wrapper.vm._sortItemsByField(items, 'description', 'string', true)
+    expect(wrapper.vm.sortedItems[0]).toEqual(items[2])
+    expect(wrapper.vm.sortedItems[1]).toEqual(items[1])
+    expect(wrapper.vm.sortedItems[2]).toEqual(items[0])
+
+    // sort by date
+    wrapper.vm._sortItemsByField(items, 'date', 'string', false)
+    expect(wrapper.vm.sortedItems[0]).toEqual(items[0])
+    expect(wrapper.vm.sortedItems[1]).toEqual(items[1])
+    expect(wrapper.vm.sortedItems[2]).toEqual(items[2])
+
+    // reverse
+    wrapper.vm._sortItemsByField(items, 'date', 'string', true)
+    expect(wrapper.vm.sortedItems[0]).toEqual(items[2])
+    expect(wrapper.vm.sortedItems[1]).toEqual(items[1])
+    expect(wrapper.vm.sortedItems[2]).toEqual(items[0])
+
+    // sort by amount
+    wrapper.vm._sortItemsByField(items, 'amount', 'number', false)
+    // expect(wrapper.vm.sortedItems[0]).toEqual(items[2])
+    // expect(wrapper.vm.sortedItems[1]).toEqual(items[0])
+    // expect(wrapper.vm.sortedItems[2]).toEqual(items[1])
+
+    // reverse
+    // wrapper.vm._sortItemsByField(items, 'amount', 'number', true)
+    // expect(wrapper.vm.sortedItems[0]).toEqual(items[2])
+    // expect(wrapper.vm.sortedItems[1]).toEqual(items[0])
+    // expect(wrapper.vm.sortedItems[2]).toEqual(items[1])
+  })
+
+  it('_paginateItems() paginates data into page sets', () => {
+
+    let items = []
+    for (let i = 0; i < 300; i++) {
+      items.push({ name: 'Kyra Lester'})
+    }
+
+    const wrapper = shallowMount(DataTable, { propsData:  { items }})
+
+    // verify current sort order and defaults
+    expect(wrapper.vm.items.length).toBe(300)
+    expect(wrapper.vm.sortedItems.length).toBe(20)
+    expect(wrapper.vm.perPage).toBe(20)
+
+    // by 20
+    expect(
+      wrapper.vm._paginateItems(
+        items
+      ).length
+    ).toBe(15)
+
+    // by 10
+    wrapper.vm.perPage = 10
+
+    expect(
+      wrapper.vm._paginateItems(
+        items
+      ).length
+    ).toBe(30)
+
+    expect(wrapper.vm.items.length).toBe(300)
+    expect(wrapper.vm.sortedItems.length).toBe(10)
+    expect(wrapper.vm.perPage).toBe(10)
+
+    // by 5
+    wrapper.vm.perPage = 5
+
+    expect(
+      wrapper.vm._paginateItems(
+        items
+      ).length
+    ).toBe(60)
+
+    expect(wrapper.vm.items.length).toBe(300)
+    expect(wrapper.vm.sortedItems.length).toBe(5)
+    expect(wrapper.vm.perPage).toBe(5)
+
+    // check DOM as well
+  })
+
+  it('paginatedItems() computed returns subset of pages', () => {
+    let items = []
+    for (let i = 0; i < 300; i++) {
+      items.push({ name: 'Kyra Lester'})
+    }
+
+    const wrapper = shallowMount(DataTable, { propsData:  { items }})
+    expect(wrapper.vm.currentPage).toBe(0)
+    expect(wrapper.vm.pages.length).toBe(15)
+
+    expect(
+      wrapper.vm.paginatedItems
+    ).toEqual(wrapper.vm.pages[0])
+
+    wrapper.vm.currentPage = 5
+    expect(
+      wrapper.vm.paginatedItems
+    ).toEqual(wrapper.vm.pages[4])
+
+  })
 
   it('generates correct number of rows', () => {
     // check for computed results
@@ -279,4 +541,7 @@ describe('DataTable.vue', () => {
   // hide/display fields
   //-- hide selected field based on key
   // toggleFields(field)
+
+  // test emitted events
 })
+

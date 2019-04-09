@@ -121,23 +121,62 @@
       },
 
       sortedItems() {
-        let items = this.items ? this.items : []
-        const sortKey = this.sortKey
-        const sortType = this.sortType
-        const reverse = this.reverse
+
+        // Filter items by search
+        let filteredItems = this._filterItemsBySearch(
+          this.items ? this.items : [],
+          this.searchText
+        )
+
+        // Sort items by field
+        let sortedItems = this._sortItemsByField(
+          filteredItems ? filteredItems : [],
+          this.sortKey,
+          this.sortType,
+          this.reverse
+        )
+
+        // Paginate
+        this._paginateItems(sortedItems)
+
+
+        // Return results for current page
+        let paginatedItems = this.paginatedItems ? this.paginatedItems : []
+        return paginatedItems
+      },
+
+      paginatedItems() {
+        return this.pages[this.currentPage]
+      }
+
+    },
+
+    methods: {
+
+      //-- internal -----------------------------
+      _filterItemsBySearch(items, searchText) {
+        let txt = searchText.toLowerCase()
+        let filteredResults = items.filter(item => {
+          const itemValues = Object.values(item)
+          itemValues.forEach(val => { val.toString().toLowerCase()})
+          return itemValues.toString().toLowerCase().includes(txt)
+        })
+        return filteredResults
+      },
+
+      _sortItemsByField(items, sortKey, sortType, reverse) {
         let result = items
 
-        if (sortType === 'number') {
+        if (sortType == 'number') {
           result = items.sort((a, b) => {
-            return reverse ?  b[sortKey] - a[sortKey] : a[sortKey] - b[sortKey]
+            return reverse ? b[sortKey] - a[sortKey] : a[sortKey] - b[sortKey]
           })
         }
 
-        if (sortType === 'string') {
-
+        if (sortType == 'string') {
           result = items.sort((a, b) => {
-            var x = a ? a[sortKey].toLowerCase() : ''
-            var y = b ? b[sortKey].toLowerCase() : ''
+            let x = a ? a[sortKey].toLowerCase() : ''
+            let y = b ? b[sortKey].toLowerCase() : ''
 
             if (reverse) {
               if (x > y) { return -1 }
@@ -152,53 +191,10 @@
 
         }
 
-        let searchText = this.searchText.toLowerCase()
-
-        let filteredResults = result.filter(item => {
-          const itemValues = Object.values(item)
-          itemValues.forEach(val => { val.toString().toLowerCase()})
-          return itemValues.toString().toLowerCase().includes(searchText)
-        })
-
-        this.calculatePages(filteredResults)
-        let paginatedItems = this.paginatedItems ? this.paginatedItems : []
-
-        let newRes = paginatedItems.filter(item => {
-          const itemValues = Object.values(item)
-          itemValues.forEach(val => { val.toString().toLowerCase()})
-          return itemValues.toString().toLowerCase().includes(searchText)
-        })
-
-        return newRes
+        return result
       },
 
-      paginatedItems() {
-        return this.pages[this.currentPage]
-      }
-
-    },
-
-    methods: {
-
-      sortTableBy(sortKey, sortType) {
-        this.currentPage = 0
-        this.reverse = (this.sortKey == sortKey) ? ! this.reverse : false
-        this.sortKey = sortKey
-        this.sortType = sortType
-      },
-
-      toggleSelect(itemID) {
-        const selectedItemIDs = this.selectedItemIDs
-
-        if (selectedItemIDs.includes(itemID)) {
-          const idx = selectedItemIDs.findIndex(x => x === itemID)
-          selectedItemIDs.splice(idx, 1)
-        } else {
-          selectedItemIDs.push(itemID)
-        }
-      },
-
-      calculatePages(items) { // internal method
+      _paginateItems(items) {
         let numItems = items ? items.length : 0
         let numItemsPerPage = this.perPage
         let pages = []
@@ -223,6 +219,26 @@
         }
 
         return this.pages = pages
+      },
+
+
+      //-- --------------------------------------
+      sortTableBy(sortKey, sortType) {
+        this.currentPage = 0
+        this.reverse = (this.sortKey == sortKey) ? ! this.reverse : false
+        this.sortKey = sortKey
+        this.sortType = sortType
+      },
+
+      toggleSelect(itemID) {
+        const selectedItemIDs = this.selectedItemIDs
+
+        if (selectedItemIDs.includes(itemID)) {
+          const idx = selectedItemIDs.findIndex(x => x === itemID)
+          selectedItemIDs.splice(idx, 1)
+        } else {
+          selectedItemIDs.push(itemID)
+        }
       },
 
       setCurrentPage(pageNum) {
