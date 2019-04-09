@@ -1,0 +1,37 @@
+@mixin flexCentered($direction) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin fontStandard() {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-size: $font-md;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: $color-black-1;
+}
+
+@mixin activeState() {
+  &.is-active {
+    background-color: $color-black-1;
+    color: $txt-color--light;
+  }
+}
+
+@mixin hoverState() {
+  &:hover {
+    background-color: $color-black-1;
+    color: $txt-color--light;
+  }
+}
+
+@mixin tippyBaseTheme() {
+  padding: 0;
+  background-color: $bg-color--light;
+  box-shadow: 0 50px 100px rgba(50, 50, 93, .1),
+              0 15px 35px rgba(50, 50, 93, .15),
+              0 5px 15px rgba(0, 0, 0, .1);
+}
