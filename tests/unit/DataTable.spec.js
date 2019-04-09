@@ -40,6 +40,24 @@ describe('DataTable.vue', () => {
     expect(wrapper.contains('[data-test-component="TableFooter"]')).toBe(true)
   })
 
+  it('generates correct number of rows', () => {
+    // check for computed results
+    // check for key DOM elements
+    let items = []
+    for (let i = 0; i < 100; i++) { items.push({ name: 'Kyra Lester'}) }
+
+
+    const wrapper = shallowMount(DataTable, { propsData:  { items }})
+    expect(wrapper.vm.pages.length).toBe(5)
+    expect(wrapper.vm.items.length).toBe(100)
+    expect(wrapper.vm.perPage).toBe(20) // default
+    expect(
+      wrapper.findAll('[data-test-component="TableRow"]').length
+    ).toBe(wrapper.vm.perPage)
+  })
+
+  //-- Computed ---------------------------------------------------------------
+
   it('headers() computed correctly returns headers with data type', () => {
     let items = [{
       "id": "3471DA17-401F-9633-BF81-4CADA6FD5C79",
@@ -81,6 +99,29 @@ describe('DataTable.vue', () => {
     //-- _filterItemsBySearch()
     //-- _sortItemsByField()
     //-- _paginateItems()
+
+  it('sortedItems() computed returns subset of pages', () => {
+    let items = []
+    for (let i = 0; i < 300; i++) {
+      items.push({ name: 'Kyra Lester'})
+    }
+
+    const wrapper = shallowMount(DataTable, { propsData:  { items }})
+    expect(wrapper.vm.currentPage).toBe(0)
+    expect(wrapper.vm.pages.length).toBe(15)
+
+    expect(
+      wrapper.vm.sortedItems
+    ).toEqual(wrapper.vm.pages[0])
+
+    wrapper.vm.currentPage = 5
+    expect(
+      wrapper.vm.sortedItems
+    ).toEqual(wrapper.vm.pages[4])
+
+  })
+
+  //-- Internal Methods -------------------------------------------------------
 
   it('_filterItemsBySearch() filters data by search text', () => {
     let items = [
@@ -288,43 +329,9 @@ describe('DataTable.vue', () => {
     // check DOM as well
   })
 
-  it('paginatedItems() computed returns subset of pages', () => {
-    let items = []
-    for (let i = 0; i < 300; i++) {
-      items.push({ name: 'Kyra Lester'})
-    }
+  //-- User Actions -----------------------------------------------------------
 
-    const wrapper = shallowMount(DataTable, { propsData:  { items }})
-    expect(wrapper.vm.currentPage).toBe(0)
-    expect(wrapper.vm.pages.length).toBe(15)
-
-    expect(
-      wrapper.vm.paginatedItems
-    ).toEqual(wrapper.vm.pages[0])
-
-    wrapper.vm.currentPage = 5
-    expect(
-      wrapper.vm.paginatedItems
-    ).toEqual(wrapper.vm.pages[4])
-
-  })
-
-  it('generates correct number of rows', () => {
-    // check for computed results
-    // check for key DOM elements
-    let items = []
-    for (let i = 0; i < 100; i++) { items.push({ name: 'Kyra Lester'}) }
-
-
-    const wrapper = shallowMount(DataTable, { propsData:  { items }})
-    expect(wrapper.vm.pages.length).toBe(5)
-    expect(wrapper.vm.items.length).toBe(100)
-    expect(wrapper.vm.perPage).toBe(20) // default
-    expect(
-      wrapper.findAll('[data-test-component="TableRow"]').length
-    ).toBe(wrapper.vm.perPage)
-  })
-
+  // select item // toggleSelect(itemID)
   it('can track selected items', () => {
     let items = [
       {
@@ -374,19 +381,43 @@ describe('DataTable.vue', () => {
     ).toBe("B743AC82-3613-13A2-2E42-E0C1F5CBF8A6")
   })
 
-  // toggleSelect(itemID)
-  // selectAllItems()
+  // select all items // selectAllItems()
+  it('can toggle selection of all items', () => {
+    let items = [
+      {
+        "id": "3471DA17-401F-9633-BF81-4CADA6FD5C79",
+        "name": "Kyra Lester",
+        "description": "Curabitur dictum. Phasellus in",
+        "date": "2017-07-23T04:24:49-07:00",
+        "amount": 345.54
+      },
+      {
+        "id": "9F5C9912-936A-FB85-1EDB-9DA87BE7FF1E",
+        "name": "Buckminster Alvarado",
+        "description": "dui, in sodales elit erat vitae risus. Duis a mi",
+        "date": "2018-11-08T05:44:15-08:00",
+        "amount": 677.08
+      },
+      {
+        "id": "B743AC82-3613-13A2-2E42-E0C1F5CBF8A6",
+        "name": "Athena Smith",
+        "description": "massa lobortis ultrices. Vivamus rhoncus.",
+        "date": "2018-11-11T06:19:57-08:00",
+        "amount": 73.67
+      }
+    ]
 
-  // can select all items in db
-  // can delete individual item in db -- RowPopover delete -- Vuex
-  // can delete all selected items RowPopover (HeaderRow?) delete -- Vuex
-  // can set the current page
-    // setCurrentPage(pageNum)
-  // quick edit mode can be toggled
-    //-- test that it sets class on data table for grid changes
-    // toggleListView()
+    const wrapper = shallowMount(DataTable, { propsData: { items } })
+    expect(wrapper.vm.selectedItemIDs.length).toBe(0)
 
-  // Filters ------------
+    // select an item
+    wrapper.vm.selectAllItems()
+    expect(wrapper.vm.selectedItemIDs.length).toBe(3)
+
+    // unselect all
+    wrapper.vm.selectAllItems()
+    expect(wrapper.vm.selectedItemIDs.length).toBe(0)
+  })
 
   // search
   it('can filter table by search', () => {
@@ -434,9 +465,6 @@ describe('DataTable.vue', () => {
     expect(rows.length).toBe(0)
     expect(wrapper.vm.sortedItems.length).toBe(0)
   })
-
-  // can set number of results to return per page
-  // setPerPage(value)
 
   // sort
   // row data can by sorted asc/desc by setting the sortKey, in reverse
@@ -539,9 +567,18 @@ describe('DataTable.vue', () => {
   })
 
   // hide/display fields
-  //-- hide selected field based on key
-  // toggleFields(field)
+    //-- hide selected field based on key
+    // toggleFields(field)
 
-  // test emitted events
+  // can set number of results to return per page
+  // setPerPage(value)
+
+  // setCurrentPage()
+
+  // toggleListView() // Quick Edit Mode
+    //-- test that it sets class on data table for grid changes
 })
 
+// can delete individual item in db -- RowPopover delete -- Vuex
+// can delete all selected items RowPopover (HeaderRow?) delete -- Vuex
+// test emitted events

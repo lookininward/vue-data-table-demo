@@ -102,7 +102,7 @@
 
     computed: {
 
-      headers() { // fields
+      headers() { // dataFields
         let items = this.items ? this.items : []
         let headers = items.length ? Object.keys(items[0]) : []
         let result = []
@@ -120,7 +120,7 @@
         return result
       },
 
-      sortedItems() {
+      sortedItems() { // currentPageItems
 
         // Filter items by search
         let filteredItems = this._filterItemsBySearch(
@@ -137,16 +137,10 @@
         )
 
         // Paginate
-        this._paginateItems(sortedItems)
-
+        let paginatedItems = this._paginateItems(sortedItems)
 
         // Return results for current page
-        let paginatedItems = this.paginatedItems ? this.paginatedItems : []
-        return paginatedItems
-      },
-
-      paginatedItems() {
-        return this.pages[this.currentPage]
+        return paginatedItems.length ? paginatedItems[this.currentPage] : []
       }
 
     },
@@ -154,6 +148,7 @@
     methods: {
 
       //-- internal -----------------------------
+
       _filterItemsBySearch(items, searchText) {
         let txt = searchText.toLowerCase()
         let filteredResults = items.filter(item => {
@@ -221,16 +216,9 @@
         return this.pages = pages
       },
 
-
       //-- --------------------------------------
-      sortTableBy(sortKey, sortType) {
-        this.currentPage = 0
-        this.reverse = (this.sortKey == sortKey) ? ! this.reverse : false
-        this.sortKey = sortKey
-        this.sortType = sortType
-      },
 
-      toggleSelect(itemID) {
+      toggleSelect(itemID) { // toggleSelectItem
         const selectedItemIDs = this.selectedItemIDs
 
         if (selectedItemIDs.includes(itemID)) {
@@ -241,12 +229,29 @@
         }
       },
 
-      setCurrentPage(pageNum) {
-        this.currentPage = pageNum
+      selectAllItems() { // toggleSelectAllItems
+        let items = this.items
+        const selectedItemIDs = this.selectedItemIDs
+        let result = []
+
+        if (!selectedItemIDs.length) {
+          items.forEach(item => {
+            if (!selectedItemIDs.includes(item.id)) {
+              result.push(item.id)
+            }
+          })
+        }
+
+        this.selectedItemIDs = result
       },
 
-      toggleListView() { // Quick Edit Mode
-        return this.listView = !this.listView
+      //-- --------------------------------------
+
+      sortTableBy(sortKey, sortType) {
+        this.currentPage = 0
+        this.reverse = (this.sortKey == sortKey) ? ! this.reverse : false
+        this.sortKey = sortKey
+        this.sortType = sortType
       },
 
       toggleFields(field) {
@@ -266,20 +271,12 @@
         this.perPage = value
       },
 
-      selectAllItems() {
-        let items = this.items
-        const selectedItemIDs = this.selectedItemIDs
-        let result = []
+      setCurrentPage(pageNum) {
+        this.currentPage = pageNum
+      },
 
-        if (!selectedItemIDs.length) {
-          items.forEach(item => {
-            if (!selectedItemIDs.includes(item.id)) {
-              result.push(item.id)
-            }
-          })
-        }
-
-        this.selectedItemIDs = result
+      toggleListView() { // Quick Edit Mode
+        return this.listView = !this.listView
       }
 
     }
