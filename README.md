@@ -2,17 +2,35 @@
 #### VueJS, GraphQL, DynamoDB
 [![CircleCI](https://circleci.com/gh/lookininward/data-table.svg?style=svg)](https://circleci.com/gh/lookininward/data-table)
 
-### Setup Project
+## Project setup
 ```
 npm install
 ```
 
-#### Run Locally
+ ### Compiles and hot-reloads for development
 ```
 npm run serve
 ```
 
-#### Run Tests
+ ### Compiles and minifies for production
+```
+npm run build
+```
+
+ ### Run your tests
+```
+npm run test
+```
+
+ ### Lints and fixes files
+```
+npm run lint
+```
+
+ ### Run your unit tests
 ```
 npm run test:unit
 ```
+
+ ### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
