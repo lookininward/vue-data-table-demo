@@ -103,4 +103,32 @@ describe('TableHeader.vue', () => {
     ).toBe('input input--checkbox far fa-square')
   })
 
+  it('emits sortData method ', () => {
+    let items = [{
+      "id": "3471DA17-401F-9633-BF81-4CADA6FD5C79",
+      "name": "Kyra Lester",
+      "description": "Curabitur dictum. Phasellus in",
+      "date": "2017-07-23T04:24:49-07:00",
+      "amount": 345.54
+    }]
+
+    let wrapper = shallowMount(TableHeader, {propsData:  { items }})
+    wrapper.vm.sortData('id', 'string')
+    expect(wrapper.emitted().sortTableBy[0]).toEqual([ 'id', 'string' ])
+  })
+
+  it('emits selectAll method ', () => {
+    let items = [{
+      "id": "3471DA17-401F-9633-BF81-4CADA6FD5C79",
+      "name": "Kyra Lester",
+      "description": "Curabitur dictum. Phasellus in",
+      "date": "2017-07-23T04:24:49-07:00",
+      "amount": 345.54
+    }]
+
+    let wrapper = shallowMount(TableHeader, {propsData:  { items }})
+    wrapper.vm.selectAll()
+    expect(wrapper.emitted().selectAllItems).toEqual([[]])
+  })
+
 })

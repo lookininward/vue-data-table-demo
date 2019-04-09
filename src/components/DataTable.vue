@@ -26,9 +26,9 @@
       :hiddenFields="hiddenFields"
       :sortKey="sortKey"
       :reverse="reverse"
-      :inQuickEdit="inQuickEdit"
       :numItems="items ? items.length : 0"
       :selectedItemIDs="selectedItemIDs"
+      :inQuickEdit="inQuickEdit"
       @sortTableBy="sortTableBy"
       @selectAllItems="selectAllItems"
     />

@@ -142,9 +142,9 @@
       hiddenFields: Array,
       sortKey: String,
       reverse: Boolean,
-      inQuickEdit: Boolean,
       numItems: Number,
-      selectedItemIDs: Array
+      selectedItemIDs: Array,
+      inQuickEdit: Boolean
     },
 
     created() {
