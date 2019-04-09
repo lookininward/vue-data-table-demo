@@ -566,19 +566,85 @@ describe('DataTable.vue', () => {
     expect(wrapperDataTable.vm.sortedItems[2]).toBe(item1)
   })
 
-  // hide/display fields
-    //-- hide selected field based on key
-    // toggleFields(field)
+  it('can hide selected fields', () => {
+    let items = [{
+      "id": "3471DA17-401F-9633-BF81-4CADA6FD5C79",
+      "name": "Kyra Lester",
+      "description": "Curabitur dictum. Phasellus in",
+      "date": "2017-07-23T04:24:49-07:00",
+      "amount": 345.54
+    }]
 
-  // can set number of results to return per page
-  // setPerPage(value)
+    const wrapperDataTable = mount(DataTable, { propsData: { items }})
 
-  // setCurrentPage()
+    expect(
+      wrapperDataTable.findAll('[data-test-component="TableRow"]').length
+    ).toBe(1)
 
-  // toggleListView() // Quick Edit Mode
-    //-- test that it sets class on data table for grid changes
+    expect(
+      wrapperDataTable.findAll('[data-test-component="TableCell"]').length
+    ).toBe(5)
+
+    expect(
+      wrapperDataTable.findAll('[data-test-component="TableCell"]').at(0).text().includes('3471DA17-401F-9633-BF81-4CADA6FD5C79')
+    ).toBe(true)
+
+    wrapperDataTable.vm.toggleFields('id') // check for each key
+
+    expect(
+      wrapperDataTable.findAll('[data-test-component="TableCell"]').length
+    ).toBe(4)
+
+    expect(
+      wrapperDataTable.findAll('[data-test-component="TableCell"]').at(0).text().includes('3471DA17-401F-9633-BF81-4CADA6FD5C79')
+    ).toBe(false)
+  })
+
+  it('can set number of results to return per page', () => {
+    let items = []
+    for (let i = 0; i < 100; i++) { items.push({ name: 'Kyra Lester'}) }
+
+    const wrapper = shallowMount(DataTable, { propsData: { items }})
+
+    expect(wrapper.vm.sortedItems.length).toBe(20)
+    expect(wrapper.vm.pages.length).toBe(5)
+
+    wrapper.vm.setPerPage(5)
+    expect(wrapper.vm.sortedItems.length).toBe(5)
+    expect(wrapper.vm.pages.length).toBe(20)
+
+    wrapper.vm.setPerPage(10)
+    expect(wrapper.vm.sortedItems.length).toBe(10)
+    expect(wrapper.vm.pages.length).toBe(10)
+  })
+
+  it('can set currentpage', () => {
+    let items = []
+    for (let i = 0; i < 100; i++) { items.push({ name: 'Kyra Lester'}) }
+
+    const wrapper = shallowMount(DataTable, { propsData: { items }})
+
+    expect(wrapper.vm.currentPage).toBe(0)
+    expect(wrapper.vm.sortedItems.length).toBe(20)
+    expect(wrapper.vm.pages.length).toBe(5)
+    expect(wrapper.vm.sortedItems).toEqual(wrapper.vm.pages[0])
+
+    wrapper.vm.setCurrentPage(4)
+    expect(wrapper.vm.sortedItems).toEqual(wrapper.vm.pages[4])
+  })
+
+
+  it('can toggle Quick Edit mode', () => {
+    let items = [{ name: 'Kyra Lester'}]
+    const wrapper = shallowMount(DataTable, { propsData: { items }})
+    expect(wrapper.vm.listView).toBe(false)
+    expect(wrapper.attributes('class')).toBe('data-table')
+
+    wrapper.vm.toggleListView()
+    expect(wrapper.vm.listView).toBe(true)
+    expect(wrapper.attributes('class')).toBe('data-table data-table--list')
+  })
 })
 
-// can delete individual item in db -- RowPopover delete -- Vuex
 // can delete all selected items RowPopover (HeaderRow?) delete -- Vuex
 // test emitted events
