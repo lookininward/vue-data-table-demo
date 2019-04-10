@@ -47,7 +47,7 @@
         :item="item"
         :hiddenFields="hiddenFields"
         :selectedItemIDs="selectedItemIDs"
-        @toggleSelect="toggleSelect"
+        @toggleSelectItem="toggleSelectItem"
       />
     </div>
 
@@ -217,7 +217,7 @@
 
       //-- --------------------------------------
 
-      toggleSelect(itemID) { // toggleSelectItem
+      toggleSelectItem(itemID) {
         const selectedItemIDs = this.selectedItemIDs
 
         if (selectedItemIDs.includes(itemID)) {

@@ -64,7 +64,7 @@ describe('TableFilters.vue', () => {
       { "field": 'amount', "type": "number" }
     ]
 
-  it('emits updateSearchText method ', () => {
+  it('emits updateSearchText() ', () => {
     let wrapper = shallowMount(TableFilters, {
       propsData: {
         dataFields,
@@ -76,7 +76,7 @@ describe('TableFilters.vue', () => {
     expect(wrapper.emitted().input[0]).toEqual(['kyr'])
   })
 
-  it('emits toggleField method ', () => {
+  it('emits toggleField() ', () => {
     let wrapper = shallowMount(TableFilters, {
       propsData: {
         dataFields,
@@ -88,7 +88,7 @@ describe('TableFilters.vue', () => {
     expect(wrapper.emitted().toggleDisplayField[0]).toEqual(['id'])
   })
 
-  it('emits setPerPage method ', () => {
+  it('emits setPerPage() ', () => {
     let wrapper = shallowMount(TableFilters, {
       propsData: {
         dataFields,
@@ -100,7 +100,7 @@ describe('TableFilters.vue', () => {
     expect(wrapper.emitted().setItemsPerPage[0]).toEqual([10])
   })
 
-  it('emits toggleQuickEdit method ', () => {
+  it('emits toggleQuickEdit() ', () => {
     let wrapper = shallowMount(TableFilters, {
       propsData: {
         dataFields,

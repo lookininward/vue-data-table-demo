@@ -16,7 +16,7 @@
           :class="selectedItemIDs.includes(item.id) ?
                   'far fa-check-square' :
                   'far fa-square'"
-          @click="toggle(item.id)"
+          @click="toggleSelect(item.id)"
         >
         </i>
 
@@ -53,9 +53,9 @@
     name: 'TableRow',
 
     props: {
-      item: { type: Object },
-      hiddenFields: { type: Array },
-      selectedItemIDs: { type: Array }
+      item: Object,
+      hiddenFields: Array,
+      selectedItemIDs: Array
     },
 
     components: {
@@ -80,8 +80,8 @@
 
     methods: {
 
-      toggle(itemID) {
-        this.$emit('toggleSelect', itemID)
+      toggleSelect(itemID) {
+        this.$emit('toggleSelectItem', itemID)
       }
 
     }

@@ -102,7 +102,7 @@ describe('DataTable.vue', () => {
     //-- _sortItemsByField()
     //-- _paginateItems()
 
-  it('sortedItems() computed returns subset of pages', () => {
+  it('sortedItems() returns subset of pages', () => {
     let items = []
     for (let i = 0; i < 300; i++) {
       items.push({ name: 'Kyra Lester'})
@@ -363,18 +363,18 @@ describe('DataTable.vue', () => {
     expect(wrapper.vm.selectedItemIDs.length).toBe(0)
 
     // select an item
-    wrapper.vm.toggleSelect(items[0].id)
+    wrapper.vm.toggleSelectItem(items[0].id)
     expect(wrapper.vm.selectedItemIDs.length).toBe(1)
     expect(
       wrapper.vm.selectedItemIDs[0]
     ).toBe("3471DA17-401F-9633-BF81-4CADA6FD5C79")
 
     // select another
-    wrapper.vm.toggleSelect(items[2].id)
+    wrapper.vm.toggleSelectItem(items[2].id)
     expect(wrapper.vm.selectedItemIDs.length).toBe(2)
 
     // unselect the first
-    wrapper.vm.toggleSelect(items[0].id)
+    wrapper.vm.toggleSelectItem(items[0].id)
 
     // second still present
     expect(wrapper.vm.selectedItemIDs.length).toBe(1)
