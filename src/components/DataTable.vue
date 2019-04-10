@@ -42,7 +42,7 @@
       <!-- Table Rows -------------------------->
       <TableRow
         data-test-component="TableRow"
-        v-for="item in sortedItems"
+        v-for="item in currentPageItems"
         v-bind:key="item.id"
         :item="item"
         :hiddenFields="hiddenFields"
@@ -119,7 +119,7 @@
         return result
       },
 
-      sortedItems() { // currentPageItems
+      currentPageItems() {
 
         // Filter items by search
         let filteredItems = this._filterItemsBySearch(
@@ -128,7 +128,7 @@
         )
 
         // Sort items by field
-        let sortedItems = this._sortItemsByField(
+        let currentPageItems = this._sortItemsByField(
           filteredItems ? filteredItems : [],
           this.sortKey,
           this.sortType,
@@ -136,7 +136,7 @@
         )
 
         // Paginate
-        let paginatedItems = this._paginateItems(sortedItems)
+        let paginatedItems = this._paginateItems(currentPageItems)
 
         // Return results for current page
         return paginatedItems.length ? paginatedItems[this.currentPage] : []

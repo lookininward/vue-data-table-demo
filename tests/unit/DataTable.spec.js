@@ -97,12 +97,12 @@ describe('DataTable.vue', () => {
     })
   })
 
-  // sortedItems() computed -- rename
+  // currentPageItems() computed -- rename
     //-- _filterItemsBySearch()
     //-- _sortItemsByField()
     //-- _paginateItems()
 
-  it('sortedItems() returns subset of pages', () => {
+  it('currentPageItems() returns subset of pages', () => {
     let items = []
     for (let i = 0; i < 300; i++) {
       items.push({ name: 'Kyra Lester'})
@@ -113,12 +113,12 @@ describe('DataTable.vue', () => {
     expect(wrapper.vm.pages.length).toBe(15)
 
     expect(
-      wrapper.vm.sortedItems
+      wrapper.vm.currentPageItems
     ).toEqual(wrapper.vm.pages[0])
 
     wrapper.vm.currentPage = 5
     expect(
-      wrapper.vm.sortedItems
+      wrapper.vm.currentPageItems
     ).toEqual(wrapper.vm.pages[4])
 
   })
@@ -153,10 +153,10 @@ describe('DataTable.vue', () => {
     const wrapper = shallowMount(DataTable, { propsData:  { items }})
 
     // verify current sort order and defaults
-    expect(wrapper.vm.sortedItems.length).toBe(3)
-    expect(wrapper.vm.sortedItems[0]).toEqual(items[0])
-    expect(wrapper.vm.sortedItems[1]).toEqual(items[1])
-    expect(wrapper.vm.sortedItems[2]).toEqual(items[2])
+    expect(wrapper.vm.currentPageItems.length).toBe(3)
+    expect(wrapper.vm.currentPageItems[0]).toEqual(items[0])
+    expect(wrapper.vm.currentPageItems[1]).toEqual(items[1])
+    expect(wrapper.vm.currentPageItems[2]).toEqual(items[2])
     expect(wrapper.vm.sortKey).toBe(null)
     expect(wrapper.vm.sortType).toBe(null)
     expect(wrapper.vm.reverse).toBe(false)
@@ -207,9 +207,9 @@ describe('DataTable.vue', () => {
 
     // verify current sort order and defaults
     expect(wrapper.vm.items.length).toBe(3)
-    expect(wrapper.vm.sortedItems[0]).toEqual(items[0])
-    expect(wrapper.vm.sortedItems[1]).toEqual(items[1])
-    expect(wrapper.vm.sortedItems[2]).toEqual(items[2])
+    expect(wrapper.vm.currentPageItems[0]).toEqual(items[0])
+    expect(wrapper.vm.currentPageItems[1]).toEqual(items[1])
+    expect(wrapper.vm.currentPageItems[2]).toEqual(items[2])
     expect(wrapper.vm.sortKey).toBe(null)
     expect(wrapper.vm.sortType).toBe(null)
     expect(wrapper.vm.reverse).toBe(false)
@@ -222,63 +222,63 @@ describe('DataTable.vue', () => {
       false // reverse
     )
 
-    expect(wrapper.vm.sortedItems[0]).toEqual(items[0])
-    expect(wrapper.vm.sortedItems[1]).toEqual(items[1])
-    expect(wrapper.vm.sortedItems[2]).toEqual(items[2])
+    expect(wrapper.vm.currentPageItems[0]).toEqual(items[0])
+    expect(wrapper.vm.currentPageItems[1]).toEqual(items[1])
+    expect(wrapper.vm.currentPageItems[2]).toEqual(items[2])
 
     // reverse
     wrapper.vm._sortItemsByField(items, 'id', 'string', true)
-    expect(wrapper.vm.sortedItems[0]).toEqual(items[2])
-    expect(wrapper.vm.sortedItems[1]).toEqual(items[1])
-    expect(wrapper.vm.sortedItems[2]).toEqual(items[0])
+    expect(wrapper.vm.currentPageItems[0]).toEqual(items[2])
+    expect(wrapper.vm.currentPageItems[1]).toEqual(items[1])
+    expect(wrapper.vm.currentPageItems[2]).toEqual(items[0])
 
     // sort by name
     wrapper.vm._sortItemsByField(items, 'name', 'string', false)
-    expect(wrapper.vm.sortedItems[0]).toEqual(items[2])
-    expect(wrapper.vm.sortedItems[1]).toEqual(items[1])
-    expect(wrapper.vm.sortedItems[2]).toEqual(items[0])
+    expect(wrapper.vm.currentPageItems[0]).toEqual(items[2])
+    expect(wrapper.vm.currentPageItems[1]).toEqual(items[1])
+    expect(wrapper.vm.currentPageItems[2]).toEqual(items[0])
 
     // reverse
     wrapper.vm._sortItemsByField(items, 'name', 'string', true)
-    expect(wrapper.vm.sortedItems[0]).toEqual(items[0])
-    expect(wrapper.vm.sortedItems[1]).toEqual(items[1])
-    expect(wrapper.vm.sortedItems[2]).toEqual(items[2])
+    expect(wrapper.vm.currentPageItems[0]).toEqual(items[0])
+    expect(wrapper.vm.currentPageItems[1]).toEqual(items[1])
+    expect(wrapper.vm.currentPageItems[2]).toEqual(items[2])
 
     // sort by description
     wrapper.vm._sortItemsByField(items, 'description', 'string', false)
-    expect(wrapper.vm.sortedItems[0]).toEqual(items[0])
-    expect(wrapper.vm.sortedItems[1]).toEqual(items[1])
-    expect(wrapper.vm.sortedItems[2]).toEqual(items[2])
+    expect(wrapper.vm.currentPageItems[0]).toEqual(items[0])
+    expect(wrapper.vm.currentPageItems[1]).toEqual(items[1])
+    expect(wrapper.vm.currentPageItems[2]).toEqual(items[2])
 
     // reverse
     wrapper.vm._sortItemsByField(items, 'description', 'string', true)
-    expect(wrapper.vm.sortedItems[0]).toEqual(items[2])
-    expect(wrapper.vm.sortedItems[1]).toEqual(items[1])
-    expect(wrapper.vm.sortedItems[2]).toEqual(items[0])
+    expect(wrapper.vm.currentPageItems[0]).toEqual(items[2])
+    expect(wrapper.vm.currentPageItems[1]).toEqual(items[1])
+    expect(wrapper.vm.currentPageItems[2]).toEqual(items[0])
 
     // sort by date
     wrapper.vm._sortItemsByField(items, 'date', 'string', false)
-    expect(wrapper.vm.sortedItems[0]).toEqual(items[0])
-    expect(wrapper.vm.sortedItems[1]).toEqual(items[1])
-    expect(wrapper.vm.sortedItems[2]).toEqual(items[2])
+    expect(wrapper.vm.currentPageItems[0]).toEqual(items[0])
+    expect(wrapper.vm.currentPageItems[1]).toEqual(items[1])
+    expect(wrapper.vm.currentPageItems[2]).toEqual(items[2])
 
     // reverse
     wrapper.vm._sortItemsByField(items, 'date', 'string', true)
-    expect(wrapper.vm.sortedItems[0]).toEqual(items[2])
-    expect(wrapper.vm.sortedItems[1]).toEqual(items[1])
-    expect(wrapper.vm.sortedItems[2]).toEqual(items[0])
+    expect(wrapper.vm.currentPageItems[0]).toEqual(items[2])
+    expect(wrapper.vm.currentPageItems[1]).toEqual(items[1])
+    expect(wrapper.vm.currentPageItems[2]).toEqual(items[0])
 
     // sort by amount
     wrapper.vm._sortItemsByField(items, 'amount', 'number', false)
-    // expect(wrapper.vm.sortedItems[0]).toEqual(items[2])
-    // expect(wrapper.vm.sortedItems[1]).toEqual(items[0])
-    // expect(wrapper.vm.sortedItems[2]).toEqual(items[1])
+    // expect(wrapper.vm.currentPageItems[0]).toEqual(items[2])
+    // expect(wrapper.vm.currentPageItems[1]).toEqual(items[0])
+    // expect(wrapper.vm.currentPageItems[2]).toEqual(items[1])
 
     // reverse
     // wrapper.vm._sortItemsByField(items, 'amount', 'number', true)
-    // expect(wrapper.vm.sortedItems[0]).toEqual(items[2])
-    // expect(wrapper.vm.sortedItems[1]).toEqual(items[0])
-    // expect(wrapper.vm.sortedItems[2]).toEqual(items[1])
+    // expect(wrapper.vm.currentPageItems[0]).toEqual(items[2])
+    // expect(wrapper.vm.currentPageItems[1]).toEqual(items[0])
+    // expect(wrapper.vm.currentPageItems[2]).toEqual(items[1])
   })
 
   it('_paginateItems() paginates data into page sets', () => {
@@ -292,7 +292,7 @@ describe('DataTable.vue', () => {
 
     // verify current sort order and defaults
     expect(wrapper.vm.items.length).toBe(300)
-    expect(wrapper.vm.sortedItems.length).toBe(20)
+    expect(wrapper.vm.currentPageItems.length).toBe(20)
     expect(wrapper.vm.perPage).toBe(20)
 
     // by 20
@@ -312,7 +312,7 @@ describe('DataTable.vue', () => {
     ).toBe(30)
 
     expect(wrapper.vm.items.length).toBe(300)
-    expect(wrapper.vm.sortedItems.length).toBe(10)
+    expect(wrapper.vm.currentPageItems.length).toBe(10)
     expect(wrapper.vm.perPage).toBe(10)
 
     // by 5
@@ -325,7 +325,7 @@ describe('DataTable.vue', () => {
     ).toBe(60)
 
     expect(wrapper.vm.items.length).toBe(300)
-    expect(wrapper.vm.sortedItems.length).toBe(5)
+    expect(wrapper.vm.currentPageItems.length).toBe(5)
     expect(wrapper.vm.perPage).toBe(5)
 
     // check DOM as well
@@ -453,19 +453,19 @@ describe('DataTable.vue', () => {
     let search = wrapper.find('[data-test-input="searchText"]')
     expect(search.contains('[data-test-input="searchText"]')).toBe(true)
     expect(rows.length).toBe(3)
-    expect(wrapper.vm.sortedItems.length).toBe(3)
+    expect(wrapper.vm.currentPageItems.length).toBe(3)
 
     // search and retrieve record
     search.setValue('Buckminster')
     rows = wrapper.findAll('[data-test-component="TableRow"]')
     expect(rows.length).toBe(1)
-    expect(wrapper.vm.sortedItems.length).toBe(1)
+    expect(wrapper.vm.currentPageItems.length).toBe(1)
 
     // find no records without matching input
     search.setValue('xxxxxxxxxxx')
     rows = wrapper.findAll('[data-test-component="TableRow"]')
     expect(rows.length).toBe(0)
-    expect(wrapper.vm.sortedItems.length).toBe(0)
+    expect(wrapper.vm.currentPageItems.length).toBe(0)
   })
 
   // sort
@@ -509,63 +509,63 @@ describe('DataTable.vue', () => {
 
   it('can sort table by amount', () => {
     wrapperDataTable.vm.sortTableBy('amount', 'number')
-    expect(wrapperDataTable.vm.sortedItems[0]).toBe(item3)
-    expect(wrapperDataTable.vm.sortedItems[1]).toBe(item1)
-    expect(wrapperDataTable.vm.sortedItems[2]).toBe(item2)
+    expect(wrapperDataTable.vm.currentPageItems[0]).toBe(item3)
+    expect(wrapperDataTable.vm.currentPageItems[1]).toBe(item1)
+    expect(wrapperDataTable.vm.currentPageItems[2]).toBe(item2)
 
     wrapperDataTable.vm.sortTableBy('amount', 'number')
-    expect(wrapperDataTable.vm.sortedItems[0]).toBe(item2)
-    expect(wrapperDataTable.vm.sortedItems[1]).toBe(item1)
-    expect(wrapperDataTable.vm.sortedItems[2]).toBe(item3)
+    expect(wrapperDataTable.vm.currentPageItems[0]).toBe(item2)
+    expect(wrapperDataTable.vm.currentPageItems[1]).toBe(item1)
+    expect(wrapperDataTable.vm.currentPageItems[2]).toBe(item3)
   })
 
   it('can sort table by id', () => {
     wrapperDataTable.vm.sortTableBy('id', 'string')
-    expect(wrapperDataTable.vm.sortedItems[0]).toBe(item1)
-    expect(wrapperDataTable.vm.sortedItems[1]).toBe(item2)
-    expect(wrapperDataTable.vm.sortedItems[2]).toBe(item3)
+    expect(wrapperDataTable.vm.currentPageItems[0]).toBe(item1)
+    expect(wrapperDataTable.vm.currentPageItems[1]).toBe(item2)
+    expect(wrapperDataTable.vm.currentPageItems[2]).toBe(item3)
 
     wrapperDataTable.vm.sortTableBy('id', 'string')
-    expect(wrapperDataTable.vm.sortedItems[0]).toBe(item3)
-    expect(wrapperDataTable.vm.sortedItems[1]).toBe(item2)
-    expect(wrapperDataTable.vm.sortedItems[2]).toBe(item1)
+    expect(wrapperDataTable.vm.currentPageItems[0]).toBe(item3)
+    expect(wrapperDataTable.vm.currentPageItems[1]).toBe(item2)
+    expect(wrapperDataTable.vm.currentPageItems[2]).toBe(item1)
   })
 
   it('can sort table by name', () => {
     wrapperDataTable.vm.sortTableBy('name', 'string')
-    expect(wrapperDataTable.vm.sortedItems[0]).toBe(item3)
-    expect(wrapperDataTable.vm.sortedItems[1]).toBe(item2)
-    expect(wrapperDataTable.vm.sortedItems[2]).toBe(item1)
+    expect(wrapperDataTable.vm.currentPageItems[0]).toBe(item3)
+    expect(wrapperDataTable.vm.currentPageItems[1]).toBe(item2)
+    expect(wrapperDataTable.vm.currentPageItems[2]).toBe(item1)
 
     wrapperDataTable.vm.sortTableBy('name', 'string')
-    expect(wrapperDataTable.vm.sortedItems[0]).toBe(item1)
-    expect(wrapperDataTable.vm.sortedItems[1]).toBe(item2)
-    expect(wrapperDataTable.vm.sortedItems[2]).toBe(item3)
+    expect(wrapperDataTable.vm.currentPageItems[0]).toBe(item1)
+    expect(wrapperDataTable.vm.currentPageItems[1]).toBe(item2)
+    expect(wrapperDataTable.vm.currentPageItems[2]).toBe(item3)
 
   })
 
   it('can sort table by description', () => {
     wrapperDataTable.vm.sortTableBy('description', 'string')
-    expect(wrapperDataTable.vm.sortedItems[0]).toBe(item1)
-    expect(wrapperDataTable.vm.sortedItems[1]).toBe(item2)
-    expect(wrapperDataTable.vm.sortedItems[2]).toBe(item3)
+    expect(wrapperDataTable.vm.currentPageItems[0]).toBe(item1)
+    expect(wrapperDataTable.vm.currentPageItems[1]).toBe(item2)
+    expect(wrapperDataTable.vm.currentPageItems[2]).toBe(item3)
 
     wrapperDataTable.vm.sortTableBy('description', 'string')
-    expect(wrapperDataTable.vm.sortedItems[0]).toBe(item3)
-    expect(wrapperDataTable.vm.sortedItems[1]).toBe(item2)
-    expect(wrapperDataTable.vm.sortedItems[2]).toBe(item1)
+    expect(wrapperDataTable.vm.currentPageItems[0]).toBe(item3)
+    expect(wrapperDataTable.vm.currentPageItems[1]).toBe(item2)
+    expect(wrapperDataTable.vm.currentPageItems[2]).toBe(item1)
   })
 
   it('can sort table by date', () => {
     wrapperDataTable.vm.sortTableBy('date', 'string')
-    expect(wrapperDataTable.vm.sortedItems[0]).toBe(item1)
-    expect(wrapperDataTable.vm.sortedItems[1]).toBe(item2)
-    expect(wrapperDataTable.vm.sortedItems[2]).toBe(item3)
+    expect(wrapperDataTable.vm.currentPageItems[0]).toBe(item1)
+    expect(wrapperDataTable.vm.currentPageItems[1]).toBe(item2)
+    expect(wrapperDataTable.vm.currentPageItems[2]).toBe(item3)
 
     wrapperDataTable.vm.sortTableBy('date', 'string')
-    expect(wrapperDataTable.vm.sortedItems[0]).toBe(item3)
-    expect(wrapperDataTable.vm.sortedItems[1]).toBe(item2)
-    expect(wrapperDataTable.vm.sortedItems[2]).toBe(item1)
+    expect(wrapperDataTable.vm.currentPageItems[0]).toBe(item3)
+    expect(wrapperDataTable.vm.currentPageItems[1]).toBe(item2)
+    expect(wrapperDataTable.vm.currentPageItems[2]).toBe(item1)
   })
 
   it('can hide selected fields', () => {
@@ -608,15 +608,15 @@ describe('DataTable.vue', () => {
 
     const wrapper = shallowMount(DataTable, { propsData: { items }})
 
-    expect(wrapper.vm.sortedItems.length).toBe(20)
+    expect(wrapper.vm.currentPageItems.length).toBe(20)
     expect(wrapper.vm.pages.length).toBe(5)
 
     wrapper.vm.setItemsPerPage(5)
-    expect(wrapper.vm.sortedItems.length).toBe(5)
+    expect(wrapper.vm.currentPageItems.length).toBe(5)
     expect(wrapper.vm.pages.length).toBe(20)
 
     wrapper.vm.setItemsPerPage(10)
-    expect(wrapper.vm.sortedItems.length).toBe(10)
+    expect(wrapper.vm.currentPageItems.length).toBe(10)
     expect(wrapper.vm.pages.length).toBe(10)
   })
 
@@ -627,12 +627,12 @@ describe('DataTable.vue', () => {
     const wrapper = shallowMount(DataTable, { propsData: { items }})
 
     expect(wrapper.vm.currentPage).toBe(0)
-    expect(wrapper.vm.sortedItems.length).toBe(20)
+    expect(wrapper.vm.currentPageItems.length).toBe(20)
     expect(wrapper.vm.pages.length).toBe(5)
-    expect(wrapper.vm.sortedItems).toEqual(wrapper.vm.pages[0])
+    expect(wrapper.vm.currentPageItems).toEqual(wrapper.vm.pages[0])
 
     wrapper.vm.setCurrentPage(4)
-    expect(wrapper.vm.sortedItems).toEqual(wrapper.vm.pages[4])
+    expect(wrapper.vm.currentPageItems).toEqual(wrapper.vm.pages[4])
   })
 
   it('can toggle Quick Edit mode', () => {
