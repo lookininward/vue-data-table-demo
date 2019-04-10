@@ -45,10 +45,10 @@
     name: 'TableFooter',
 
     props: {
-     totalItems: { type: Number },
-     numSelectedItemIDs: { type: Number },
-     totalPages: { type: Number },
-     currentPage: { type: Number }
+     totalItems: Number,
+     numSelectedItemIDs: Number,
+     totalPages: Number,
+     currentPage: Number
    },
 
    methods: {
@@ -58,6 +58,7 @@
     }
 
    }
+
   }
 </script>
 

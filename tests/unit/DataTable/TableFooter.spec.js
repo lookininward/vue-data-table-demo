@@ -25,4 +25,10 @@ describe('TableFooter.vue', () => {
     expect(totalRows.text()).toBe(`Total Rows: ${items.length}`)
   })
 
+   it('emits setPage() ', () => {
+    const wrapper = shallowMount(TableFooter)
+    wrapper.vm.setPage(3)
+    expect(wrapper.emitted().setCurrentPage[0]).toEqual([3])
+  })
+
 })
