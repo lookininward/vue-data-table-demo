@@ -10,11 +10,16 @@ Amplify.configure(aws_exports);
 Vue.use(AmplifyPlugin, AmplifyModules);
 Vue.config.productionTip = false
 
+
+// debugger;
+
+console.log(process.env.VUE_APP_ENDPOINT)
+
 Amplify.configure({
   API: {
-    graphql_endpoint: process.env.VUE_APP_ENDPOINT,
+    graphql_endpoint: aws_exports.aws_appsync_graphqlEndpoint,
     graphql_headers: async () => ({
-      'x-api-key': process.env.VUE_APP_API_KEY,
+      'x-api-key': aws_exports.aws_appsync_apiKey,
     })
   }
 });
