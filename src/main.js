@@ -10,10 +10,6 @@ Amplify.configure(aws_exports);
 Vue.use(AmplifyPlugin, AmplifyModules);
 Vue.config.productionTip = false
 
-console.log(process.env)
-console.log(process.env.VUE_APP_ENDPOINT)
-console.log(process.env.VUE_APP_API_KEY)
-
 Amplify.configure({
   API: {
     graphql_endpoint: process.env.VUE_APP_ENDPOINT,
