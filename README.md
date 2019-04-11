@@ -3,7 +3,7 @@
 [![CircleCI](https://circleci.com/gh/lookininward/data-table.svg?style=svg)](https://circleci.com/gh/lookininward/data-table)
 
 ### 1.0 Approach and Deployment Method
-I thought I'd have some 'fun' and try out a bunch of new tools for this project. It was the first time using Vue.js, GraphQL, DynamoDB, Amplify, and everything that comes along with these technologies.
+I thought I'd have some fun and try out a bunch of new tools for this project. It was the first time using Vue.js, GraphQL, DynamoDB, Amplify, and everything that comes along with these technologies.
 
 ##### 1.1 Development Steps:
 - break out requirements into checklist of functionality to implement
