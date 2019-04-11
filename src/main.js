@@ -5,7 +5,6 @@ import store from './store'
 import Amplify, * as AmplifyModules from 'aws-amplify';
 import { AmplifyPlugin } from 'aws-amplify-vue';
 import aws_exports from './aws-exports';
-import env from '../.env';
 
 Amplify.configure(aws_exports);
 Vue.use(AmplifyPlugin, AmplifyModules);
@@ -13,9 +12,9 @@ Vue.config.productionTip = false
 
 Amplify.configure({
   API: {
-    graphql_endpoint: env.ENDPOINT,
+    graphql_endpoint: process.env.ENDPOINT,
     graphql_headers: async () => ({
-      'x-api-key': env.API_KEY,
+      'x-api-key': process.env.API_KEY,
     })
   }
 });

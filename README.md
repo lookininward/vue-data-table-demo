@@ -39,7 +39,6 @@ With more time i'd like to try:
 
 - real-time querying with something like Elasticsearch:
 - real-time query and pagination on the server:
-- support detecting dates and formatting them for like format date, with MomentJS
 
 - accessibility: i don't really like the base styles for inputs, e.g. blue outline. Spending some time to make design input styles that don't look jarring and support accessibility would be great
 
@@ -50,13 +49,12 @@ With more time i'd like to try:
 - dynamically resize columns in css grid layout by dragging
 - confirmation modals for actions: making changes to sensitive data should probably prompt the user for confirmation - unless they explicitly turn of prompts.
 
-- upload json file for display: support the uploading of a different set of json data. could be validated and normalized for display.
-
 - breakout table components as reusable ui components: the buttons, inputs, popovers could all be their own components.
 
-### 3.0 adapting to different scenarios
-##### 3.1 in what ways could it be adapted?
-##### 3.2 what kind of scenarios require data tables?
+### 3.0 Adapting to Different Scenarios
+This table could be adapted so that users can import their own JSON data to display and work with. That would require file upload functionality, and validation and normalization of the data to ensure integrity.
+
+Coul also detect data fields like dates so that they can be better formatted for readability, and the implementation of a date picker to update this field type.
 
 
 ### 4.0 New CSS features
