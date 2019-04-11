@@ -12,9 +12,9 @@ Vue.config.productionTip = false
 
 Amplify.configure({
   API: {
-    graphql_endpoint: process.env.ENDPOINT,
+    graphql_endpoint: process.env.VUE_APP_ENDPOINT,
     graphql_headers: async () => ({
-      'x-api-key': process.env.API_KEY,
+      'x-api-key': process.env.VUE_APP_API_KEY,
     })
   }
 });
