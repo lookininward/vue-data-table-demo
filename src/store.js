@@ -28,6 +28,7 @@ export default new Vuex.Store({
           limit: 200
         })
       )
+
       commit('FETCH_ITEMS', data)
     },
 
@@ -39,6 +40,20 @@ export default new Vuex.Store({
           }
         })
       )
+
+      dispatch('fetchData')
+    },
+
+    async deleteSelectedItems({dispatch}, itemIDs) {
+      for (let i = 0; i < itemIDs.length; i++) {
+        await API.graphql(
+          graphqlOperation(mutations.deleteItem, {
+            input: {
+              "id": itemIDs[i]
+            }
+          })
+        )
+      }
 
       dispatch('fetchData')
     },

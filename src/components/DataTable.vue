@@ -3,33 +3,33 @@
   <div
     data-test-component="DataTable"
     class="data-table"
-    :class="listView ? 'data-table--list' : '' "
+    :class="inQuickEdit ? 'data-table--list' : '' "
   >
 
     <!-- Table Filters ------------------------->
     <TableFilters
       data-test-component="TableFilters"
       v-model="searchText"
-      :headers="headers"
+      :dataFields="dataFields"
       :hiddenFields="hiddenFields"
-      :listView="listView"
       :perPage="perPage"
-      @toggleListView="toggleListView"
-      @toggleFields="toggleFields"
-      @setPerPage="setPerPage"
+      :inQuickEdit="inQuickEdit"
+      @toggleDisplayField="toggleDisplayField"
+      @setItemsPerPage="setItemsPerPage"
+      @toggleQuickEditMode="toggleQuickEditMode"
     />
 
     <!-- Table Header -------------------------->
     <TableHeader
       data-test-component="TableHeader"
-      :headers="headers"
+      :dataFields="dataFields"
       :hiddenFields="hiddenFields"
       :sortKey="sortKey"
       :reverse="reverse"
-      :listView="listView"
       :numItems="items ? items.length : 0"
-      :numSelectedItemIDs="selectedItemIDs ? selectedItemIDs.length : 0"
-      @sortColumns="sortTableBy"
+      :selectedItemIDs="selectedItemIDs"
+      :inQuickEdit="inQuickEdit"
+      @sortTableBy="sortTableBy"
       @selectAllItems="selectAllItems"
     />
 
@@ -42,13 +42,12 @@
       <!-- Table Rows -------------------------->
       <TableRow
         data-test-component="TableRow"
-        v-for="item in sortedItems"
+        v-for="item in currentPageItems"
         v-bind:key="item.id"
         :item="item"
-        :headers="headers"
         :hiddenFields="hiddenFields"
         :selectedItemIDs="selectedItemIDs"
-        @toggleSelect="toggleSelect"
+        @toggleSelectItem="toggleSelectItem"
       />
     </div>
 
@@ -95,24 +94,24 @@
         currentPage: 0,
         perPage: 20,
         pages: [],
-        listView: false,
+        inQuickEdit: false,
         hiddenFields: []
       }
     },
 
     computed: {
 
-      headers() { // fields
+      dataFields() {
         let items = this.items ? this.items : []
-        let headers = items.length ? Object.keys(items[0]) : []
+        let fields = items.length ? Object.keys(items[0]) : []
         let result = []
 
-        headers.forEach(header => {
-          let data = items[0] ? items[0][header] : 'string'
+        fields.forEach(field => {
+          let data = items[0] ? items[0][field] : 'string'
           let type = typeof data
 
           result.push({
-            header,
+            field,
             type
           })
         })
@@ -120,24 +119,58 @@
         return result
       },
 
-      sortedItems() {
-        let items = this.items ? this.items : []
-        const sortKey = this.sortKey
-        const sortType = this.sortType
-        const reverse = this.reverse
+      currentPageItems() {
+
+        // Filter items by search
+        let filteredItems = this._filterItemsBySearch(
+          this.items ? this.items : [],
+          this.searchText
+        )
+
+        // Sort items by field
+        let currentPageItems = this._sortItemsByField(
+          filteredItems ? filteredItems : [],
+          this.sortKey,
+          this.sortType,
+          this.reverse
+        )
+
+        // Paginate
+        let paginatedItems = this._paginateItems(currentPageItems)
+
+        // Return results for current page
+        return paginatedItems.length ? paginatedItems[this.currentPage] : []
+      }
+
+    },
+
+    methods: {
+
+      //-- internal -----------------------------
+
+      _filterItemsBySearch(items, searchText) {
+        let txt = searchText.toLowerCase()
+        let filteredResults = items.filter(item => {
+          const itemValues = Object.values(item)
+          itemValues.forEach(val => { val.toString().toLowerCase()})
+          return itemValues.toString().toLowerCase().includes(txt)
+        })
+        return filteredResults
+      },
+
+      _sortItemsByField(items, sortKey, sortType, reverse) {
         let result = items
 
-        if (sortType === 'number') {
+        if (sortType == 'number') {
           result = items.sort((a, b) => {
-            return reverse ?  b[sortKey] - a[sortKey] : a[sortKey] - b[sortKey]
+            return reverse ? b[sortKey] - a[sortKey] : a[sortKey] - b[sortKey]
           })
         }
 
-        if (sortType === 'string') {
-
+        if (sortType == 'string') {
           result = items.sort((a, b) => {
-            var x = a ? a[sortKey].toLowerCase() : ''
-            var y = b ? b[sortKey].toLowerCase() : ''
+            let x = a ? a[sortKey].toLowerCase() : ''
+            let y = b ? b[sortKey].toLowerCase() : ''
 
             if (reverse) {
               if (x > y) { return -1 }
@@ -152,53 +185,10 @@
 
         }
 
-        let searchText = this.searchText.toLowerCase()
-
-        let filteredResults = result.filter(item => {
-          const itemValues = Object.values(item)
-          itemValues.forEach(val => { val.toString().toLowerCase()})
-          return itemValues.toString().toLowerCase().includes(searchText)
-        })
-
-        this.calculatePages(filteredResults)
-        let paginatedItems = this.paginatedItems ? this.paginatedItems : []
-
-        let newRes = paginatedItems.filter(item => {
-          const itemValues = Object.values(item)
-          itemValues.forEach(val => { val.toString().toLowerCase()})
-          return itemValues.toString().toLowerCase().includes(searchText)
-        })
-
-        return newRes
+        return result
       },
 
-      paginatedItems() {
-        return this.pages[this.currentPage]
-      }
-
-    },
-
-    methods: {
-
-      sortTableBy(sortKey, sortType) {
-        this.currentPage = 0
-        this.reverse = (this.sortKey == sortKey) ? ! this.reverse : false
-        this.sortKey = sortKey
-        this.sortType = sortType
-      },
-
-      toggleSelect(itemID) {
-        const selectedItemIDs = this.selectedItemIDs
-
-        if (selectedItemIDs.includes(itemID)) {
-          const idx = selectedItemIDs.findIndex(x => x === itemID)
-          selectedItemIDs.splice(idx, 1)
-        } else {
-          selectedItemIDs.push(itemID)
-        }
-      },
-
-      calculatePages(items) {
+      _paginateItems(items) {
         let numItems = items ? items.length : 0
         let numItemsPerPage = this.perPage
         let pages = []
@@ -225,32 +215,20 @@
         return this.pages = pages
       },
 
-      setCurrentPage(pageNum) {
-        this.currentPage = pageNum
-      },
+      //-- --------------------------------------
 
-      toggleListView() {
-        return this.listView = !this.listView
-      },
+      toggleSelectItem(itemID) {
+        const selectedItemIDs = this.selectedItemIDs
 
-      toggleFields(field) {
-        let hiddenFields = this.hiddenFields
-
-        if (hiddenFields.includes(field)) {
-          this.hiddenFields = hiddenFields.filter(hiddenField => {
-            return hiddenField != field
-          })
+        if (selectedItemIDs.includes(itemID)) {
+          const idx = selectedItemIDs.findIndex(x => x === itemID)
+          selectedItemIDs.splice(idx, 1)
         } else {
-          hiddenFields.push(field)
+          selectedItemIDs.push(itemID)
         }
-
       },
 
-      setPerPage(value) {
-        this.perPage = value
-      },
-
-      selectAllItems() {
+      selectAllItems() { // toggleSelectAllItems
         let items = this.items
         const selectedItemIDs = this.selectedItemIDs
         let result = []
@@ -264,6 +242,40 @@
         }
 
         this.selectedItemIDs = result
+      },
+
+      //-- --------------------------------------
+
+      sortTableBy(sortKey, sortType) {
+        this.currentPage = 0
+        this.reverse = (this.sortKey == sortKey) ? ! this.reverse : false
+        this.sortKey = sortKey
+        this.sortType = sortType
+      },
+
+      toggleDisplayField(field) {
+        let hiddenFields = this.hiddenFields
+
+        if (hiddenFields.includes(field)) {
+          this.hiddenFields = hiddenFields.filter(hiddenField => {
+            return hiddenField != field
+          })
+        } else {
+          hiddenFields.push(field)
+        }
+
+      },
+
+      setItemsPerPage(value) {
+        this.perPage = value
+      },
+
+      setCurrentPage(pageNum) {
+        this.currentPage = pageNum
+      },
+
+      toggleQuickEditMode() {
+        return this.inQuickEdit = !this.inQuickEdit
       }
 
     }
@@ -272,78 +284,6 @@
 
 <!-- Style ------------------------------------------------------------------->
 <style lang="scss">
-
-  //-- Buttons ----------------------------------
-  .btn {
-    min-width: 20px;
-    background-color: $bg-color--light;
-    border: 1px solid $bdr-color--light;
-    border-radius: 10px;
-    padding: 3px 5px;
-    font-size: $font-sm;
-    cursor: pointer;
-    outline: 0;
-    transition: all .2s;
-    @include hoverState();
-    @include activeState();
-  }
-
-  .btn.btn--confirm {
-    &:hover {
-      background-color: $bg-color--green;
-      color: $txt-color--light;
-    }
-  }
-
-  .btn.btn--pageNumber {
-    margin: 0 2px;
-    padding: 2px 10px;
-
-    &:last-child {
-      margin: 0 0 0 2px;
-    }
-  }
-
-  //-- Inputs -----------------------------------
-
-  i.input.input--checkbox {
-    font-size: $font-lg;
-    cursor: pointer;
-
-    @media screen and (min-width: $screen-width-sm) {
-      margin: 2px;
-    }
-  }
-
-  //-- Popovers ---------------------------------
-  .popover-theme {
-    @include tippyBaseTheme();
-  }
-
-  .popover {
-    @include fontStandard();
-    text-align: left;
-    background-color: $bg-color--light;
-    color: $txt-color--dark;
-  }
-
-  .popover.popover--standard {
-    @include fontStandard();
-    text-align: left;
-    padding: 10px 15px;
-    background-color: $bg-color--light;
-    color: $txt-color--dark;
-  }
-
-  .popover-options-list {
-    .popover-option {
-      width: 100%;
-      padding: 3px 8px;
-      @include activeState();
-      @include hoverState();
-      cursor: pointer;
-    }
-  }
 
   //-- Data Table ---------------------------------
   //-- Standard View ----------------------------

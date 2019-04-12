@@ -10,6 +10,7 @@
     >
       <!-- Logo ---------------------------------->
       <a
+        data-test-logo
         class="logo is-active"
         href="https://lookininward.github.io/"
         target="_blank"
@@ -18,13 +19,12 @@
       </a>
 
       <!-- Search -------------------------------->
-      <!-- searchInput -->
       <input
-        data-test-input="Search"
+        data-test-input="searchText"
         ref="SearchComponent"
         type="text"
         v-bind:value="searchText"
-        v-on:input="updateValue($event.target.value)"
+        v-on:input="updateSearchText($event.target.value)"
         class="input input--search"
         placeholder="Search"
       >
@@ -67,8 +67,9 @@
           </div>
           <div>
             <select
+              data-test-input="selectItemsPerPage"
               v-model="perPage"
-              v-on:input="updatePerPage($event.target.value)"
+              v-on:input="setPerPage($event.target.value)"
               class="input input--select"
             >
               <option
@@ -96,26 +97,28 @@
             Data Columns
           </div>
           <label
-            v-for="(header, idx) in headers"
+            data-test-label="displayField"
+            v-for="(dataField, idx) in dataFields"
             v-bind:key="idx"
             class="label label--dataColumnOption"
           >
             <input
+              data-test-input="displayField"
               type="checkbox"
-              :checked="!hiddenFields.includes(header)"
-              @click="toggleFields(header.header)"
+              :checked="!hiddenFields.includes(dataField)"
+              @click="toggleField(dataField.field)"
             >
-            {{ header.header }}
+            {{ dataField.field }}
           </label>
         </div>
       </div>
 
-      <!-- List View  -->
+      <!-- Quick Edit Mode  -->
       <div
-        data-test-btn="listView"
-        class="filter filter--listView"
-        :class="listView ? 'is-active' : ''"
-        @click="toggleListView()"
+        data-test-btn="toggleQuickEditMode"
+        class="filter filter--quickEdit"
+        :class="inQuickEdit ? 'is-active' : ''"
+        @click="toggleQuickEdit()"
       >
         <i class="fas fa-list"></i>
       </div>
@@ -150,11 +153,11 @@
     name: 'TableFilters',
 
     props: {
-      searchText: { type: String },
-      listView: { type: Boolean },
-      headers: { type: Array },
-      hiddenFields: { type: Array },
-      perPage: { type: Number }
+      searchText: String,
+      dataFields: Array,
+      hiddenFields: Array,
+      perPage: Number,
+      inQuickEdit: Boolean
     },
 
     created() {
@@ -162,26 +165,25 @@
     },
 
     mounted() {
-      let refs = this.$refs
-      refs.SearchComponent.focus()
+      this.$refs.SearchComponent.focus()
     },
 
     methods: {
 
-      updateValue: function (value) {
-        this.$emit('input', value)
+      updateSearchText: function (searchText) {
+        this.$emit('input', searchText)
       },
 
-      updatePerPage: function (value) {
-        this.$emit('setPerPage', parseInt(value))
+      toggleField(field) {
+        this.$emit('toggleDisplayField', field)
       },
 
-      toggleListView() {
-        this.$emit('toggleListView')
+      setPerPage: function (numItemsPerPage) {
+        this.$emit('setItemsPerPage', parseInt(numItemsPerPage))
       },
 
-      toggleFields(field) {
-        this.$emit('toggleFields', field)
+      toggleQuickEdit() {
+        this.$emit('toggleQuickEditMode')
       }
 
     }
@@ -297,7 +299,7 @@
   }
 
   //-- List View --------------------------------
-  .filter.filter--listView {
+  .filter.filter--quickEdit {
     @include activeState();
 
     @media screen and (min-width: $screen-width-sm) {

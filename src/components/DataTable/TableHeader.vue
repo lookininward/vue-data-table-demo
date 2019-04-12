@@ -14,6 +14,7 @@
         class="table-header-cell table-header-cell--checkbox"
       >
         <i
+          data-test-input="selectAllCheckbox"
           class="input input--checkbox"
           :class="allItemsSelected ?
                   'fas fa-check-square is-active' :
@@ -28,13 +29,41 @@
         data-test-TableHeaderCellPopoverTrigger
         class="table-header-cell table-header-cell--popoverTrigger"
       >
-        <i class="fas fa-ellipsis-v"></i>
+        <i
+          class="fas fa-ellipsis-v"
+          v-tippy="{
+            reactive: true,
+            interactive : true,
+            trigger : 'click',
+            placement: 'right',
+            html: `#headerPopover`,
+            theme : 'popover',
+            duration: 100
+          }"
+        >
+        </i>
+
+        <div
+          id="headerPopover"
+          data-test-popover="headerPopover"
+          class="row-popover"
+          v-tippy-html
+        >
+          <div
+            data-test-btn="deleteSelectedItems"
+            class="row-popover-option"
+            @click="deleteSelectedItems(selectedItemIDs)"
+          >
+            Delete All
+          </div>
+        </div>
+
       </div>
     </div>
 
     <!-- Edit Mode (row orientation) ----------->
     <div
-      v-if="listView"
+      v-if="inQuickEdit"
       class="edit-mode"
     >
       Quick Edit Mode
@@ -62,13 +91,13 @@
       >
         <div class="popover-options-list">
           <div
-            v-for="(header, idx) in headers"
+            v-for="(dataField, idx) in dataFields"
             v-bind:key="idx"
             class="popover-option"
-            :class="header.header === sortKey ? 'is-active' : ''"
-            @click="sort(header.header, header.type)"
+            :class="dataField.field === sortKey ? 'is-active' : ''"
+            @click="sortData(dataField.field, dataField.type)"
           >
-            {{ header.header }}
+            {{ dataField.field }}
           </div>
         </div>
       </div>
@@ -76,19 +105,19 @@
 
     <!-- Headers ------------------------------->
     <div class="table-header-attrs">
-      <template v-for="(header, idx) in headers">
+      <template v-for="(dataField, idx) in dataFields">
         <div
           data-test-HeaderCell
-          v-if="!hiddenFields.includes(header.header)"
+          v-if="!hiddenFields.includes(dataField.field)"
           class="table-header-cell"
-          :class="header.header === sortKey ? 'is-active' : ''"
+          :class="dataField.field === sortKey ? 'is-active' : ''"
           :key="idx + '--header'"
-          @click="sort(header.header, header.type)"
+          @click="sortData(dataField.field, dataField.type)"
         >
-          {{ header.header }}
+          {{ dataField.field }}
 
           <i
-            v-if="header.header === sortKey"
+            v-if="dataField.field === sortKey"
             data-test-sortIndicator
             class="fas fa-sort table-sort-indicator"
           >
@@ -101,36 +130,50 @@
 
 <!-- Script ------------------------------------------------------------------>
 <script>
+  import Vue from 'vue'
+  import VueTippy from 'vue-tippy'
+  import { mapActions } from 'vuex'
+
   export default {
     name: 'TableHeader',
 
     props: {
-      headers: { type: Array },
-      hiddenFields: { type: Array },
-      sortKey: { type: String },
-      reverse: { type: Boolean },
-      listView: { type: Boolean },
-      numItems: { type: Number },
-      numSelectedItemIDs: { type: Number }
+      dataFields: Array,
+      hiddenFields: Array,
+      sortKey: String,
+      reverse: Boolean,
+      numItems: Number,
+      selectedItemIDs: Array,
+      inQuickEdit: Boolean
+    },
+
+    created() {
+      Vue.use(VueTippy)
     },
 
     computed: {
 
       allItemsSelected() {
-        return this.numItems  === this.numSelectedItemIDs
+        return this.numItems === (this.selectedItemIDs ?
+                                  this.selectedItemIDs.length :
+                                  0)
       }
 
     },
 
     methods: {
 
-      sort(header, type) {
-        this.$emit('sortColumns', header, type)
+      sortData(field, type) {
+        this.$emit('sortTableBy', field, type)
       },
 
       selectAll() {
         this.$emit('selectAllItems')
-      }
+      },
+
+      ...mapActions([
+        'deleteSelectedItems'
+      ])
 
     }
   }
@@ -151,7 +194,6 @@
     .table-header-cell {
       position: relative;
       @include flexCentered(column);
-      @include hoverState();
       align-items: flex-start;
       padding: 0px 10px;
       font-size: 12px;

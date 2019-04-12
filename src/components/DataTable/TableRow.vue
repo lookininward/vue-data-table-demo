@@ -9,16 +9,14 @@
     <div class="table-row-actions">
 
       <!-- Select Item checkbox ------------------>
-      <div
-        data-test-TableCellCheckbox
-        class="table-cell table-cell--checkbox"
-      >
+      <div class="table-cell table-cell--checkbox">
         <i
+          data-test-TableCellCheckbox
           class="input input--checkbox"
           :class="selectedItemIDs.includes(item.id) ?
                   'far fa-check-square' :
                   'far fa-square'"
-          @click="toggle(item.id)"
+          @click="toggleSelect(item.id)"
         >
         </i>
 
@@ -55,9 +53,9 @@
     name: 'TableRow',
 
     props: {
-      item: { type: Object },
-      hiddenFields: { type: Array },
-      selectedItemIDs: { type: Array }
+      item: Object,
+      hiddenFields: Array,
+      selectedItemIDs: Array
     },
 
     components: {
@@ -82,8 +80,8 @@
 
     methods: {
 
-      toggle(itemID) {
-        this.$emit('toggleSelect', itemID)
+      toggleSelect(itemID) {
+        this.$emit('toggleSelectItem', itemID)
       }
 
     }
