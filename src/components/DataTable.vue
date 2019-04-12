@@ -155,7 +155,6 @@
 
       _sortItemsByField(items, sortKey, sortType, reverse) {
         let result = items
-
         if (sortType == 'number') {
           result = items.sort((a, b) => {
             return reverse ? b[sortKey] - a[sortKey] : a[sortKey] - b[sortKey]
