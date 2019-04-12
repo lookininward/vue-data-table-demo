@@ -30,7 +30,7 @@
       :selectedItemIDs="selectedItemIDs"
       :inQuickEdit="inQuickEdit"
       @sortTableBy="sortTableBy"
-      @selectAllItems="selectAllItems"
+      @toggleSelectAllItems="toggleSelectAllItems"
     />
 
     <!-- Table Body ---------------------------->
@@ -89,12 +89,12 @@
         sortKey: null,
         sortType: null,
         reverse: false,
+        inQuickEdit: false,
         searchText: '',
-        selectedItemIDs: [],
         currentPage: 0,
         perPage: 20,
         pages: [],
-        inQuickEdit: false,
+        selectedItemIDs: [],
         hiddenFields: []
       }
     },
@@ -228,7 +228,7 @@
         }
       },
 
-      selectAllItems() { // toggleSelectAllItems
+      toggleSelectAllItems() {
         let items = this.items
         const selectedItemIDs = this.selectedItemIDs
         let result = []

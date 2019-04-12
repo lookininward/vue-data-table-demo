@@ -170,7 +170,7 @@
       },
 
       selectAll() {
-        this.$emit('selectAllItems')
+        this.$emit('toggleSelectAllItems')
       },
 
       ...mapActions([
@@ -195,7 +195,7 @@
 
     .table-header-cell {
       @include flexCentered(column);
-      align-items: flex-start;
+      align-items: center;
       position: relative;
       padding: 0px 10px;
       font-size: $font-md;

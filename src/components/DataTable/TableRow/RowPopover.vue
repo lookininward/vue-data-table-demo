@@ -2,7 +2,7 @@
 <template>
   <div
     data-test-component="rowPopover"
-    class="table-cell"
+    class="table-cell table-cell--popover"
   >
     <div
       data-test-popover="rowPopover"
@@ -67,3 +67,13 @@
 
   }
 </script>
+
+<!-- Style ------------------------------------------------------------------->
+<style scoped lang="scss">
+  .table-cell.table-cell--popover {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>

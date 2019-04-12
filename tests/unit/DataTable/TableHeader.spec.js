@@ -128,7 +128,7 @@ describe('TableHeader.vue', () => {
 
     let wrapper = shallowMount(TableHeader, {propsData:  { items }})
     wrapper.vm.selectAll()
-    expect(wrapper.emitted().selectAllItems).toEqual([[]])
+    expect(wrapper.emitted().toggleSelectAllItems).toEqual([[]])
   })
 
 })

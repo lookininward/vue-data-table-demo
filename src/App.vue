@@ -29,6 +29,7 @@
     padding: 3px 5px;
     font-size: $font-sm;
     cursor: pointer;
+    outline: 0;
     transition: all .2s;
   }
 

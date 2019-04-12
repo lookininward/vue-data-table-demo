@@ -383,7 +383,6 @@ describe('DataTable.vue', () => {
     ).toBe("B743AC82-3613-13A2-2E42-E0C1F5CBF8A6")
   })
 
-  // select all items // selectAllItems()
   it('can toggle selection of all items', () => {
     let items = [
       {
@@ -413,11 +412,11 @@ describe('DataTable.vue', () => {
     expect(wrapper.vm.selectedItemIDs.length).toBe(0)
 
     // select an item
-    wrapper.vm.selectAllItems()
+    wrapper.vm.toggleSelectAllItems()
     expect(wrapper.vm.selectedItemIDs.length).toBe(3)
 
     // unselect all
-    wrapper.vm.selectAllItems()
+    wrapper.vm.toggleSelectAllItems()
     expect(wrapper.vm.selectedItemIDs.length).toBe(0)
   })
 
