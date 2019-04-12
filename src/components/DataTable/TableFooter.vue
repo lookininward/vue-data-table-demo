@@ -75,7 +75,7 @@
     padding: 0 15px;
     font-size: $font-sm;
 
-    @media screen and (min-width: $screen-width-sm) {
+    @media screen and (min-width: $screen-width-md) {
       grid-template-columns: 1fr 1fr;
     }
   }
@@ -83,7 +83,7 @@
   .table-footer-info {
     display: none;
 
-    @media screen and (min-width: $screen-width-sm) {
+    @media screen and (min-width: $screen-width-md) {
       display: flex;
     }
   }

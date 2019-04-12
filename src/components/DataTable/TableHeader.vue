@@ -35,7 +35,7 @@
             reactive: true,
             interactive : true,
             trigger : 'click',
-            placement: 'right',
+            placement: 'right-end',
             html: `#headerPopover`,
             theme : 'popover',
             duration: 100
@@ -203,7 +203,7 @@
       transition: all .2s;
       overflow-x: auto;
 
-      @media screen and (min-width: $screen-width-sm) {
+      @media screen and (min-width: $screen-width-md) {
         padding: 0;
         align-items: center;
         font-size: inherit;
@@ -212,7 +212,7 @@
       .table-sort-indicator {
         display: none;
 
-        @media screen and (min-width: $screen-width-sm) {
+        @media screen and (min-width: $screen-width-md) {
           display: flex;
           position: absolute;
           right: 20px;

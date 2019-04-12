@@ -26,7 +26,7 @@
         reactive: true,
         interactive : true,
         trigger : 'click',
-        placement: 'right',
+        placement: 'right-end',
         html: `#item-${item.id}`,
         theme : 'popover',
         duration: 100

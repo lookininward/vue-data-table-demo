@@ -64,7 +64,7 @@
     font-size: $font-lg;
     cursor: pointer;
 
-    @media screen and (min-width: $screen-width-sm) {
+    @media screen and (min-width: $screen-width-md) {
       margin: 2px;
     }
   }

@@ -293,7 +293,7 @@
     display: grid;
     grid-template-rows: 80px 50px auto 30px;
 
-    @media screen and (min-width: $screen-width-sm) {
+    @media screen and (min-width: $screen-width-md) {
       grid-template-rows: 40px 30px auto 30px;
     }
 
@@ -304,7 +304,7 @@
       grid-template-columns: 30px 1fr;
       grid-template-rows: 1fr;
 
-      @media screen and (min-width: $screen-width-sm) {
+      @media screen and (min-width: $screen-width-md) {
         grid-template-columns: 55px 1fr;
       }
     }
@@ -316,7 +316,7 @@
       grid-template-columns: 1fr;
       border-right: 1px solid $bdr-color--light;
 
-      @media screen and (min-width: $screen-width-sm) {
+      @media screen and (min-width: $screen-width-md) {
         grid-template-rows: 1fr;
         grid-template-columns: 30px 25px;
         border: none;
@@ -328,7 +328,7 @@
       @include flexCentered(column);
       padding: 0;
 
-      @media screen and (min-width: $screen-width-sm) {
+      @media screen and (min-width: $screen-width-md) {
         align-items: flex-end;
       }
     }

@@ -102,7 +102,7 @@
         background-color: $bg-color--grey;
       }
 
-      @media screen and (min-width: $screen-width-sm) {
+      @media screen and (min-width: $screen-width-md) {
         border: none;
       }
     }

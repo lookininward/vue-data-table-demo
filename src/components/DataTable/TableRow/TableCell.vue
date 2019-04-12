@@ -57,7 +57,7 @@
     overflow-x: auto;
     overflow-y: hidden;
 
-    @media screen and (min-width: $screen-width-sm) {
+    @media screen and (min-width: $screen-width-md) {
       align-items: center;
       padding: 10px;
       font-size: $font-md;
@@ -86,7 +86,7 @@
 
   //-- List View --------------------------------
   .data-table.data-table--list .table-cell {
-    @media screen and (min-width: $screen-width-sm) {
+    @media screen and (min-width: $screen-width-md) {
       padding: 3px 10px;
     }
   }
