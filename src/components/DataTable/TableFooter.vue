@@ -92,4 +92,13 @@
     display: flex;
     justify-content: flex-end;
   }
+
+  .btn.btn--pageNumber {
+    margin: 0 2px;
+    padding: 2px 10px;
+
+    &:last-child {
+      margin: 0 0 0 2px;
+    }
+  }
 </style>

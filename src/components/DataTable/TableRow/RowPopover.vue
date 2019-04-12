@@ -2,26 +2,30 @@
 <template>
   <div
     data-test-component="rowPopover"
-    class="table-cell table-cell--rowPopover"
+    class="table-cell"
   >
     <div
       data-test-popover="rowPopover"
       v-bind:id="`item-${item.id}`"
-      class="row-popover"
+      class="popover"
       v-tippy-html
     >
-      <div
-        data-test-btn="deleteItem"
-        class="row-popover-option"
-        @click="deleteItem(item.id)"
-      >
-        Delete
+      <div class="popover-options-list">
+        <div class="popover-option is-disabled">Edit</div>
+        <div
+          data-test-btn="deleteItem"
+          class="popover-option"
+          @click="deleteItem(item.id)"
+        >
+          Delete
+        </div>
+        <hr class="popover-options-divider">
+        <div class="popover-option is-disabled">Share</div>
       </div>
     </div>
-
     <i
       data-test-btn="popoverTrigger"
-      class="fas fa-ellipsis-v"
+      class="fas fa-ellipsis-v popoverTrigger"
       v-tippy="{
         reactive: true,
         interactive : true,
@@ -46,7 +50,7 @@
     name: 'RowPopover',
 
     props: {
-      item: { type: Object }
+      item: Object
     },
 
     created() {
@@ -63,15 +67,3 @@
 
   }
 </script>
-
-<!-- Style ------------------------------------------------------------------->
-<style scoped lang="scss">
-  .table-cell.table-cell--rowPopover {
-    @include flexCentered(column);
-    padding: 0;
-  }
-
-  .table-cell.table-cell--rowPopover i {
-    cursor: pointer;
-  }
-</style>

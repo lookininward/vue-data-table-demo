@@ -27,10 +27,27 @@
       <!-- All Items Popover ------------------->
       <div
         data-test-TableHeaderCellPopoverTrigger
-        class="table-header-cell table-header-cell--popoverTrigger"
+        class="table-header-cell"
       >
+        <div
+          id="headerPopover"
+          data-test-popover="headerPopover"
+          class="popover"
+          v-tippy-html
+        >
+          <div class="popover-options-list">
+            <div
+              data-test-btn="deleteSelectedItems"
+              class="popover-option"
+              @click="deleteSelectedItems(selectedItemIDs)"
+            >
+              Delete All
+            </div>
+          </div>
+        </div>
+
         <i
-          class="fas fa-ellipsis-v"
+          class="fas fa-ellipsis-v popoverTrigger"
           v-tippy="{
             reactive: true,
             interactive : true,
@@ -42,21 +59,6 @@
           }"
         >
         </i>
-
-        <div
-          id="headerPopover"
-          data-test-popover="headerPopover"
-          class="row-popover"
-          v-tippy-html
-        >
-          <div
-            data-test-btn="deleteSelectedItems"
-            class="row-popover-option"
-            @click="deleteSelectedItems(selectedItemIDs)"
-          >
-            Delete All
-          </div>
-        </div>
 
       </div>
     </div>
@@ -70,7 +72,7 @@
 
       <i
         data-test-btn="popoverTrigger"
-        class="fas fa-sort popover-trigger"
+        class="fas fa-sort popoverTrigger"
         v-tippy="{
           reactive: true,
           interactive : true,
@@ -218,29 +220,6 @@
           right: 20px;
         }
       }
-
-      &.table-header-cell--checkbox,
-      &.table-header-cell--popoverTrigger {
-        &:hover {
-          background-color: inherit;
-        }
-      }
-
-      &.table-header-cell--popoverTrigger,
-      &.table-header-cell--checkbox {
-        &:hover {
-          color: $txt-color--dark;
-        }
-      }
-
-      &.table-header-cell--popoverTrigger {
-        align-items: center;
-        cursor: auto;
-      }
-
-      &.table-header-cell--popoverTrigger i {
-        cursor: pointer;
-      }
     }
 
     .edit-mode {
@@ -248,13 +227,12 @@
       padding: 0 10px;
       color: $txt-color--dark;
       font-weight: 600;
+
+      .popoverTrigger {
+        margin-left: 5px;
+      }
     }
 
-    .popover-trigger {
-      font-size: $font-lg;
-      color: $txt-color--dark;
-      margin-left: 8px;
-    }
   }
 
   //-- List View --------------------------------

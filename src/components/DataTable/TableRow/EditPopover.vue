@@ -21,7 +21,7 @@
     Edit
     <div
       data-test-popover="editField"
-      class="edit-popover"
+      class="popover popover--standard"
       v-bind:id="`item-${item.id}`"
       v-tippy-html
     >
@@ -103,19 +103,9 @@
 
 <!-- Style ------------------------------------------------------------------->
 <style scoped lang="scss">
-  .edit-popover {
-    @include fontStandard();
-    background-color: $bg-color--light;
-    padding: 10px 0;
-    color: $txt-color--dark;
-    text-align: left;
-  }
-
   .edit-popover-textarea {
     @include fontStandard();
-    background-color: $bg-color--light;
     border: none;
-    padding: 10px;
     margin-bottom: 10px;
     outline: 0;
   }
@@ -125,6 +115,7 @@
 
     .btn {
       margin: 0 5px;
+      min-width: 50px;
     }
   }
 </style>
