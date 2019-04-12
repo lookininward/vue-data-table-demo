@@ -1,0 +1,114 @@
+{
+   "name":"Michael",
+   "location":"Toronto",
+   "languages":[
+      "English",
+      "French"
+   ],
+   "traits":[
+      "Straightforward communication skills",
+      "Experience designing and building software applications",
+      "Focused on meaningful collaboration with others in team environments",
+      "Gets business requirements and impacts on existing architectures",
+      "Independent mindset with strong problem-solving abilities",
+      "Detail-oriented, but knows to balance perfection with delivery",
+      "Enjoys the learning process, achieving greater goals",
+      "Can get ahead of himself, but trying to build better habits"
+   ],
+   "skills":[
+      {
+         "software":[
+            {
+               "tools":[
+                  "JavaScript",
+                  "Ember.js",
+                  "Vue.js",
+                  "Jekyll",
+                  "QUnit",
+                  "Jest",
+                  "HTML",
+                  "CSS",
+                  "jQuery",
+                  "SCSS/SASS",
+                  "LESS",
+                  "Bootstrap",
+                  "Materialize",
+                  "Sketch",
+                  "Photoshop",
+                  "Python",
+                  "Django",
+                  "PostGresQL",
+                  "MongoDB",
+                  "SQL",
+                  "NoSQL",
+                  "DynamoDB",
+                  "Visual Basic For Applications",
+                  "FireBase",
+                  "AWS Amplify",
+                  "Git",
+                  "GitHub",
+                  "Gitlab",
+                  "Trello",
+                  "Sentry",
+                  "CircleCI",
+                  "Linux/Unix",
+                  "Shell"
+               ]
+            },
+            {
+               "techniques":[
+                  "Test Driven Development",
+                  "Continuous Integration",
+                  "Continuous Delivery",
+                  "Mobile First Design",
+                  "Responsive Design",
+                  "Human Centered Design",
+                  "Code Review",
+                  "Design Review",
+                  "Version Control",
+                  "Kanban",
+                  "Entity Relationship Diagrams",
+                  "Quality Assurance Testing",
+                  "Technical Documentation",
+                  "Don't Repeat Yourself",
+                  "Architectural Diagrams"
+               ]
+            }
+         ]
+      }
+   ],
+   "interests":[
+      {
+         "physical":[
+            "volleyball",
+            "badminton",
+            "dance",
+            "resistance training",
+            "touring"
+         ]
+      },
+      {
+         "technology":[
+            "Space Exploration",
+            "Machine Learning",
+            "User Interfaces and Experiences",
+            "Consumer Electronics",
+            "Video Games"
+         ]
+      },
+      {
+         "history":[
+            "Roman Republic and Empire",
+            "Italian City States",
+            "Spain in the Americas",
+            "Development of Asia",
+            "World History",
+            "United States"
+         ]
+      }
+   ],
+   "education":[
+      "University of Toronto - Master of Library and Information Science - Information Systems Design",
+      "University of Toronto - Bachelor of Arts - English Literature, Intersection, Exchanges, and Exchanges in the Humanities"
+   ]
+}
