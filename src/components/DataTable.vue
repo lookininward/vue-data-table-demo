@@ -285,7 +285,7 @@
 <!-- Style ------------------------------------------------------------------->
 <style lang="scss">
 
-  //-- Data Table ---------------------------------
+  //-- Data Table -------------------------------
   //-- Standard View ----------------------------
   .data-table {
     width: 100vw;
@@ -297,7 +297,7 @@
       grid-template-rows: 40px 30px auto 30px;
     }
 
-    //-- maintain alignment of header, row columns --
+    //-- alignment of header, row columns -------
     .table-header,
     .table-row {
       display: grid;

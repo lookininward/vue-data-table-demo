@@ -188,17 +188,17 @@
 
   //-- Standard View ----------------------------
   .data-table .table-header {
+    background-color: $bg-color--grey;
     border-top: 1px solid $bdr-color--light2;
     border-bottom: 1px solid $bdr-color--light2;
-    background-color: $bg-color--grey;
     color: $txt-color--light;
 
     .table-header-cell {
-      position: relative;
       @include flexCentered(column);
       align-items: flex-start;
+      position: relative;
       padding: 0px 10px;
-      font-size: 12px;
+      font-size: $font-md;
       font-weight: 500;
       color: $txt-color--dark;
       cursor: pointer;
@@ -208,7 +208,7 @@
       @media screen and (min-width: $screen-width-md) {
         padding: 0;
         align-items: center;
-        font-size: inherit;
+        font-size: $font-md;
       }
 
       .table-sort-indicator {

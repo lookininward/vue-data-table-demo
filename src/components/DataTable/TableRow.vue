@@ -94,7 +94,6 @@
 
   //-- Standard View ----------------------------
   .data-table {
-
     .table-row {
       background-color: $bg-color--light;
 

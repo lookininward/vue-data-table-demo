@@ -65,7 +65,7 @@
 <!-- Style ------------------------------------------------------------------->
 <style scoped lang="scss">
 
-  //-- Grid Row 5 ---------------------------------
+  //-- Grid Row 5 -------------------------------
   .table-footer {
     display: grid;
     grid-template-columns: 1fr;
@@ -91,14 +91,14 @@
   .table-footer-pages {
     display: flex;
     justify-content: flex-end;
-  }
 
-  .btn.btn--pageNumber {
-    margin: 0 2px;
-    padding: 2px 10px;
+    .btn.btn--pageNumber {
+      margin: 0 2px;
+      padding: 2px 10px;
 
-    &:last-child {
-      margin: 0 0 0 2px;
+      &:last-child {
+        margin: 0 0 0 2px;
+      }
     }
   }
 </style>
