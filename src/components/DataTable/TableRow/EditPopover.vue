@@ -65,8 +65,8 @@
     name: 'EditPopover',
 
     props: {
-      item: { type: Object },
-      itemAttr: { type: String || Number }
+      item: Object,
+      itemAttr: { type: [String, Number] }
     },
 
     data() {
@@ -90,7 +90,7 @@
         this.stopEditingField()
       },
 
-      stopEditingField: function () {
+      stopEditingField() {
         this.isEditing = false
         let popoverTrigger = this.$refs["edit-popover-trigger"]
         if (popoverTrigger._tippy) {

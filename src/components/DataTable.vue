@@ -102,46 +102,42 @@
     computed: {
 
       dataFields() {
-        let items = this.items ? this.items : []
-        let fields = items.length ? Object.keys(items[0]) : []
-        let result = []
+        const items = this.items ? this.items : []
+        const fields = items.length ? Object.keys(items[0]) : []
 
-        fields.forEach(field => {
+        return fields.map(field => {
           let data = items[0] ? items[0][field] : 'string'
           let type = typeof data
 
-          result.push({
+          return {
             field,
             type
-          })
+          }
         })
-
-        return result
       },
 
       currentPageItems() {
 
         // Filter items by search
-        let filteredItems = this._filterItemsBySearch(
+        const filteredItems = this._filterItemsBySearch(
           this.items ? this.items : [],
           this.searchText
         )
 
         // Sort items by field
-        let currentPageItems = this._sortItemsByField(
-          filteredItems ? filteredItems : [],
+        const currentPageItems = this._sortItemsByField(
+          filteredItems,
           this.sortKey,
           this.sortType,
           this.reverse
         )
 
         // Paginate
-        let paginatedItems = this._paginateItems(currentPageItems)
+        const paginatedItems = this._paginateItems(currentPageItems)
 
-        // Return results for current page
+        // Results for current page
         return paginatedItems.length ? paginatedItems[this.currentPage] : []
       }
-
     },
 
     methods: {
@@ -149,11 +145,10 @@
       //-- internal -----------------------------
 
       _filterItemsBySearch(items, searchText) {
-        let txt = searchText.toLowerCase()
-        let filteredResults = items.filter(item => {
-          const itemValues = Object.values(item)
-          itemValues.forEach(val => { val.toString().toLowerCase()})
-          return itemValues.toString().toLowerCase().includes(txt)
+        const txt = searchText.toLowerCase()
+        const filteredResults = items.filter(item => {
+          let itemValues = Object.values(item).toString().toLowerCase()
+          return itemValues.includes(txt)
         })
         return filteredResults
       },
@@ -189,8 +184,8 @@
       },
 
       _paginateItems(items) {
-        let numItems = items ? items.length : 0
-        let numItemsPerPage = this.perPage
+        const numItems = items.length
+        const numItemsPerPage = this.perPage
         let pages = []
         let pageSet = []
 
@@ -203,7 +198,7 @@
 
           if (pageSet.length < numItemsPerPage) {
             pageSet.push(items[i])
-            pageSet = pageSet.filter(Boolean);
+            pageSet = pageSet.filter(Boolean)
           }
 
         }
@@ -229,7 +224,7 @@
       },
 
       toggleSelectAllItems() {
-        let items = this.items
+        const items = this.items
         const selectedItemIDs = this.selectedItemIDs
         let result = []
 
@@ -243,8 +238,6 @@
 
         this.selectedItemIDs = result
       },
-
-      //-- --------------------------------------
 
       sortTableBy(sortKey, sortType) {
         this.currentPage = 0

@@ -27,7 +27,7 @@
     },
 
     props: {
-      item: { type: Object },
+      item: Object ,
       itemAttr: { type: [String, Number] }
     },
 
