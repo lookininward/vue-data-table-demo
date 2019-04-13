@@ -57,11 +57,14 @@
     overflow-x: auto;
     overflow-y: hidden;
 
+    @media screen and (min-width: $screen-width-sm) {
+      text-align: center;
+    }
+
     @media screen and (min-width: $screen-width-md) {
       align-items: center;
       padding: 10px;
       font-size: $font-md;
-      text-align: center;
     }
 
     //-- Edit Field --

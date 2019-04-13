@@ -29,6 +29,7 @@ describe('TableRow.vue', () => {
         selectedItemIDs: []
       }
     })
+
     let tableCells = wrapper.findAll('[data-test-component="TableCell"]')
     let itemKeys = Object.keys(item)
 

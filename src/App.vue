@@ -91,7 +91,7 @@
 
   .popover-options-divider {
     margin: 0;
-    border: 1px solid $bdr-color--dark;
+    border: 1px solid $bdr-color--light;
   }
 
 </style>

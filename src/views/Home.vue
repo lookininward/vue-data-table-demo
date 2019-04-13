@@ -17,10 +17,6 @@
       DataTable
     },
 
-    data() {
-      return {}
-    },
-
     mounted() {
       this.$store.dispatch('fetchData')
     },
