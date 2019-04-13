@@ -65,7 +65,7 @@
 <!-- Style ------------------------------------------------------------------->
 <style scoped lang="scss">
 
-  //-- Grid Row 5 ---------------------------------
+  //-- Grid Row 5 -------------------------------
   .table-footer {
     display: grid;
     grid-template-columns: 1fr;
@@ -75,7 +75,7 @@
     padding: 0 15px;
     font-size: $font-sm;
 
-    @media screen and (min-width: $screen-width-sm) {
+    @media screen and (min-width: $screen-width-md) {
       grid-template-columns: 1fr 1fr;
     }
   }
@@ -83,7 +83,7 @@
   .table-footer-info {
     display: none;
 
-    @media screen and (min-width: $screen-width-sm) {
+    @media screen and (min-width: $screen-width-md) {
       display: flex;
     }
   }
@@ -91,5 +91,14 @@
   .table-footer-pages {
     display: flex;
     justify-content: flex-end;
+
+    .btn.btn--pageNumber {
+      margin: 0 2px;
+      padding: 2px 10px;
+
+      &:last-child {
+        margin: 0 0 0 2px;
+      }
+    }
   }
 </style>

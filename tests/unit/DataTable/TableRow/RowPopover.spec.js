@@ -10,11 +10,9 @@ describe('RowPopover.vue', () => {
 
   it('component does render', () => {
     const wrapper = shallowMount(RowPopover, { propsData: { item } })
-
     expect(
       wrapper.attributes()['data-test-component']
     ).toBe('rowPopover')
-
     expect(wrapper.contains('[data-test-btn="popoverTrigger"]')).toBe(true)
     expect(wrapper.contains('[data-test-popover="rowPopover"]')).toBe(true)
     expect(wrapper.contains('[data-test-btn="deleteItem"]')).toBe(true)

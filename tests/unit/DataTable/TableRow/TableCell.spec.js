@@ -10,9 +10,8 @@ describe('TableCell.vue', () => {
     "amount": 345.54
   }
 
-  let itemAttr = "This is a something something"
-
   it('component does render without editable field', () => {
+    let itemAttr = "This is a something something"
     const wrapper = shallowMount(TableCell, { propsData: { item, itemAttr }})
     expect(wrapper.attributes()['data-test-component']).toBe('TableCell')
     expect(
@@ -21,7 +20,7 @@ describe('TableCell.vue', () => {
   })
 
   it('component does render with editable field', () => {
-    itemAttr = "Curabitur dictum. Phasellus in"
+    let itemAttr = "Curabitur dictum. Phasellus in"
     const wrapper = shallowMount(TableCell, { propsData: { item, itemAttr } })
     expect(
       wrapper.contains('[data-test-component="editPopoverTrigger"]')

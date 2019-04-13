@@ -15,11 +15,9 @@ describe('EditPopover.vue', () => {
 
   it('component does render', () => {
     const wrapper = shallowMount(EditPopover, { propsData: { item, itemAttr }})
-
     expect(
       wrapper.attributes()['data-test-component']
     ).toBe('editPopoverTrigger')
-
     expect(wrapper.contains('[data-test-popover="editField"]')).toBe(true)
     expect(wrapper.contains('[data-test-input="textarea"]')).toBe(true)
     expect(wrapper.contains('[data-test-btn="stopEditingField"]')).toBe(true)
@@ -41,8 +39,7 @@ describe('EditPopover.vue', () => {
       propsData: { item, itemAttr }
     })
 
-    wrapper.setData({ isEditing: true})
-
+    wrapper.setData({ isEditing: true })
     expect(wrapper.contains('[data-test-btn="updateField"]')).toBe(true)
     expect(wrapper.contains('[data-test-btn="stopEditingField"]')).toBe(true)
 

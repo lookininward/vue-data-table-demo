@@ -11,7 +11,6 @@
   body {
     margin: 0;
     padding: 0;
-    overflow: hidden;
   }
 
   #app {
@@ -19,17 +18,10 @@
     user-select: none;
   }
 
-  h3 {
-    margin: 0;
-  }
-
-  input[type='checkbox'] {
-    cursor: pointer;
-  }
-
-  // Breakout UI components
   //-- Buttons ----------------------------------
   .btn {
+    @include hoverState();
+    @include activeState();
     min-width: 20px;
     background-color: $bg-color--light;
     border: 1px solid $bdr-color--light;
@@ -39,8 +31,6 @@
     cursor: pointer;
     outline: 0;
     transition: all .2s;
-    @include hoverState();
-    @include activeState();
   }
 
   .btn.btn--confirm {
@@ -50,72 +40,58 @@
     }
   }
 
-  .btn.btn--pageNumber {
-    margin: 0 2px;
-    padding: 2px 10px;
-
-    &:last-child {
-      margin: 0 0 0 2px;
-    }
-  }
-
   //-- Inputs -----------------------------------
   i.input.input--checkbox {
     font-size: $font-lg;
     cursor: pointer;
 
-    @media screen and (min-width: $screen-width-sm) {
+    @media screen and (min-width: $screen-width-md) {
       margin: 2px;
     }
   }
 
   //-- Popovers ---------------------------------
+  i.popoverTrigger {
+    cursor: pointer;
+  }
+
   .popover-theme {
-    @include tippyBaseTheme();
+    padding: 0;
+    background-color: $bg-color--light;
+    box-shadow: 0 50px 100px rgba(50, 50, 93, .1),
+                0 15px 35px rgba(50, 50, 93, .15),
+                0 5px 15px rgba(0, 0, 0, .1);
   }
 
   .popover {
     @include fontStandard();
     text-align: left;
     background-color: $bg-color--light;
-    color: $txt-color--dark;
-  }
 
-  .popover.popover--standard {
-    @include fontStandard();
-    text-align: left;
-    padding: 10px 15px;
-    background-color: $bg-color--light;
-    color: $txt-color--dark;
+    &.popover--standard {
+      padding: 10px 15px;
+    }
   }
 
   .popover-options-list {
-    .popover-option {
-      width: 100%;
-      padding: 3px 8px;
-      @include activeState();
-      @include hoverState();
-      cursor: pointer;
-    }
+    min-width: 100px;
   }
 
-  .row-popover {
-    @include flexCentered(column);
-    @include fontStandard();
-    width: 100px;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(auto-fit, minmax(0px, 1fr));
-  }
-
-  .row-popover-option {
-    padding: 5px 10px;
-    background-color: $bg-color--light;
+  .popover-option {
+    @include activeState();
+    @include hoverState();
+    padding: 3px 8px;
+    text-align: center;
     cursor: pointer;
 
-     &:hover {
-      background-color: $color-black-1;
-      color: $txt-color--light;
+    &.is-disabled {
+      cursor: not-allowed;
     }
   }
+
+  .popover-options-divider {
+    margin: 0;
+    border: 1px solid $bdr-color--light;
+  }
+
 </style>

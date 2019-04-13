@@ -30,7 +30,7 @@
       :selectedItemIDs="selectedItemIDs"
       :inQuickEdit="inQuickEdit"
       @sortTableBy="sortTableBy"
-      @selectAllItems="selectAllItems"
+      @toggleSelectAllItems="toggleSelectAllItems"
     />
 
     <!-- Table Body ---------------------------->
@@ -89,12 +89,12 @@
         sortKey: null,
         sortType: null,
         reverse: false,
+        inQuickEdit: false,
         searchText: '',
-        selectedItemIDs: [],
         currentPage: 0,
         perPage: 20,
         pages: [],
-        inQuickEdit: false,
+        selectedItemIDs: [],
         hiddenFields: []
       }
     },
@@ -102,46 +102,42 @@
     computed: {
 
       dataFields() {
-        let items = this.items ? this.items : []
-        let fields = items.length ? Object.keys(items[0]) : []
-        let result = []
+        const items = this.items ? this.items : []
+        const fields = items.length ? Object.keys(items[0]) : []
 
-        fields.forEach(field => {
+        return fields.map(field => {
           let data = items[0] ? items[0][field] : 'string'
           let type = typeof data
 
-          result.push({
+          return {
             field,
             type
-          })
+          }
         })
-
-        return result
       },
 
       currentPageItems() {
 
         // Filter items by search
-        let filteredItems = this._filterItemsBySearch(
+        const filteredItems = this._filterItemsBySearch(
           this.items ? this.items : [],
           this.searchText
         )
 
         // Sort items by field
-        let currentPageItems = this._sortItemsByField(
-          filteredItems ? filteredItems : [],
+        const currentPageItems = this._sortItemsByField(
+          filteredItems,
           this.sortKey,
           this.sortType,
           this.reverse
         )
 
         // Paginate
-        let paginatedItems = this._paginateItems(currentPageItems)
+        const paginatedItems = this._paginateItems(currentPageItems)
 
-        // Return results for current page
+        // Results for current page
         return paginatedItems.length ? paginatedItems[this.currentPage] : []
       }
-
     },
 
     methods: {
@@ -149,18 +145,16 @@
       //-- internal -----------------------------
 
       _filterItemsBySearch(items, searchText) {
-        let txt = searchText.toLowerCase()
-        let filteredResults = items.filter(item => {
-          const itemValues = Object.values(item)
-          itemValues.forEach(val => { val.toString().toLowerCase()})
-          return itemValues.toString().toLowerCase().includes(txt)
+        const txt = searchText.toLowerCase()
+        const filteredResults = items.filter(item => {
+          let itemValues = Object.values(item).toString().toLowerCase()
+          return itemValues.includes(txt)
         })
         return filteredResults
       },
 
       _sortItemsByField(items, sortKey, sortType, reverse) {
         let result = items
-
         if (sortType == 'number') {
           result = items.sort((a, b) => {
             return reverse ? b[sortKey] - a[sortKey] : a[sortKey] - b[sortKey]
@@ -189,8 +183,8 @@
       },
 
       _paginateItems(items) {
-        let numItems = items ? items.length : 0
-        let numItemsPerPage = this.perPage
+        const numItems = items.length
+        const numItemsPerPage = this.perPage
         let pages = []
         let pageSet = []
 
@@ -203,7 +197,7 @@
 
           if (pageSet.length < numItemsPerPage) {
             pageSet.push(items[i])
-            pageSet = pageSet.filter(Boolean);
+            pageSet = pageSet.filter(Boolean)
           }
 
         }
@@ -228,8 +222,8 @@
         }
       },
 
-      selectAllItems() { // toggleSelectAllItems
-        let items = this.items
+      toggleSelectAllItems() {
+        const items = this.items
         const selectedItemIDs = this.selectedItemIDs
         let result = []
 
@@ -243,8 +237,6 @@
 
         this.selectedItemIDs = result
       },
-
-      //-- --------------------------------------
 
       sortTableBy(sortKey, sortType) {
         this.currentPage = 0
@@ -285,7 +277,7 @@
 <!-- Style ------------------------------------------------------------------->
 <style lang="scss">
 
-  //-- Data Table ---------------------------------
+  //-- Data Table -------------------------------
   //-- Standard View ----------------------------
   .data-table {
     width: 100vw;
@@ -293,18 +285,18 @@
     display: grid;
     grid-template-rows: 80px 50px auto 30px;
 
-    @media screen and (min-width: $screen-width-sm) {
+    @media screen and (min-width: $screen-width-md) {
       grid-template-rows: 40px 30px auto 30px;
     }
 
-    //-- maintain alignment of header, row columns --
+    //-- alignment of header, row columns -------
     .table-header,
     .table-row {
       display: grid;
       grid-template-columns: 30px 1fr;
       grid-template-rows: 1fr;
 
-      @media screen and (min-width: $screen-width-sm) {
+      @media screen and (min-width: $screen-width-md) {
         grid-template-columns: 55px 1fr;
       }
     }
@@ -316,7 +308,7 @@
       grid-template-columns: 1fr;
       border-right: 1px solid $bdr-color--light;
 
-      @media screen and (min-width: $screen-width-sm) {
+      @media screen and (min-width: $screen-width-md) {
         grid-template-rows: 1fr;
         grid-template-columns: 30px 25px;
         border: none;
@@ -328,7 +320,7 @@
       @include flexCentered(column);
       padding: 0;
 
-      @media screen and (min-width: $screen-width-sm) {
+      @media screen and (min-width: $screen-width-md) {
         align-items: flex-end;
       }
     }

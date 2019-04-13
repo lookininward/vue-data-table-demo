@@ -27,36 +27,38 @@
       <!-- All Items Popover ------------------->
       <div
         data-test-TableHeaderCellPopoverTrigger
-        class="table-header-cell table-header-cell--popoverTrigger"
+        class="table-header-cell"
       >
+        <div
+          id="headerPopover"
+          data-test-popover="headerPopover"
+          class="popover"
+          v-tippy-html
+        >
+          <div class="popover-options-list">
+            <div
+              data-test-btn="deleteSelectedItems"
+              class="popover-option"
+              @click="deleteSelectedItems(selectedItemIDs)"
+            >
+              Delete All
+            </div>
+          </div>
+        </div>
+
         <i
-          class="fas fa-ellipsis-v"
+          class="fas fa-ellipsis-v popoverTrigger"
           v-tippy="{
             reactive: true,
             interactive : true,
             trigger : 'click',
-            placement: 'right',
+            placement: 'right-end',
             html: `#headerPopover`,
             theme : 'popover',
             duration: 100
           }"
         >
         </i>
-
-        <div
-          id="headerPopover"
-          data-test-popover="headerPopover"
-          class="row-popover"
-          v-tippy-html
-        >
-          <div
-            data-test-btn="deleteSelectedItems"
-            class="row-popover-option"
-            @click="deleteSelectedItems(selectedItemIDs)"
-          >
-            Delete All
-          </div>
-        </div>
 
       </div>
     </div>
@@ -70,7 +72,7 @@
 
       <i
         data-test-btn="popoverTrigger"
-        class="fas fa-sort popover-trigger"
+        class="fas fa-sort popoverTrigger"
         v-tippy="{
           reactive: true,
           interactive : true,
@@ -168,7 +170,7 @@
       },
 
       selectAll() {
-        this.$emit('selectAllItems')
+        this.$emit('toggleSelectAllItems')
       },
 
       ...mapActions([
@@ -186,60 +188,37 @@
 
   //-- Standard View ----------------------------
   .data-table .table-header {
+    background-color: $bg-color--grey;
     border-top: 1px solid $bdr-color--light2;
     border-bottom: 1px solid $bdr-color--light2;
-    background-color: $bg-color--grey;
     color: $txt-color--light;
 
     .table-header-cell {
-      position: relative;
       @include flexCentered(column);
-      align-items: flex-start;
+      align-items: center;
+      position: relative;
       padding: 0px 10px;
-      font-size: 12px;
+      font-size: $font-md;
       font-weight: 500;
       color: $txt-color--dark;
       cursor: pointer;
       transition: all .2s;
       overflow-x: auto;
 
-      @media screen and (min-width: $screen-width-sm) {
+      @media screen and (min-width: $screen-width-md) {
         padding: 0;
         align-items: center;
-        font-size: inherit;
+        font-size: $font-md;
       }
 
       .table-sort-indicator {
         display: none;
 
-        @media screen and (min-width: $screen-width-sm) {
+        @media screen and (min-width: $screen-width-md) {
           display: flex;
           position: absolute;
           right: 20px;
         }
-      }
-
-      &.table-header-cell--checkbox,
-      &.table-header-cell--popoverTrigger {
-        &:hover {
-          background-color: inherit;
-        }
-      }
-
-      &.table-header-cell--popoverTrigger,
-      &.table-header-cell--checkbox {
-        &:hover {
-          color: $txt-color--dark;
-        }
-      }
-
-      &.table-header-cell--popoverTrigger {
-        align-items: center;
-        cursor: auto;
-      }
-
-      &.table-header-cell--popoverTrigger i {
-        cursor: pointer;
       }
     }
 
@@ -248,13 +227,12 @@
       padding: 0 10px;
       color: $txt-color--dark;
       font-weight: 600;
+
+      .popoverTrigger {
+        margin-left: 5px;
+      }
     }
 
-    .popover-trigger {
-      font-size: $font-lg;
-      color: $txt-color--dark;
-      margin-left: 8px;
-    }
   }
 
   //-- List View --------------------------------

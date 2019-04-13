@@ -200,7 +200,7 @@
     grid-template-rows: 1fr 1fr;
     border-top: 1px solid $bdr-color--light2;
 
-    @media screen and (min-width: $screen-width-sm) {
+    @media screen and (min-width: $screen-width-md) {
       grid-template-columns: 1fr 1fr;
       grid-template-rows: 1fr;
     }
@@ -213,7 +213,7 @@
     grid-template-columns: 1fr 4fr;
     border-bottom: 1px solid $bdr-color--dark;
 
-    @media screen and (min-width: $screen-width-sm) {
+    @media screen and (min-width: $screen-width-md) {
       grid-template-columns: .25fr 1fr;
       border-bottom: none;
     }
@@ -237,7 +237,7 @@
     padding: 0px 20px;
     outline: 0;
 
-    @media screen and (min-width: $screen-width-sm) {
+    @media screen and (min-width: $screen-width-md) {
       font-size: $font-lg;
       padding: 0 15px 3px 15px;
     }
@@ -249,7 +249,7 @@
     grid-template-columns: repeat(auto-fit, minmax(0px, 1fr));
     align-items: center;
 
-    @media screen and (min-width: $screen-width-sm) {
+    @media screen and (min-width: $screen-width-md) {
       grid-template-columns: repeat(auto-fit, minmax(0px, 50px));
     }
   }
@@ -302,7 +302,7 @@
   .filter.filter--quickEdit {
     @include activeState();
 
-    @media screen and (min-width: $screen-width-sm) {
+    @media screen and (min-width: $screen-width-md) {
       display: none;
     }
   }

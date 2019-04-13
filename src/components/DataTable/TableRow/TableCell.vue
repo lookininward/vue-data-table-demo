@@ -27,7 +27,7 @@
     },
 
     props: {
-      item: { type: Object },
+      item: Object,
       itemAttr: { type: [String, Number] }
     },
 
@@ -58,10 +58,13 @@
     overflow-y: hidden;
 
     @media screen and (min-width: $screen-width-sm) {
+      text-align: center;
+    }
+
+    @media screen and (min-width: $screen-width-md) {
       align-items: center;
       padding: 10px;
       font-size: $font-md;
-      text-align: center;
     }
 
     //-- Edit Field --
@@ -86,7 +89,7 @@
 
   //-- List View --------------------------------
   .data-table.data-table--list .table-cell {
-    @media screen and (min-width: $screen-width-sm) {
+    @media screen and (min-width: $screen-width-md) {
       padding: 3px 10px;
     }
   }
