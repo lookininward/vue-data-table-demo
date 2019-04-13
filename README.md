@@ -70,7 +70,7 @@ The Vue ecosystem is new to me. I used [VueTippy](https://kabbouchi.github.io/vu
 ### 7.0 code solution
 [GitHub repo](https://github.com/lookininward/data-table)
 
-[Deployed App - Data Table Component](https://github.com/lookininward/data-table)
+[Deployed App - Data Table Component](https://master.d30apwevkqycxw.amplifyapp.com/#/)
 
 ### 8.0 Screenshots
 
