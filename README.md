@@ -74,4 +74,9 @@ The Vue ecosystem is new to me. I used [VueTippy](https://kabbouchi.github.io/vu
 
 ### 8.0 Screenshots
 
-
+![](data/screens/1. Standard - Desktop.png?raw=true)
+![](data/screens/2. Standard - Desktop - Filters.png?raw=true)
+![](data/screens/3. Standard - Desktop - Row Actions.png?raw=true)
+![](data/screens/4. Standard - Desktop - Field Actions.png?raw=true)
+![](data/screens/5. Standard - Mobile?raw=true)
+![](data/screens/6. Standard - Mobile - Quick Edit Mode.png?raw=true)
